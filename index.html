@@ -140,6 +140,21 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .pwhy{font-size:11px;color:var(--muted)}
 .cta-btn{display:block;width:100%;padding:12px;background:var(--night);color:#fff;border:none;border-radius:var(--rad);font-size:15px;cursor:pointer;font-weight:500;text-align:center;margin:20px 0 8px;font-family:'DM Sans',sans-serif}
 @media(max-width:580px){.hero h1{font-size:26px}.split-grid{grid-template-columns:1fr}.card-meta{gap:5px}}
+/* DINING BY CUISINE */
+.prox-legend{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.plg{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;white-space:nowrap}
+.cuisine-block{margin-bottom:20px}
+.cuisine-head{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--text);padding-bottom:6px;border-bottom:2px solid var(--border);margin-bottom:10px}
+.rest{background:var(--white);border:1px solid var(--border);border-radius:var(--rad);padding:9px 12px;margin-bottom:7px;transition:border-color .2s}
+.rest:hover{border-color:#aac}
+.rest-top{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-bottom:3px}
+.rest-name{font-weight:600;font-size:13.5px;color:var(--text);margin-right:2px}
+.rest-note{font-size:12px;color:var(--muted);line-height:1.5}
+.bonsite{background:var(--teal2);color:var(--teal)}
+.bwalk{background:#E7F1D6;color:#3B6D11}
+.bnoord{background:var(--ocean2);color:var(--ocean)}
+.bcity{background:var(--gold2);color:#7A5A0A}
+.bsouth{background:var(--coral2);color:#9A3018}
 </style>
 </head>
 <body>
@@ -162,6 +177,8 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
     <button class="tab-btn active" onclick="showTab('p1',this)">📋 Activities + Rate Them</button>
     <button class="tab-btn" onclick="showTab('p2',this)">📅 Smart Itinerary</button>
     <button class="tab-btn" onclick="showTab('p3',this)">🧭 AI Consultant</button>
+    <button class="tab-btn" onclick="showTab('p4',this)">🍽 Dining by Cuisine</button>
+    <button class="tab-btn" onclick="showTab('p5',this)">📞 Book It</button>
   </div>
 </div>
 
@@ -624,6 +641,144 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 <li><strong>Julio:</strong> Per multiple TripAdvisor reviews, Julio at the Divi Phoenix beach stand is the person who sets up palapas. Be friendly to Julio on Day 1.</li>
 <li><strong>Resort renovations complete:</strong> Divi Phoenix confirmed all major renovations finished early 2026 — fully open, refreshed rooms and amenities. No construction concerns for your June stay.</li>
 <li><strong>Airport logistics:</strong> AUA Queen Beatrix is 15 min S. Small airport — 2 hours before flight is plenty. With 17 people + luggage in 2 vehicles, plan 2 trips or pre-book a group van (~$60 flat) to do it in one.</li>
+</ul>
+</div>
+</div>
+
+<!-- PAGE 4: DINING BY CUISINE -->
+<div id="p4" class="page">
+<span class="pg-badge badge-blue">Tab 4</span>
+<div class="pg-title">Dining by Cuisine · Sorted by Distance</div>
+<div class="pg-desc">Every option is tagged by how far it is from Divi Phoenix — with 17 people and 2 vehicles, proximity is everything. Closest first within each cuisine. 🏨 = on resort property · 🚶 = walk from the resort · 🚗 = short drive. Always call ahead for groups — most places need a reservation for parties of 10+. Phone numbers, hours and reservation links are on the <strong>Book It</strong> tab.</div>
+
+<div class="prox-legend">
+  <span class="plg bonsite">🏨 On-site · 0 min</span>
+  <span class="plg bwalk">🚶 Walkable · Palm Beach strip</span>
+  <span class="plg bnoord">🚗 5–10 min · Noord</span>
+  <span class="plg bcity">🚗 15 min · Oranjestad</span>
+  <span class="plg bsouth">🚗 20–25 min · South coast</span>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🏨 Right at the Resort</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Sunset Beach Bistro</span><span class="bdg bonsite">🏨 On-site</span><span class="bdg bmid">$$</span></div><div class="rest-note">Divi Phoenix's own beachfront restaurant — seafood + local fare, all day. Zero logistics when nobody wants to drive.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Pure Beach</span><span class="bdg bonsite">🏨 On-site</span><span class="bdg bmid">$$–$$$</span></div><div class="rest-note">American menu, toes-near-the-sand lunch &amp; dinner on the resort beach with sunset views.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">French Market &amp; Deli</span><span class="bdg bonsite">🏨 On-site</span><span class="bdg bbudget">$</span></div><div class="rest-note">Coffee, pastries, sandwiches, grab-and-go. Easy breakfast for early risers before tour pickups.</div></div>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🍝 Italian &amp; Pizza</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Gianni's Ristorante</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$–$$$</span></div><div class="rest-note">Palm Beach institution since 1984. Authentic, group-friendly, big menu — a safe crowd-pleaser for mixed ages.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Hostaria Da Vittorio</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$–$$$</span></div><div class="rest-note">Lively Tuscan/Roman on the strip. Handmade pasta, big portions, good for sharing.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Casa Tua</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bbudget">$$</span></div><div class="rest-note">Casual Italian + pizza, generous portions, value pricing. Teen-approved, no fuss.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Lucca Trattoria</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$–$$$</span></div><div class="rest-note">Contemporary Italian on Palm Beach. A notch more modern / date-night than the classics.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Casa Nonna (Ritz-Carlton)</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bsplurge">$$$$</span></div><div class="rest-note">Upscale beachfront Italian at the Ritz. Octopus, meatballs, fresh pasta — the splurge Italian night.</div></div>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🥩 Steakhouse &amp; Grill</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Texas de Brazil</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Brazilian churrascaria — all-you-can-eat carved meats + big salad bar. Best value for hungry teens and a large group.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Sunset Grille (Hilton)</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bsplurge">$$$$</span></div><div class="rest-note">Classic island steakhouse, 60+ years. Aged steaks + seafood, polished service — a special-occasion dinner.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">BLT Steak (Ritz-Carlton)</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bsplurge">$$$$</span></div><div class="rest-note">Premium steaks, beachfront, famous popovers to start. Adults' upscale night out.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">El Gaucho Argentine Grill</span><span class="bdg bcity">🚗 15 min</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Oranjestad institution since 1977. Big Argentine steaks, old-school vibe — worth the drive for steak lovers.</div></div>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🍣 Asian, Sushi &amp; Fusion</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Azia Restaurant &amp; Lounge</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$–$$$</span></div><div class="rest-note">Pan-Asian in the heart of Palm Beach — sushi, dim sum, wok dishes. Lively, works for a big mixed table.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Nikkei</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Japanese-Peruvian fusion + sushi &amp; wok at The Cove Mall, across from Paseo Herencia. Trendy plates.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Noori Sushi Bar (Ritz-Carlton)</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bsplurge">$$$$</span></div><div class="rest-note">Contemporary Japanese, widely called the island's best sushi. Chic lounge setting.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Brutto</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Open-kitchen sushi bar with a DJ, open late. More scene than family dinner — great for the young-adult crew.</div></div>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🦞 Seafood &amp; On-the-Water</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Pelican Nest Seafood Grill</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$–$$$</span></div><div class="rest-note">Built out over the water on Pelican Pier. Fresh seafood + Palm Beach views — the closest "wow" setting.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Atardi (Marriott)</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bsplurge">$$$$</span></div><div class="rest-note">Toes-in-the-sand beach dining at sunset. Reserve well ahead — one of the most romantic tables on the strip.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Hadicurari</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$</span></div><div class="rest-note">Casual beachfront at Fishermen's Huts. Grilled catch of the day, relaxed, feet in the sand.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Aqua Grill</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Long-standing Palm Beach seafood + raw/oyster bar. New England-meets-Caribbean menu.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Flying Fishbone</span><span class="bdg bsouth">🚗 20 min</span><span class="bdg bsplurge">$$$$</span></div><div class="rest-note">Savaneta. Tables literally in the sea — the adults' splurge in your Day 3 plan. Book early for water tables.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Zeerovers</span><span class="bdg bsouth">🚗 20 min</span><span class="bdg bbudget">$</span></div><div class="rest-note">Savaneta fishing pier. Fry-by-the-pound fresh fish, cash only, closed Mon–Tue. The "I was in Aruba" lunch.</div></div>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🏝️ Caribbean &amp; Local Aruban</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Madame Janette</span><span class="bdg bnoord">🚗 5–10 min</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Noord garden courtyard, international/Caribbean. The rare spot that comfortably seats all 17 — your family dinner.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Quinta del Carmen</span><span class="bdg bnoord">🚗 5–10 min</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Restored 100-year cunucu mansion + courtyard. Caribbean/international, beautiful for a group-photo dinner.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Old Cunucu House</span><span class="bdg bnoord">🚗 5–10 min</span><span class="bdg bmid">$$</span></div><div class="rest-note">Traditional Aruban dishes (keshi yena, fresh fish) in a historic farmhouse. The most "local" sit-down nearby.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Gostoso</span><span class="bdg bcity">🚗 15 min</span><span class="bdg bbudget">$$</span></div><div class="rest-note">Oranjestad. Aruban-Portuguese home cooking, loved by locals, great value. Reserve — it fills up.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Yemanja Woodfired Grill</span><span class="bdg bcity">🚗 15 min</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Oranjestad. Caribbean wood-fired cooking, atmospheric courtyard. A step up for a special downtown night.</div></div>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🌶️ Latin, Peruvian &amp; Tapas</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Salt &amp; Pepper</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$</span></div><div class="rest-note">Spanish tapas + sangria on the strip. Order lots of small plates to share — flexible for a big group.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Fusion Wine &amp; Tapas</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$</span></div><div class="rest-note">Wine bar + tapas at Palm Beach Plaza. Casual grazing and drinks before the casino.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Lima Bistro</span><span class="bdg bcity">🚗 15 min</span><span class="bdg bmid">$$$</span></div><div class="rest-note">Peruvian fusion on the Oranjestad marina, CaribbeanJournal #2 (2025). A standout farewell-dinner option.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Que Pasa?</span><span class="bdg bcity">🚗 15 min</span><span class="bdg bmid">$$</span></div><div class="rest-note">Oranjestad. Eclectic Latin/international, art-filled and lively. Fun, unfussy downtown dinner.</div></div>
+</div>
+
+<div class="cuisine-block">
+<div class="cuisine-head">🍔 Casual, American &amp; Beach Bars</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Bugaloe Beach Bar &amp; Grill</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bbudget">$–$$</span></div><div class="rest-note">On De Palm Pier — casual seafood, live music, no reservations. Your low-stress welcome-night spot.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Hard Rock Cafe</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$</span></div><div class="rest-note">Burgers + American classics on the strip. Reliable and familiar — easy with picky teens.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Eduardo's Beach Shack</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bbudget">$</span></div><div class="rest-note">Smoothie bowls, wraps, healthy breakfast/lunch. Great quick fuel before a beach or tour morning.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">The Lazy Turtle</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$</span></div><div class="rest-note">Casual American/Caribbean, beachy poolside vibe. Easy lunch or relaxed dinner.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Sopranos Piano Bar</span><span class="bdg bwalk">🚶 Walkable</span><span class="bdg bmid">$$</span></div><div class="rest-note">Drinks + live piano taking requests all night. The adults' walkable nightcap after dinner.</div></div>
+</div>
+
+<div class="itin-note"><span style="font-size:18px">💡</span><div><strong>Group tip:</strong> On tour days when both cars are spoken for, lean on 🏨 on-site and 🚶 walkable spots — save the 🚗 Noord / Oranjestad places for the two planned group dinners. Call ahead anywhere you're bringing more than ~8 people and ask for the garden/patio or a private section.</div></div>
+</div>
+
+<!-- PAGE 5: BOOK IT -->
+<div id="p5" class="page">
+<span class="pg-badge badge-gold">Tab 5</span>
+<div class="pg-title">Book It · Hours, Phones &amp; Links</div>
+<div class="pg-desc">One place for every reservation — who to call, when they're open, and where to book online. Aruba's country code is <strong>+297</strong> (from the US dial 011-297-…). For groups, book 2–4 weeks ahead — tours and the big restaurants fill up. Hours shift seasonally, so confirm when you call.</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-blue">🎟️</div><h3>Excursions &amp; Tours</h3></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Catamaran Snorkel — Jolly Pirates</span><span class="bdg ball">Daily · 9am–2pm</span></div><div class="rest-note">Hotel pickup ~8:40am. 📞 <a href="tel:+2975861603">+297 586-1603</a> · 🔗 <a href="https://www.viator.com/tours/Aruba/Jolly-Pirates-Aruba-Sailing-Snorkeling-Tour/d28-2660JOLLYPIR" target="_blank">Book on Viator</a> · Reserve 17 spots or 2 boats.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">UTV / ATV Adventure</span><span class="bdg ball">AM 8:35am · PM 2:10pm</span></div><div class="rest-note">Two slots/day, Phoenix pickup. 🔗 <a href="https://www.viator.com/tours/Aruba/Aruba-UTV-ATV-Adventure-to-Beach-with-cliff-jumping/d28-5068ATVCLIFF" target="_blank">Book both slots on Viator</a> · Limited seats per departure — book early.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Arikok Jeep Safari — Fofoti Tours</span><span class="bdg ball">Half-day 9am–1pm</span></div><div class="rest-note">Guide Arnold, hotel pickup. 🔗 <a href="https://www.viator.com/tours/Aruba/Natural-Pool-and-Indian-Cave-Safari-by-Jeep/d28-2660JEEPCAVE" target="_blank">Book on Viator</a> or request Arnold/Fofoti directly.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Deep Sea Fishing — Driftwood Charters</span><span class="bdg ball">Departs 7–8am</span></div><div class="rest-note">Renaissance Marina, Oranjestad · 4 / 6 / 8-hr trips. 🔗 <a href="https://www.driftwoodfishingcharters.com" target="_blank">driftwoodfishingcharters.com</a> · Book 1–2 boats (up to 6 each).</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Kukoo Kunuku Pub Krawl (18+)</span><span class="bdg ball">Pickup 8:30pm</span></div><div class="rest-note">Hotel pickup, home by midnight. 🔗 <a href="https://www.kukookunuku.com" target="_blank">kukookunuku.com</a> · Confirm your room # with the hotel on arrival.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Pure Indulgence Spa (ladies)</span><span class="bdg ball">By appointment</span></div><div class="rest-note">On-site, 2-min walk. 📞 <a href="tel:+12975866066">+1 (297) 586-6066</a> · 🔗 <a href="https://www.purespaaruba.com" target="_blank">purespaaruba.com</a> · Book a group slot; request Angeles or Francy.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">De Palm Island (water park)</span><span class="bdg ball">Full day 9am–5pm</span></div><div class="rest-note">All-inclusive day pass, hotel pickup. 🔗 <a href="https://www.depalm.com" target="_blank">depalm.com</a>.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Sunset Sail — Red Sail Sports (ladies)</span><span class="bdg ball">Departs 5pm</span></div><div class="rest-note">Walk to Palm Beach pier. 🔗 <a href="https://www.redsailsaruba.com" target="_blank">redsailsaruba.com</a>.</div></div>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-teal">⛳</div><h3>Golf — Tee Times</h3></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">The Links at Divi Aruba (9-hole)</span><span class="bdg bwalk">🚗 5 min</span><span class="bdg ball">Dawn–dusk</span></div><div class="rest-note">Same resort group as Phoenix — easiest option. 📞 <a href="tel:+2975814653">+297 581-4653</a> for tee times. Pro shop + rentals. Best early morning (cooler).</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Tierra del Sol (18-hole championship)</span><span class="bdg bcity">🚗 15–20 min N</span><span class="bdg ball">Tue–Sun 9am–5pm · Mon closed</span></div><div class="rest-note">Aruba's only 18-hole course, near California Lighthouse. 📞 <a href="tel:+2975867800">+297 586-7800</a> ext. 224 · ✉️ tdsgl5@iberostar.com · 🔗 <a href="https://www.tierradelsol.com/golf-3/" target="_blank">tierradelsol.com</a>, or book online via GolfNow / golfscape.</div></div>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-purple">🎾</div><h3>Tennis &amp; Pickleball — Courts</h3></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Divi Phoenix Courts (tennis + racquetball)</span><span class="bdg bonsite">🏨 On-site · Free</span></div><div class="rest-note">On-property, free for guests, first-come. Ask the front desk to hold a slot and about racket rental. Best 7–9am or 5–7pm.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Aruba Racquet Club (pickleball + tennis)</span><span class="bdg bnoord">🚗 ~5 min · Noord</span></div><div class="rest-note">The island's main pickleball venue (courts are limited elsewhere). Day passes for non-members, plus pool, gym &amp; Italian restaurant. 🔗 <a href="https://www.arc.aw" target="_blank">arc.aw</a> — reserve a court online or by phone.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Hyatt Regency Aruba</span><span class="bdg bwalk">🚶 Walkable</span></div><div class="rest-note">Has newer pickleball courts on the strip; non-guest access varies — call ahead to ask about a day booking.</div></div>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-coral">🍽️</div><h3>Restaurant Reservations</h3></div>
+<div class="hi"><strong>How to book in Aruba:</strong> most restaurants take reservations by phone or WhatsApp; many bigger ones are also on <a href="https://www.opentable.com/landmark/restaurants-near-palm-beach-180680" target="_blank">OpenTable</a>. Dinner is typically ~5:30–10pm, lunch ~11am–3pm. For 8+ people, call a few days ahead and ask for a patio/garden or private section.</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Madame Janette — family dinner (all 17)</span><span class="bdg bnoord">🚗 5–10 min</span></div><div class="rest-note">📞 <a href="tel:+2975870184">+297 587-0184</a> · Reserve 2+ weeks ahead for 17, list dietary needs, request the garden.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Flying Fishbone — adults' splurge</span><span class="bdg bsouth">🚗 20 min</span></div><div class="rest-note">📞 <a href="tel:+2975842506">+297 584-2506</a> · Dinner only — ask specifically for water tables; they go fast.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Zeerovers — pier fish lunch</span><span class="bdg bsouth">🚗 20 min</span></div><div class="rest-note">📞 <a href="tel:+2975848401">+297 584-8401</a> · Open Wed–Sun ~11am–9pm, <strong>closed Mon–Tue</strong>. Cash only, no reservations — just show up.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Everything else (Palm Beach strip)</span><span class="bdg bwalk">🚶 Walkable</span></div><div class="rest-note">Gianni's, Azia, Texas de Brazil, Pelican Nest, Atardi, etc. — book via OpenTable or call the restaurant. Atardi's beach tables and the Ritz/Hilton venues need the earliest notice.</div></div>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-gold">📱</div><h3>Mobile &amp; Staying Connected</h3></div>
+<div class="hi"><strong>Quickest setup:</strong> install a travel <strong>eSIM before you fly</strong> (data-only, activates on landing). For a 5–6 day trip a 3–5 GB plan (~$20–30) is plenty if you're on resort WiFi at night.</div>
+<ul>
+<li><strong>Travel eSIM (data-only, buy online):</strong> ~$8–9 for 1 GB / 7 days, ~$20–25 for 3 GB, ~$35–40 for ~10 GB. Providers: Airalo, Saily, Holafly, Jetpac. Install &amp; activate before departure.</li>
+<li><strong>Local SIM / eSIM (buy on arrival):</strong> <strong>SETAR</strong> or <strong>Digicel</strong> at the airport or island shops. Tourist plans ~$20 (3 days) / ~$30 (7 days) / ~$50 (14 days). Best value for heavy data, and you get a local number.</li>
+<li><strong>Coverage:</strong> both run 4G/5G LTE across Palm Beach, Eagle Beach &amp; Oranjestad — all well covered.</li>
+<li><strong>Your US carrier:</strong> T-Mobile / AT&amp;T / Verizon usually offer a Caribbean or international day pass (~$10/day). Check rates before buying anything — it may be cheapest for a short trip.</li>
+<li><strong>Group tip:</strong> not all 17 need data. Get an eSIM for 2–3 "navigators" (one per vehicle), keep everyone in the <strong>WhatsApp group</strong>, and lean on resort/restaurant WiFi otherwise.</li>
 </ul>
 </div>
 </div>
