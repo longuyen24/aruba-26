@@ -385,7 +385,8 @@ details[open] .org-summary::after{transform:rotate(90deg)}
     <span style="font-size:13px;font-weight:500">👋 Who's rating? </span>
     <input id="voter-name-input" class="voter-input" type="text" placeholder="Your first name..." maxlength="20">
     <button class="voter-save" onclick="saveVoterName()">Save my name</button>
-    <span class="voter-info"> — one name per device, no account needed</span>
+    <button class="voter-change" onclick="skipVoterName()" style="margin-left:2px">Skip</button>
+    <span class="voter-info"> — optional, one name per device</span>
   </div>
 </div>
 
@@ -1636,14 +1637,18 @@ function legacyCopy(text){
 // ── VOTER IDENTITY ─────────────────────────────────────────────────────────
 function initVoter(){
   const name=localStorage.getItem('aruba26_voter');
-  if(name)showVoterDisplay(name);
+  if(name!==null)showVoterDisplay(name||'Anonymous');
   else document.getElementById('voter-input-row').style.display='flex';
 }
 function saveVoterName(){
   const v=document.getElementById('voter-name-input').value.trim();
-  if(!v)return;
-  localStorage.setItem('aruba26_voter',v);
-  showVoterDisplay(v);
+  const name=v||'Anonymous';
+  localStorage.setItem('aruba26_voter',v); // store raw (empty = anonymous)
+  showVoterDisplay(name);
+}
+function skipVoterName(){
+  localStorage.setItem('aruba26_voter','');
+  showVoterDisplay('Anonymous');
 }
 function showVoterDisplay(name){
   document.getElementById('voter-name-display').textContent=name;
