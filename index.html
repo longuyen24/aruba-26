@@ -15,6 +15,20 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),var(--gold),var(--teal))}
 .hero-eye{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
 .wx-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:0;color:#fff;display:inline-flex;align-items:center;gap:4px;text-transform:none}
+.sync-pill{font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(0,0,0,.06);color:var(--muted);margin-left:auto;white-space:nowrap;transition:all .4s}
+.sync-pill.ok{background:#E8F5E9;color:#2E7D32}
+.sync-pill.err{background:#FFEBEE;color:#C62828}
+.slot{position:relative;transition:opacity .2s,border-top .15s}
+.slot[draggable]{cursor:grab}
+.slot[draggable]:active{cursor:grabbing}
+.slot.dragging{opacity:.35}
+.slot.drag-over{border-top:3px solid var(--ocean) !important}
+.drag-handle{position:absolute;left:-2px;top:50%;transform:translateY(-50%);color:var(--border);font-size:16px;cursor:grab;user-select:none;padding:4px;opacity:0;transition:opacity .2s}
+.slot:hover .drag-handle{opacity:1}
+.manual-banner{background:#FFF8E1;border:1px solid #FFD54F;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12.5px;display:none;align-items:center;gap:12px;flex-wrap:wrap}
+.manual-banner strong{color:#E65100}
+.resume-auto-btn{background:#FF9800;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;white-space:nowrap}
+.resume-auto-btn:hover{opacity:.85}
 .hero h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
 .hero-sub{font-size:13.5px;color:rgba(255,255,255,.75);margin-bottom:18px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65}
 .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
@@ -365,6 +379,7 @@ details[open] .org-summary::after{transform:rotate(90deg)}
     <span>⭐ Rating as: <strong id="voter-name-display"></strong></span>
     <button class="voter-change" onclick="showVoterInput()">Change</button>
     <span class="voter-info">· Saves on this device · Survives refresh ✓</span>
+    <span id="sync-pill" class="sync-pill" style="display:none"></span>
   </div>
   <div id="voter-input-row">
     <span style="font-size:13px;font-weight:500">👋 Who's rating? </span>
@@ -700,6 +715,11 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <span class="pg-badge badge-gold">Tab 2</span>
 <div class="pg-title">Smart Itinerary · Jun 27 – Jul 2</div>
 <div class="pg-desc">Built from your ratings + consultant strategy. ⏳ = limited availability — only offered at certain times, so book it early before the slots fill. Alternates shown for every major slot. Split-day plans show each sub-group's vehicle and activity clearly.</div>
+
+<div id="manual-banner" class="manual-banner">
+  <span>✋ <strong>Manual Override Active</strong> — you've rearranged slots. Smart auto-updates are paused.</span>
+  <button class="resume-auto-btn" onclick="resumeAutoUpdates()">↩ Resume Smart Updates</button>
+</div>
 
 <div id="lock-banner" class="lock-banner">
   <span class="lock-icon">✅</span>
@@ -1245,6 +1265,18 @@ details[open] .org-summary::after{transform:rotate(90deg)}
         </div>
         <button class="lock-cta" onclick="lockItinerary()" style="margin-top:10px">🔒 Lock Itinerary</button>
         <div class="claude-note" style="margin-top:10px">💡 Ratings live in localStorage — survive refresh on the same device. Different device = fresh vote. The Auto-Update button sends your ratings to GitHub Actions → Claude rewrites the file → live site updates in ~90 sec.</div>
+
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+          <h4 style="margin:0 0 6px">🔄 Live Ratings Sync (GitHub Gist)</h4>
+          <p style="font-size:12px;color:var(--muted);margin:0 0 10px">Ratings sync across all devices every 60 seconds via a secret GitHub Gist. Enter your GitHub PAT above first — it auto-creates the Gist. Share the Gist ID with family so their ratings stay in sync.</p>
+          <div style="font-size:12px;margin-bottom:8px">Gist ID: <code id="gist-id-display" style="background:rgba(0,0,0,.06);padding:2px 6px;border-radius:4px;font-size:11px">(none — PAT required to auto-create)</code></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px">
+            <input id="gist-id-input" type="text" placeholder="Paste Gist ID from another device..." style="flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:monospace">
+            <button onclick="saveGistId()" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer">Connect</button>
+            <button onclick="gistPush()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--muted)">Push now ↑</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted)">Poll interval: every 60 sec · Also re-fetches on tab focus · Status shown next to voter name in Tab 1.</div>
+        </div>
       </div>
     </div>
   </details>
@@ -1268,7 +1300,7 @@ function buildStars(){
 }
 function hov(row,v){row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<v));}
 function rst(row,id){const r=ratings[id]||0;row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<r));}
-function setR(id,v,row){ratings[id]=v;rst(row,id);calcScores();save();syncItinerary();}
+function setR(id,v,row){ratings[id]=v;rst(row,id);calcScores();save();syncItinerary();schedulePush();}
 function calcScores(){
   const vals=Object.values(ratings).filter(v=>v>0);
   if(!vals.length)return;
@@ -1488,6 +1520,7 @@ const ACTS={
 
 // ── SMART SYNC ─────────────────────────────────────────────────────────────
 function syncItinerary(){
+  if(manualOverride)return;
   const panel=document.getElementById('top-picks');
   if(!panel)return;
   const rated=Object.entries(ACTS)
@@ -1717,7 +1750,162 @@ async function autoUpdate(){
   }
 }
 
+// ── MANUAL OVERRIDE ────────────────────────────────────────────────────────
+let manualOverride=!!localStorage.getItem('aruba26_manual');
+function setManualOverride(on){
+  manualOverride=on;
+  if(on)localStorage.setItem('aruba26_manual','1');
+  else localStorage.removeItem('aruba26_manual');
+  const b=document.getElementById('manual-banner');
+  if(b)b.style.display=on?'flex':'none';
+}
+function resumeAutoUpdates(){setManualOverride(false);syncItinerary();}
+
+// ── DRAG-AND-DROP ITINERARY SLOTS ──────────────────────────────────────────
+let dragSrc=null;
+function initDragDrop(){
+  document.querySelectorAll('#p2 .slots').forEach(slots=>{
+    slots.querySelectorAll('.slot').forEach(slot=>{
+      // add drag handle icon
+      const h=document.createElement('span');
+      h.className='drag-handle';h.textContent='⠿';h.title='Drag to reorder';
+      slot.insertBefore(h,slot.firstChild);
+      slot.setAttribute('draggable','true');
+      slot.addEventListener('dragstart',e=>{
+        dragSrc=slot;slot.classList.add('dragging');
+        e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','');
+      });
+      slot.addEventListener('dragend',()=>{
+        slot.classList.remove('dragging');
+        document.querySelectorAll('.slot.drag-over').forEach(s=>s.classList.remove('drag-over'));
+      });
+      slot.addEventListener('dragover',e=>{
+        e.preventDefault();e.dataTransfer.dropEffect='move';
+        if(slot!==dragSrc)slot.classList.add('drag-over');
+      });
+      slot.addEventListener('dragleave',e=>{
+        if(!slot.contains(e.relatedTarget))slot.classList.remove('drag-over');
+      });
+      slot.addEventListener('drop',e=>{
+        e.preventDefault();slot.classList.remove('drag-over');
+        if(!dragSrc||dragSrc===slot)return;
+        const parent=slot.parentNode;
+        // insert dragSrc before slot (or after if dragging down)
+        const srcIdx=Array.from(parent.children).indexOf(dragSrc);
+        const tgtIdx=Array.from(parent.children).indexOf(slot);
+        if(srcIdx<tgtIdx)parent.insertBefore(dragSrc,slot.nextSibling);
+        else parent.insertBefore(dragSrc,slot);
+        if(!manualOverride)setManualOverride(true);
+      });
+    });
+  });
+}
+
+// ── GIST LIVE SYNC ─────────────────────────────────────────────────────────
+let gistId=localStorage.getItem('aruba26_gist_id')||'';
+let syncTs=0;
+let pushDebounce=null;
+
+function setSyncPill(msg,cls){
+  const p=document.getElementById('sync-pill');
+  if(!p)return;
+  p.textContent=msg;p.className='sync-pill '+(cls||'');p.style.display='inline-flex';
+}
+
+async function gistFetch(){
+  if(!gistId)return;
+  try{
+    const pat=localStorage.getItem('aruba26_github_pat');
+    const hdrs={'Accept':'application/vnd.github+json'};
+    if(pat)hdrs['Authorization']='token '+pat;
+    const r=await fetch('https://api.github.com/gists/'+gistId,{headers:hdrs});
+    if(!r.ok){setSyncPill('Sync ✗','err');return;}
+    const d=await r.json();
+    const raw=d.files&&d.files['aruba26-ratings.json']&&d.files['aruba26-ratings.json'].content;
+    if(!raw)return;
+    const remote=JSON.parse(raw);
+    if((remote.ts||0)>syncTs){
+      syncTs=remote.ts||0;
+      const remoteRatings=remote.ratings||{};
+      Object.entries(remoteRatings).forEach(([id,v])=>{
+        ratings[id]=v;
+        const row=document.querySelector('.stars-row[data-id="'+id+'"]');
+        if(row)rst(row,id);
+      });
+      save();calcScores();syncItinerary();
+      setSyncPill('↓ '+new Date().toLocaleTimeString(),'ok');
+    } else {
+      setSyncPill('✓ '+new Date().toLocaleTimeString(),'ok');
+    }
+  }catch(e){setSyncPill('Sync ✗','err');}
+}
+
+async function gistPush(){
+  const pat=localStorage.getItem('aruba26_github_pat');
+  if(!pat)return;
+  if(!gistId){await gistCreate(pat);return;}
+  const voter=localStorage.getItem('aruba26_voter')||'organizer';
+  const ts=Date.now();syncTs=ts;
+  const content=JSON.stringify({ratings,voter,ts},null,2);
+  try{
+    const r=await fetch('https://api.github.com/gists/'+gistId,{
+      method:'PATCH',
+      headers:{'Authorization':'token '+pat,'Content-Type':'application/json'},
+      body:JSON.stringify({files:{'aruba26-ratings.json':{content}}})
+    });
+    setSyncPill(r.ok?'↑ '+new Date().toLocaleTimeString():'Push ✗',r.ok?'ok':'err');
+  }catch(e){setSyncPill('Push ✗','err');}
+}
+
+async function gistCreate(pat){
+  const voter=localStorage.getItem('aruba26_voter')||'organizer';
+  const ts=Date.now();
+  const content=JSON.stringify({ratings,voter,ts},null,2);
+  try{
+    const r=await fetch('https://api.github.com/gists',{
+      method:'POST',
+      headers:{'Authorization':'token '+pat,'Content-Type':'application/json'},
+      body:JSON.stringify({description:'Aruba 2026 — Shared Ratings',public:false,
+        files:{'aruba26-ratings.json':{content}}})
+    });
+    if(r.ok){
+      const d=await r.json();
+      gistId=d.id;localStorage.setItem('aruba26_gist_id',gistId);
+      updateGistDisplay();setSyncPill('↑ Created','ok');
+    }
+  }catch(e){}
+}
+
+function schedulePush(){clearTimeout(pushDebounce);pushDebounce=setTimeout(gistPush,2000);}
+
+function updateGistDisplay(){
+  const el=document.getElementById('gist-id-display');
+  if(el)el.textContent=gistId||'(none — enter PAT above to auto-create)';
+  const inp=document.getElementById('gist-id-input');
+  if(inp&&gistId)inp.value=gistId;
+}
+
+function saveGistId(){
+  const v=(document.getElementById('gist-id-input')||{}).value||'';
+  const id=v.trim();
+  if(id){gistId=id;localStorage.setItem('aruba26_gist_id',id);updateGistDisplay();gistFetch();}
+}
+
+function initSync(){
+  updateGistDisplay();
+  if(gistId){
+    gistFetch();
+    setInterval(gistFetch,60000);
+  }
+  // re-fetch whenever tab becomes visible (mac mini always-on scenario)
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&gistId)gistFetch();});
+  // auto-create gist on first rating if PAT exists but no gist yet
+}
+
 buildStars();load();initVoter();syncItinerary();showLockBanner();initDayModes();
+// restore manual override banner
+if(manualOverride){const b=document.getElementById('manual-banner');if(b)b.style.display='flex';}
+initDragDrop();initSync();
 
 // Weather widget — Open-Meteo (free, no key needed), Aruba coords
 (function fetchWeather(){
