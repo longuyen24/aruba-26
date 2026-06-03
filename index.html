@@ -186,6 +186,39 @@ body{font-size:14px}
 .slot-t{min-width:0}
 .star-col .slbl{font-size:8px}
 }
+/* INSIDER INTEL */
+.intel-sec{margin:24px 0 10px;padding-left:14px;border-left:4px solid var(--ocean)}
+.intel-sec.tip{border-color:var(--teal)}
+.intel-sec.local{border-color:var(--coral)}
+.intel-sec.photo{border-color:var(--purple)}
+.intel-sec.nature{border-color:#2E7D32}
+.intel-sec h3{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:2px}
+.intel-sec p{font-size:12px;color:var(--muted)}
+.intel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:9px;margin:10px 0 4px}
+.intel-item{background:var(--white);border:1px solid var(--border);border-radius:var(--rad);padding:11px 13px;display:flex;gap:10px;align-items:flex-start}
+.intel-n{flex-shrink:0;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;background:var(--ocean);margin-top:1px}
+.intel-item.tip .intel-n{background:var(--teal)}
+.intel-item.local .intel-n{background:var(--coral)}
+.intel-item.photo .intel-n{background:var(--purple)}
+.intel-item.nature .intel-n{background:#2E7D32}
+.intel-b strong{font-size:13px;display:block;margin-bottom:3px}
+.intel-b span{font-size:12px;color:var(--muted);line-height:1.55}
+/* KIDS CORNER */
+.kids-hero{background:linear-gradient(135deg,var(--gold2),var(--teal2));border:1px solid var(--border);border-radius:var(--radlg);padding:18px 20px;margin-bottom:18px;text-align:center}
+.kids-hero h2{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:6px}
+.kids-hero p{font-size:13px;color:var(--muted)}
+.fact-card{background:var(--white);border:1px solid var(--border);border-radius:var(--rad);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.fact-num{flex-shrink:0;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;background:var(--gold);margin-top:1px}
+.fact-title{font-size:13.5px;font-weight:600;margin-bottom:3px}
+.fact-body{font-size:12.5px;color:var(--muted);line-height:1.6}
+.mission-box{background:var(--teal2);border:1px solid var(--teal);border-radius:var(--radlg);padding:16px 18px;margin-bottom:18px}
+.mission-box h3{color:var(--teal);font-size:16px;margin-bottom:10px}
+.mission-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px}
+.mission-row:last-child{border-bottom:none}
+.mission-cb{width:18px;height:18px;border:2px solid var(--teal);border-radius:4px;cursor:pointer;flex-shrink:0;accent-color:var(--teal)}
+.mission-label strong{display:block;font-size:13px}
+.mission-label small{font-size:11.5px;color:var(--muted)}
+@media(max-width:600px){.intel-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -210,6 +243,8 @@ body{font-size:14px}
     <button class="tab-btn" onclick="showTab('p3',this)">🧭 AI Consultant</button>
     <button class="tab-btn" onclick="showTab('p4',this)">🍽 Dining by Cuisine</button>
     <button class="tab-btn" onclick="showTab('p5',this)">📞 Book It</button>
+    <button class="tab-btn" onclick="showTab('p6',this)">🤫 Insider Intel</button>
+    <button class="tab-btn" onclick="showTab('p7',this)">🧒 Kids' Corner</button>
   </div>
 </div>
 
@@ -821,6 +856,186 @@ body{font-size:14px}
 <li><strong>Your US carrier:</strong> T-Mobile / AT&amp;T / Verizon usually offer a Caribbean or international day pass (~$10/day). Check rates before buying anything — it may be cheapest for a short trip.</li>
 <li><strong>Group tip:</strong> not all 17 need data. Get an eSIM for 2–3 "navigators" (one per vehicle), keep everyone in the <strong>WhatsApp group</strong>, and lean on resort/restaurant WiFi otherwise.</li>
 </ul>
+</div>
+</div>
+
+<!-- PAGE 6 — INSIDER INTEL -->
+<div id="p6" class="page">
+<span class="pg-badge badge-blue">Tab 6</span>
+<div class="pg-title">Insider Intel · What Tourists Miss</div>
+<div class="pg-desc">Curated from local blogs, travel forums, and Aruba residents — things you won't find on the hotel brochure. 5 categories, ~65 discoveries total. Research done June 2026.</div>
+
+<!-- SECRETS -->
+<div class="intel-sec">
+  <h3>🤫 Top 15 Secrets</h3>
+  <p>Hidden spots, local knowledge, and places most tourists drive right past</p>
+</div>
+<div class="intel-grid">
+<div class="intel-item"><div class="intel-n">1</div><div class="intel-b"><strong>Conchi — The Natural Pool</strong><span>Formed by volcanic rocks on the wild NE coast, only reachable by 4x4 or horseback. Most tourists never find it. Go with <a href="https://www.google.com/search?q=Natural+Pool+Aruba+4x4+tour" target="_blank">a guided 4x4 tour</a> or hire a local driver who knows the trail.</span></div></div>
+<div class="intel-item"><div class="intel-n">2</div><div class="intel-b"><strong>Blackstone Beach</strong><span>Aruba's only black-sand beach — three natural stone arches, black volcanic stones, zero tourists. Past Andicuri Beach via a dirt road through a cactus valley. Requires a 4x4 or high clearance.</span></div></div>
+<div class="intel-item"><div class="intel-n">3</div><div class="intel-b"><strong>"Hidden" Natural Pool (Bushiribana)</strong><span>Different from Conchi — this second natural pool sits behind a limestone cliff near the Gold Mill Ruins. Completely invisible until you're at the edge. Descend a fixed iron ladder. Known to almost no visitors.</span></div></div>
+<div class="intel-item"><div class="intel-n">4</div><div class="intel-b"><strong>Mangel Halto — Best Free Snorkeling</strong><span>SW coast, past Savaneta. Locals say this beats the paid boat tours: shallow turquoise lagoon framed by mangroves, sea horses, reef fish, crystal visibility. Zero entry fee, rarely crowded before 10am.</span></div></div>
+<div class="intel-item"><div class="intel-n">5</div><div class="intel-b"><strong>Tres Trapi ("Three Steps")</strong><span>Three limestone steps cut directly into a cove — locals have swum here for generations. Float in the pool while someone shoots from the ledge above. Never on a tour itinerary.</span></div></div>
+<div class="intel-item"><div class="intel-n">6</div><div class="intel-b"><strong>Zeerovers — The Fishermen's Shack</strong><span>Savaneta, south coast. Fishermen drop their catch at the dock window; you order by the plate ($8–10, fried fish or shrimp). Cash only. Picnic tables on the water. This is where Arubans actually eat fish — not the tourist strip.</span></div></div>
+<div class="intel-item"><div class="intel-n">7</div><div class="intel-b"><strong>Savaneta Fishing Village</strong><span>The southern coast's best-kept non-secret. Authentic, slow, almost zero tourists. A handful of beachfront local guesthouses and the occasional food trailer. Drive through on the way to Baby Beach.</span></div></div>
+<div class="intel-item"><div class="intel-n">8</div><div class="intel-b"><strong>Bright Bakery (Paradera)</strong><span>Local bakery in a residential neighborhood inland. Cash only, no signage, gone by 10am. Drigidek (local spice cake) and sugar-coated donuts — best $2 you'll spend. Zero tourist footprint.</span></div></div>
+<div class="intel-item"><div class="intel-n">9</div><div class="intel-b"><strong>Balashi Brewery Tour</strong><span>Aruba's only beer, brewed entirely from desalinated seawater. ~$20 tour + tasting. The open-air bar next to the brewery is where locals go Saturday afternoon. <a href="https://www.google.com/search?q=Balashi+Brewery+Aruba+tour" target="_blank">Book ahead</a>.</span></div></div>
+<div class="intel-item"><div class="intel-n">10</div><div class="intel-b"><strong>Pastechi House (Oranjestad)</strong><span>Open from 6am. A pastechi is Aruba's iconic breakfast pastry — cheese or meat filled, deep-fried, $1.50. Most popular local breakfast spot. Arrive before 9am or they sell out.</span></div></div>
+<div class="intel-item"><div class="intel-n">11</div><div class="intel-b"><strong>Quadirikiri Cave (Arikok NP)</strong><span>Two huge caverns with holes punched in the ceiling — sunlight beams down dramatically through the darkness. Free inside the national park entry (~$15pp). Bats live in the deepest section.</span></div></div>
+<div class="intel-item"><div class="intel-n">12</div><div class="intel-b"><strong>San Nicolas on Saturday Night</strong><span>The resort strip is tourist-land. San Nicolas (SE corner) completely transforms on Saturday nights: street art, murals, food trucks, live music, local art galleries. The real artistic heart of the island.</span></div></div>
+<div class="intel-item"><div class="intel-n">13</div><div class="intel-b"><strong>Boca Prins — Sea Turtle Coast</strong><span>Wild, wind-blown beach where sea turtles nest Jun–Oct. Waves are too strong to swim but dramatically beautiful. Pair with nearby sand dunes and the Fontein Cave Arawak paintings.</span></div></div>
+<div class="intel-item"><div class="intel-n">14</div><div class="intel-b"><strong>Alto Vista Chapel (1750)</strong><span>Tiny yellow chapel on a hilltop ringed by cacti — no crowds, no parking lot, just rolling desert landscape. Built in 1750, one of the island's oldest structures. Sunrise and golden hour are magic here.</span></div></div>
+<div class="intel-item"><div class="intel-n">15</div><div class="intel-b"><strong>Waf'i Rancho Harbor (Oranjestad)</strong><span>The revamped historic fisherman's pier — actual fishing boats deliver catch each morning to small fresh-fish restaurants. Evening walkable promenade where locals stroll and eat; tourists mostly skip it for the hotel strip.</span></div></div>
+</div>
+
+<!-- TIPS -->
+<div class="intel-sec tip">
+  <h3>💡 Top 15 Pro Tips</h3>
+  <p>Practical hacks that save time, money, and headaches</p>
+</div>
+<div class="intel-grid">
+<div class="intel-item tip"><div class="intel-n">1</div><div class="intel-b"><strong>Tap water is 100% safe</strong><span>Aruba desalinates seawater for all drinking water — it's among the cleanest tap water in the Caribbean. Skip buying bottled water and save ~$20+ over the week.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">2</div><div class="intel-b"><strong>Pay in USD, not florins</strong><span>The AWG florin is pegged at 1.79 to $1 — everywhere accepts USD. If you pay in AWG you risk getting change back at a worse rate. Just use USD or a no-foreign-fee card.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">3</div><div class="intel-b"><strong>Rent a car, skip the cabs</strong><span>One-way cab Palm Beach → San Nicolas runs $35+. Car rental is $40–55/day for the group. Two rentals for 17 people beats per-trip cabs by a wide margin for any excursion beyond walking distance.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">4</div><div class="intel-b"><strong>Snorkel 8–10am for best visibility</strong><span>After mid-morning, boat wakes churn the sand and visibility drops significantly. Get in early for crystal-clear water — especially at Mangel Halto and Boca Catalina.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">5</div><div class="intel-b"><strong>Reef-safe sunscreen only</strong><span>Arikok National Park rangers can fine you for non-reef-safe sunscreen. Bring your own mineral SPF from home — hotel shops charge a premium and stock limited options.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">6</div><div class="intel-b"><strong>WhatsApp is how Aruba communicates</strong><span>Restaurants, taxi drivers, tour operators, and services all prefer WhatsApp messages over phone calls. Save each contact as a WhatsApp number from the start.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">7</div><div class="intel-b"><strong>Trade winds blow every single day</strong><span>The island's trade winds are consistent 15–25 mph year-round — they're why the divi-divi trees lean permanently. Face NW for relief. Bring one light layer for evening outdoor dining; it's always breezy.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">8</div><div class="intel-b"><strong>Happy hour is 5–7pm everywhere</strong><span>Most bars on the strip run daily 2-for-1 drink specials. Bugaloe, Pelican Pier, and Moomba all have it. Plan beach time to end by 5pm and walk to drinks.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">9</div><div class="intel-b"><strong>Grocery run at Ling &amp; Sons or Super Food</strong><span>Hotel convenience stores charge 3–4x markup. Ling &amp; Sons (Palm Beach) or Super Food (Oranjestad) stock everything you need for beach snacks, breakfast, and drinks at normal prices.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">10</div><div class="intel-b"><strong>Book big-group dinners 2+ weeks ahead</strong><span>Most restaurants cap at 8–10 and need to set up a special arrangement for 17. Call early, specify "large group," and ask about patio or private section options.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">11</div><div class="intel-b"><strong>SETAR or Digicel SIM at the airport</strong><span>$25–30 for 7–10 days unlimited data. Far cheaper than US carrier international day-passes ($10/day × 6 days = $60). Get one SIM per vehicle as a "navigator" and use resort WiFi the rest.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">12</div><div class="intel-b"><strong>Golden hour hits both coasts</strong><span>Sunrise: east coast (wild side, Arikok, Boca Prins) — dramatic and deserted. Sunset: west coast (Eagle Beach, Palm Beach) — faces the ocean. Plan at least one outing per coast.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">13</div><div class="intel-b"><strong>No hurricane risk</strong><span>Aruba sits 15° north of the equator — well outside the hurricane belt. You will not be evacuated, rerouted, or rained out by a storm. The weather is almost always perfect, 82–88°F.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">14</div><div class="intel-b"><strong>Arubus public bus: $1.28/trip</strong><span>AWG 2.30 per ride, runs the length of the hotel strip. Useful for solo explorers or older teens. Day pass AWG 17.50 (~$9.80). Ask the driver — they're friendly and speak English.</span></div></div>
+<div class="intel-item tip"><div class="intel-n">15</div><div class="intel-b"><strong>Sunday = locals' day out</strong><span>Wilhelmina Park in Oranjestad fills with families, food stalls, and live music on Sunday mornings. Free. The best 90-minute window into real Aruban culture — schedule it after church hours (10:30am+).</span></div></div>
+</div>
+
+<!-- LOCALS -->
+<div class="intel-sec local">
+  <h3>🏘️ Top 12 Locals' Picks</h3>
+  <p>Where Arubans actually eat, drink, and spend their weekends</p>
+</div>
+<div class="intel-grid">
+<div class="intel-item local"><div class="intel-n">1</div><div class="intel-b"><strong>Zeerovers (Savaneta)</strong><span>The locals' fish-fry. Order at the dock window, take a number, eat outside on the water. Fried fish or shrimp plates $8–10. Cash only. Wed–Sun ~11am–9pm. This is the most authentic meal on the island.</span></div></div>
+<div class="intel-item local"><div class="intel-n">2</div><div class="intel-b"><strong>Pastechi House (Oranjestad)</strong><span>Open 6am, sells out by 10am. Locals queue here every morning. Under $2 each. Meat, cheese, or tuna filling. The benchmark by which all other pastechis are judged.</span></div></div>
+<div class="intel-item local"><div class="intel-n">3</div><div class="intel-b"><strong>Café Chaos (Oranjestad)</strong><span>Downtown Dutch pub loved by locals for decades. Eclectic decor, strong pours, live jazz some nights. Visited by politicians, artists, and fishermen in the same hour. No tourist trappings.</span></div></div>
+<div class="intel-item local"><div class="intel-n">4</div><div class="intel-b"><strong>Huchada Bakery</strong><span>Pan di coco, bolo di banana, quesillo — all $2–4. Savory croquettes and cheese balls. A neighborhood institution. Bring cash and buy more than you think you need.</span></div></div>
+<div class="intel-item local"><div class="intel-n">5</div><div class="intel-b"><strong>Balashi Cold Zone</strong><span>Open-air bar at the Balashi Brewery grounds. Locals' Saturday afternoon spot — cold Balashis, cheap snacks, no tourists. Closes early (4–5pm), arrive by 2pm.</span></div></div>
+<div class="intel-item local"><div class="intel-n">6</div><div class="intel-b"><strong>Taste My Aruba (Oranjestad)</strong><span>100-year-old heritage house turned restaurant. Locally sourced fresh fish, lobster, and krioyo dishes. Owner Nathaly de Mey knows every farmer and fisherman on the island. Reserve ahead.</span></div></div>
+<div class="intel-item local"><div class="intel-n">7</div><div class="intel-b"><strong>Super Food Supermarket — deli section</strong><span>Oranjestad locals grab cooked lunches here under $10. No tourists. Rotisserie chicken, rice dishes, stewed fish. The grocery cart checkout aisle is 80% Aruban families, 20% expats.</span></div></div>
+<div class="intel-item local"><div class="intel-n">8</div><div class="intel-b"><strong>Waf'i Rancho harbor promenade</strong><span>Evenings, locals walk the revamped fisherman's pier, grab fresh-fish dinners at Kingfish or SharQys, and watch the boats come in. Families, couples, kids on bikes — the real Oranjestad vibe.</span></div></div>
+<div class="intel-item local"><div class="intel-n">9</div><div class="intel-b"><strong>San Nicolas Saturday art night</strong><span>The island's best-kept cultural secret. Murals, Cosecha Art Gallery, food trucks, live music in the streets from ~7pm. 45-minute drive from Palm Beach but a completely different Aruba.</span></div></div>
+<div class="intel-item local"><div class="intel-n">10</div><div class="intel-b"><strong>Local Store Aruba (Oranjestad)</strong><span>Casual bar/restaurant with an expat-and-local mix. Great for spontaneous conversations, cold drinks, and zero pretension. Locals recommend it for a real cross-section of island life.</span></div></div>
+<div class="intel-item local"><div class="intel-n">11</div><div class="intel-b"><strong>Moomba Beach Bar afternoons</strong><span>Though now tourist-adjacent, local regulars still anchor here for weekday afternoon beers and water sports. Sit at the bar rather than a table — that's where locals cluster.</span></div></div>
+<div class="intel-item local"><div class="intel-n">12</div><div class="intel-b"><strong>Any roadside snack trailer with a hand-painted sign</strong><span>Especially on the east coast road. Fresh fish tacos, corn, empanadas. If there's a queue of Aruban families, stop — the food will be excellent and under $5.</span></div></div>
+</div>
+
+<!-- PHOTO SPOTS -->
+<div class="intel-sec photo">
+  <h3>📸 Top 12 Photo Spots + Photoshoot Rec</h3>
+  <p>Best shots on the island — including a pro family shoot recommendation</p>
+</div>
+<div class="intel-grid">
+<div class="intel-item photo"><div class="intel-n">1</div><div class="intel-b"><strong>Eagle Beach Fofoti Trees — 6:30am</strong><span>Arrive before sunrise for zero crowds. Silhouette the bent divi-divi trees against the pink/orange sky. Featured in countless magazines — completely free, just show up early.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">2</div><div class="intel-b"><strong>California Lighthouse — golden hour</strong><span>Climb the stairs for 360° panorama. Best 45 minutes before sunset. The lighthouse glows amber, and the wild coast below is all rock and crashing surf — dramatic background.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">3</div><div class="intel-b"><strong>Tres Trapi (Three Steps) — float shot</strong><span>Float in the crystal pool, photographer stands on the limestone ledge above shooting down through turquoise water. Unique perspective you won't find anywhere else on the island.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">4</div><div class="intel-b"><strong>San Nicolas murals — morning light</strong><span>Bright, saturated street murals on east-facing walls — hit them in morning when the sun is low and direct. No tourist crowds before 9am. Bring a wide-angle lens or phone in portrait mode.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">5</div><div class="intel-b"><strong>Alto Vista Chapel — sunrise or golden hour</strong><span>Yellow chapel + cactus + rolling hills + no other humans. Very painterly. The hill provides elevation for wide-landscape shots showing how unique Aruba's terrain is.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">6</div><div class="intel-b"><strong>Mangel Halto — family float shot</strong><span>Shallow lagoon, clear water, mangroves framing the edges. Perfect for kids floating on inflatables or wading shots. Turquoise water pops beautifully in any light.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">7</div><div class="intel-b"><strong>Bushiribana Gold Mill Ruins</strong><span>Desert ruins against an ocean backdrop — unusual combination. Early morning before tour buses arrive. Great for dramatic couple or group shots with historical texture.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">8</div><div class="intel-b"><strong>Natural Pool (Conchi) — volcanic ring</strong><span>Wild volcanic rock surrounding calm pool with crashing surf visible behind. Only reachable by 4x4. A drone or wide-angle shot here is genuinely stunning.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">9</div><div class="intel-b"><strong>Red Anchor at Boca Grandi</strong><span>Iconic rust-red anchor set against turquoise water — simple, bold, instantly recognizable. Near Baby Beach. Works well even with a phone camera on a bright morning.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">10</div><div class="intel-b"><strong>Boca Catalina — pelicans + turquoise</strong><span>Clear water with pelicans that hang around fishing boats. Natural action shots happen organically. One of Aruba's most Instagrammable beaches with zero effort required.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">11</div><div class="intel-b"><strong>G10 Studio — pro family shoot</strong><span>Local pros who specialize in large family groups, know every golden-hour spot, bring a drone. Perfect for a group of 17. 🔗 <a href="https://www.g10.studio" target="_blank">g10.studio</a> — book 2–3 weeks ahead for Jun/Jul.</span></div></div>
+<div class="intel-item photo"><div class="intel-n">12</div><div class="intel-b"><strong>Aruba Paradise Photos</strong><span>Second top recommendation for family/beach photography. Known for relaxed, candid style and stunning sunset shoots at Eagle Beach. 🔗 <a href="https://www.arubaparadisephotos.com" target="_blank">arubaparadisephotos.com</a></span></div></div>
+</div>
+
+<!-- NATURE -->
+<div class="intel-sec nature">
+  <h3>🦎 Top 10 Nature &amp; Wildlife</h3>
+  <p>Animals, wild coasts, and encounters you won't find at the resort pool</p>
+</div>
+<div class="intel-grid">
+<div class="intel-item nature"><div class="intel-n">1</div><div class="intel-b"><strong>Flamingos — Renaissance Island</strong><span>A day pass (~$150/person, includes food/drinks) gets you onto the private island where pink flamingos literally walk up to you on the beach. Book ahead — passes sell out fast in summer.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">2</div><div class="intel-b"><strong>Green sea turtles (Jun–Oct)</strong><span>Nesting season overlaps perfectly with your trip. Aruba Turtle Conservation Program offers guided night watches at Boca Prins and Boca Grandi. Seeing a turtle nest or hatch is unforgettable.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">3</div><div class="intel-b"><strong>Giant iguanas at Arikok NP</strong><span>Up to 4 feet long, completely harmless, often sunbathing in the middle of the park trail. They look prehistoric. Kids absolutely love them — and they barely move so you get great photos.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">4</div><div class="intel-b"><strong>Green parakeet flocks at dawn</strong><span>Enormous flocks of wild green parakeets swirl over aloe and cactus fields in the island interior just after sunrise. Drive through the countryside around 6:30am to witness it.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">5</div><div class="intel-b"><strong>Sea horses at Mangel Halto</strong><span>Mangrove roots provide habitat for sea horses — snorkel very slowly through the shallow entrance. Bring an underwater camera. Not guaranteed but sightings are frequent for patient swimmers.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">6</div><div class="intel-b"><strong>Rays at Antilla Wreck</strong><span>The Antilla is the largest shipwreck in the Caribbean (400 feet long, WWII German freighter). Stingrays and spotted eagle rays circle it daily. Multiple dive operators depart from Palm Beach.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">7</div><div class="intel-b"><strong>Pelicans at Boca Catalina</strong><span>Brown pelicans hang out with local fishermen cleaning their catch here every morning. Extremely approachable — some will eat from your hand. Perfect for wildlife photos without a boat trip.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">8</div><div class="intel-b"><strong>Tide pools at Boca Mahos</strong><span>Wild northeast coast, dozens of invertebrate species visible in low-tide pools — crabs, sea urchins, anemones, tiny fish. No facilities, no crowds, no fee. Bring shoes with grip.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">9</div><div class="intel-b"><strong>Sea turtle hatchlings (lucky timing)</strong><span>Aruba Turtle Conservation hosts volunteer watch sessions. Watching a hundred hatchlings scramble to the ocean is a bucket-list wildlife moment. Check <a href="https://www.arubatreasures.com/turtle-conservation" target="_blank">arubatreasures.com</a> for session dates.</span></div></div>
+<div class="intel-item nature"><div class="intel-n">10</div><div class="intel-b"><strong>Colorful reef fish at Mangel Halto</strong><span>Parrotfish, angelfish, trumpetfish, blue tangs — free snorkeling that rivals paid boat tours. The electric-blue parrotfish alone is worth the drive. Best before 10am.</span></div></div>
+</div>
+</div>
+
+<!-- PAGE 7 — KIDS' CORNER -->
+<div id="p7" class="page">
+<span class="pg-badge badge-gold">Tab 7</span>
+<div class="pg-title">Kids' Corner 🌴 Ages 5 &amp; 7</div>
+<div class="pg-desc">Fun facts for our youngest adventurers (Kai &amp; Lila, or whoever the 5 and 7 year olds are!) + a mission checklist, and kid-specific activities for the whole trip. Designed to be read WITH the kids.</div>
+
+<div class="kids-hero">
+  <h2>🌟 Secret Agent Mission: Aruba Explorer</h2>
+  <p>You're not just going on vacation — you're going on a <strong>top-secret scouting mission</strong>. Your job: complete as many challenges as possible and earn the title of <em>Official Aruba Explorer</em>.</p>
+</div>
+
+<div class="mission-box">
+  <h3>🎯 Explorer Mission Checklist</h3>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Find a divi-divi tree</strong><small>Which way does it lean? (Hint: always southwest — it's nature's compass!)</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Spot a real iguana</strong><small>Arikok National Park has giant ones up to 4 feet long — they look like dinosaurs!</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>See a flamingo up close</strong><small>Renaissance Island has real pink flamingos that walk right up to you</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Swim at Baby Beach</strong><small>The water is so shallow you can walk out super far — perfect for little swimmers!</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Find a creature in a tide pool</strong><small>Boca Mahos on the wild coast has crabs, sea urchins, and tiny fish hiding in rocks</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Spot a pelican diving for fish</strong><small>They crash into the water like a bowling ball — watch from the shore!</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Drink water from the tap</strong><small>Aruba's tap water is made from ocean water that's been cleaned — it's safe!</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Count how many different colored fish you see snorkeling</strong><small>Blue, yellow, orange, green — write down your count!</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Try a pastechi</strong><small>Aruba's most famous snack — a crispy pastry with cheese or meat inside</small></div></div>
+  <div class="mission-row"><input type="checkbox" class="mission-cb"><div class="mission-label"><strong>Watch the sunset over the ocean</strong><small>Eagle Beach faces west — the sun goes right into the water every evening!</small></div></div>
+</div>
+
+<div class="sec-label">🌊 10 Amazing Fun Facts About Aruba</div>
+
+<div class="fact-card"><div class="fact-num">1</div><div><div class="fact-title">🌳 The trees never grow straight!</div><div class="fact-body">Aruba's divi-divi trees always lean to the southwest because trade winds blow so hard, every single day. They're so reliable that sailors used them as a compass before GPS existed. Find one and check — it ALWAYS points the same way!</div></div></div>
+
+<div class="fact-card"><div class="fact-num">2</div><div><div class="fact-title">🦩 Real pink flamingos live here</div><div class="fact-body">On a nearby private island called Renaissance Island, actual flamingos walk right on the beach with people! They're tame, friendly, and will waddle right up next to you. Their pink color comes from the food they eat — shrimp!</div></div></div>
+
+<div class="fact-card"><div class="fact-num">3</div><div><div class="fact-title">🚰 Ocean water comes out of the faucet</div><div class="fact-body">Aruba gets almost no rain, so there are no rivers or lakes. Instead, a giant machine called a desalination plant sucks in seawater, removes all the salt, and pumps clean drinking water to every home and hotel. The tap water is totally safe to drink!</div></div></div>
+
+<div class="fact-card"><div class="fact-num">4</div><div><div class="fact-title">🦎 Giant lizards roam the island</div><div class="fact-body">Aruba has iguanas that can grow over 4 feet long — as long as a kindergartner! They look exactly like tiny dinosaurs. They're completely harmless and love to sunbathe on rocks. If you're very quiet and still, they'll let you get really close for a photo.</div></div></div>
+
+<div class="fact-card"><div class="fact-num">5</div><div><div class="fact-title">🏖️ The sand never burns your feet</div><div class="fact-body">Eagle Beach and Palm Beach have powdery white sand made of ground-up coral and shells. Unlike regular beach sand, it stays cool even in full sun. You can walk barefoot all day, even at noon!</div></div></div>
+
+<div class="fact-card"><div class="fact-num">6</div><div><div class="fact-title">⛵ A sunken ship lives underwater</div><div class="fact-body">During World War II, a huge German ship called the Antilla sank near Aruba. It's now 400 feet long on the ocean floor — that's longer than a football field! Colorful fish, stingrays, and even eels use it as their home now. You can snorkel over part of it.</div></div></div>
+
+<div class="fact-card"><div class="fact-num">7</div><div><div class="fact-title">🐢 Sea turtles lay eggs on the beach</div><div class="fact-body">Giant sea turtles come to Aruba's beaches in June and July — exactly when we're visiting! — to lay eggs in the sand at night. The eggs hatch about 2 months later. Volunteers called turtle guardians watch over the nests to protect them from crabs and birds.</div></div></div>
+
+<div class="fact-card"><div class="fact-num">8</div><div><div class="fact-title">🌦️ Aruba almost never gets hurricanes</div><div class="fact-body">Aruba sits in a special zone near the equator that hurricanes almost never reach. That's why the weather is almost always sunny and warm — about 82–88°F every day. It's one of the most reliably beautiful weather spots in the whole Caribbean!</div></div></div>
+
+<div class="fact-card"><div class="fact-num">9</div><div><div class="fact-title">🎨 Ancient paintings are hidden in caves</div><div class="fact-body">Over 1,000 years ago, a people called the Arawak lived in Aruba and painted pictures of animals and people on cave walls deep inside the island. Those paintings are still there today in Arikok National Park! They used natural red and black dyes that never faded.</div></div></div>
+
+<div class="fact-card"><div class="fact-num">10</div><div><div class="fact-title">🐟 Baby fish live in tree roots!</div><div class="fact-body">Mangrove trees grow right in the water and have wild tangly roots that stick out everywhere. Baby fish use those roots as their hiding spot — it's like their nursery! When the fish grow big enough, they swim out to the reef. Snorkel in Mangel Halto and peek under the roots!</div></div></div>
+
+<div class="sec-label">🌟 Best Kid Activities for Ages 5–7</div>
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-gold">🏖️</div><h3>Beach &amp; Water — Perfect for Little Ones</h3></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Baby Beach (Seroe Colorado)</span><span class="bdg bsouth">🚗 ~25 min S</span></div><div class="rest-note">The #1 beach for young kids in the Caribbean. A natural lagoon creates water so shallow and calm you can walk 200 feet out and it's still only waist-deep on a 5-year-old. Clear, warm, glassy water — snorkeling-grade visibility. No waves. Pure paradise for little swimmers.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Resort pool &amp; splash areas at Divi Phoenix</span><span class="bdg bonsite">🏨 On-site</span></div><div class="rest-note">The multiple pools at Divi Phoenix are perfect for little ones — no surf, no currents, lifeguards on deck. Great for the first and last days when travel fatigue hits the youngest travelers hardest.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Palm Beach calm water (morning)</span><span class="bdg bwalk">🚶 Walkable</span></div><div class="rest-note">Palm Beach is relatively calm in the mornings before afternoon winds pick up. Ages 5–7 can paddle in the shallows while older kids go further out. Bring a float/noodle for added safety and fun.</div></div>
+</div>
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-teal">🦎</div><h3>Wildlife &amp; Nature Moments Kids Love</h3></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Flamingo Beach (Renaissance Island day pass)</span><span class="bdg bcity">🚗 ~10 min · Oranjestad</span></div><div class="rest-note">The most memorable experience for young kids on the entire trip. Pink flamingos walk up to you — kids can feed and photograph them. Day pass (~$150/person, all-inclusive food/drinks). Book 2+ weeks ahead for summer. Completely worth it for a 5 or 7 year old.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Iguana spotting at Arikok National Park</span><span class="bdg bcity">🚗 ~20 min</span></div><div class="rest-note">Kids love the giant iguanas — they're prehistoric-looking, harmless, and often sit perfectly still for photos. Arikok also has interesting cactus landscapes, cave paintings, and (if lucky) sea turtles on the coast edge. Bring water and reef shoes.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Butterfly Farm (Palm Beach)</span><span class="bdg bnoord">🚗 5 min · Noord</span></div><div class="rest-note">Free return visits for life with original ticket (~$15 for kids). Hundreds of tropical butterflies land on you in an enclosed garden. A calm, magical 45 minutes — great for a hotter part of the day when beach time isn't ideal. 🔗 <a href="https://www.thebutterflyfarm.com" target="_blank">thebutterflyfarm.com</a></div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Tide pools at Boca Mahos (NE coast)</span><span class="bdg bcity">🚗 ~25 min</span></div><div class="rest-note">Low tide reveals dozens of pools packed with crabs, sea urchins, anemones, and tiny fish. Kids can explore rock by rock — like a natural aquarium. Wear closed-toe water shoes. Check tide charts before going: aim for within 1–2 hours of low tide.</div></div>
+</div>
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-coral">🍦</div><h3>Food Experiences Kids Will Talk About</h3></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Try a pastechi (anywhere)</span><span class="bdg ball">All ages · ~$1.50</span></div><div class="rest-note">Aruba's iconic warm pastry — crispy outside, cheesy inside. Kids universally love them. Pick one up at Pastechi House in Oranjestad or any bakery. A perfect 8am pre-beach snack.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Fresh fish at Zeerovers (with older supervision)</span><span class="bdg bsouth">🚗 ~20 min · Savaneta</span></div><div class="rest-note">Even 5 and 7 year olds can enjoy the experience — watching fishermen at the dock, eating at picnic tables on the water. Order shrimp for the little ones. It's an adventure, not just a meal.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Ice cream on Palm Beach strip (evening walk)</span><span class="bdg bwalk">🚶 Walkable</span></div><div class="rest-note">End the day with a beach walk and ice cream. Multiple spots on the strip serve tropical flavors (coconut, mango, guava). A ritual the 5 and 7 year olds will beg to repeat every night.</div></div>
 </div>
 </div>
 
