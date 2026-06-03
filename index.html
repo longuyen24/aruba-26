@@ -132,7 +132,16 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .card-dir{font-size:11.5px;color:var(--teal);font-style:italic;margin:3px 0}
 .card-src{font-size:11px;color:var(--muted)}
 .card-src a{color:var(--ocean)}
-/* SURVEY BANNER */
+/* SURVEY CTA BANNER (top-of-page, all tabs) */
+.survey-cta{background:linear-gradient(135deg,#C0392B 0%,#8E44AD 100%);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:14px;margin-bottom:0;border-bottom:3px solid rgba(0,0,0,.15)}
+.survey-cta-icon{font-size:28px;flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.survey-cta-body{flex:1;min-width:0}
+.survey-cta-body strong{display:block;font-size:14px;font-weight:700;letter-spacing:.01em;margin-bottom:2px}
+.survey-cta-body span{font-size:12px;color:rgba(255,255,255,.82);line-height:1.4}
+.survey-cta-btn{background:#fff;color:#8E44AD;border:none;border-radius:20px;padding:8px 18px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;letter-spacing:.03em}
+.survey-cta-btn:hover{background:rgba(255,255,255,.9)}
+/* SURVEY BANNER (tab 1 instructions) */
 .survey-banner{background:var(--night);color:#fff;border-radius:var(--radlg);padding:15px 18px;display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
 .sb-icon{font-size:26px;flex-shrink:0}
 .survey-banner h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;margin-bottom:4px}
@@ -388,6 +397,15 @@ details[open] .org-summary::after{transform:rotate(90deg)}
   <div class="hero-sub">17 people · 4 families · 2 vehicles · ages 5 to 85 — from a 5-year-old chasing iguanas to an 85-year-old chasing sunsets, everyone's along for the ride.</div>
 </div>
 
+<div class="survey-cta">
+  <div class="survey-cta-icon">🗳️</div>
+  <div class="survey-cta-body">
+    <strong>Survey is open — we need your ratings!</strong>
+    <span>The itinerary won't be finalized until <strong>10 family members</strong> have rated. Takes 2 minutes. Every vote shapes the trip.</span>
+  </div>
+  <button class="survey-cta-btn" onclick="showTab('p0',document.querySelectorAll('.tab-btn')[0])">Rate Now →</button>
+</div>
+
 <div class="tab-bar">
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('p0',this)">📸 Quick Rate</button>
@@ -412,7 +430,7 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div id="p0" class="page active">
 <span class="pg-badge badge-gold">Quick Rate</span>
 <div class="pg-title">Quick Rate — Photo &amp; Vibe</div>
-<div class="pg-desc">Rate 1–5 stars. One photo, one sentence — that's it. Ratings sync live with Tab 1. Full details, directions, and tips are in the next tab.</div>
+<div class="pg-desc">Rate 1–5 stars. One photo, one sentence — done. The Smart Itinerary finalizes after <strong>10 family members</strong> have rated, so the more people vote, the better it gets. Ratings sync live across tabs.</div>
 <div id="p0-grid"></div>
 <div id="custom-section-p0" class="custom-section"></div>
 </div>
@@ -441,16 +459,16 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 </div>
 
 <div class="survey-banner">
-  <div class="sb-icon">⭐</div>
+  <div class="sb-icon">📋</div>
   <div>
-    <h3>How to use this survey</h3>
-    <p>Every family member rates activities on <em>their own device</em>. Ratings auto-save in your browser — refresh is fine, they stick. Different device = fresh vote. When done, go to Tab 2 → "Copy Prompt for Claude Code" to let Claude rebuild the itinerary around your group's actual preferences.</p>
+    <h3>How this works — read before rating</h3>
+    <p>Rate each activity 1–5 stars on <em>your own device</em>. Ratings save automatically — closing the tab is fine, they stick. <strong style="color:#fff">We need 10 family members to rate before the itinerary is finalized.</strong> Every vote counts — high-rated activities get prime time slots, low-rated ones move to alternates. Takes about 2 minutes for Quick Rate (Tab 0).</p>
   </div>
 </div>
 
 <div class="filter-bar">
   <span class="filter-lbl">Filter:</span>
-  <button class="fbtn active" onclick="filt('all',this)">All (36)</button>
+  <button class="fbtn active" id="filter-all-btn" onclick="filt('all',this)">All</button>
   <button class="fbtn" onclick="filt('resort',this)">🏨 Resort</button>
   <button class="fbtn" onclick="filt('chill',this)">😌 Chill</button>
   <button class="fbtn" onclick="filt('water',this)">🌊 Water</button>
@@ -516,6 +534,14 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div class="card-src"><a href="https://www.diviresorts.com/phoenix-amenities.htm" target="_blank">diviresorts.com/phoenix-amenities</a></div></div></div>
 
 <div class="sec-label" data-cat="chill">😌 Relax &amp; Recharge — No plans, no pressure</div>
+
+<div class="act-card" data-cat="chill ladies" data-id="manchebo">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="manchebo"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Manchebo Beach — Aruba's Quietest Stretch</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg bladies">Ladies fav</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Any time · Best 7–11am before crowds build</span><span>🚗 Drive 10 min S on J.E. Irausquin Blvd · Free parking</span><span>⭐ TripAdvisor 4.7/5 — tied #1 beach in Aruba</span></div>
+<div class="card-desc">Manchebo is Aruba's widest beach — over 100 feet of uninterrupted white powder sand before the water. Almost no vendor pressure, no jet ski noise, no crowds. The beach fronting Bucuti &amp; Tara and Amsterdam Manor hotels. Perfect for early morning yoga, quiet reads, or a ladies' morning walk before Elements brunch. 10 min south of the resort, free, and completely different vibe from the Palm Beach strip.</div>
+<div class="card-dir">🚗 Drive 10 min S · Look for Bucuti &amp; Tara Resort on J.E. Irausquin Blvd · Park on roadside</div>
+<div class="card-src"><a href="https://www.tripadvisor.com/Attraction_Review-g147247-d318428-Reviews-Manchebo_Beach-Aruba.html" target="_blank">TripAdvisor 4.7/5</a></div></div></div>
 
 <div class="act-card" data-cat="chill resort" data-id="beachwalk">
 <div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="beachwalk"></div></div>
@@ -693,6 +719,22 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div class="card-desc">Most walkable evening option from resort. Pier-end beach bar, live music some nights, sunset buckets, seafood baskets, cold Balashi beers. No reservations needed. Great for arrival night, teen evenings, casual group hangouts. Under $25/pp.</div>
 <div class="card-dir">🚶 Walk 5–8 min N along beach · De Palm Pier · No car needed</div>
 <div class="card-src"><a href="https://www.bugaloe.com" target="_blank">bugaloe.com</a> · <a href="https://www.tripadvisor.com/Restaurant_Review-g488162-d2104285-Reviews-Bugaloe_Beach_Bar_Grill-Noord_Aruba.html" target="_blank">TripAdvisor 4.2</a></div></div></div>
+
+<div class="act-card" data-cat="food" data-id="pinchos">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="pinchos"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Pinchos Grill &amp; Bar — Waterfront Pier Dinner</div><div class="badge-row"><span class="bdg bmid">$$–$$$</span><span class="bdg block">⏳ Reserve ahead</span></div></div>
+<div class="card-meta"><span>⏰ Dinner from 5:30pm · Closed Monday · Reservations recommended</span><span>🚗 Drive 15 min S to Oranjestad harbor marina</span><span>⭐ TripAdvisor #2 in Aruba (4.6/5 · 3,200+ reviews)</span></div>
+<div class="card-desc">Perched on a pier over the water in Oranjestad harbor — tables literally over the sea. Caribbean-American menu: fresh grilled fish, surf-and-turf, Caribbean lobster. Outstanding sunset views looking back at the island. A local institution for 15+ years. TripAdvisor's second-highest-rated restaurant on the island — only 48 tables so book ahead. Great for a special family dinner away from the Palm Beach strip.</div>
+<div class="card-dir">🚗 Both vehicles · Oranjestad harbor marina · 15 min S from resort · Same area as Lima Bistro</div>
+<div class="card-src"><a href="https://www.tripadvisor.com/Restaurant_Review-g147247-d1154113-Reviews-Pinchos_Grill_Bar-Aruba.html" target="_blank">TripAdvisor #2 Aruba</a></div></div></div>
+
+<div class="act-card" data-cat="food ladies" data-id="elements">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="elements"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Elements Restaurant — Manchebo Beach Cabana Dining</div><div class="badge-row"><span class="bdg bladies">Ladies</span><span class="bdg bhigh">$$$</span><span class="bdg block">⏳ Reserve ahead</span></div></div>
+<div class="card-meta"><span>⏰ Breakfast 7–11am · Dinner 6–10pm · Closed Tuesday</span><span>🚗 Drive 10 min S to Manchebo Beach · Bucuti &amp; Tara Resort</span><span>⭐ Aruba Tourism Board featured restaurant · TripAdvisor Excellence Award</span></div>
+<div class="card-desc">Aruba's most romantic beachfront restaurant — open-air cabana tables with your toes near the sand, watching waves on the quietest, most serene stretch of beach on the island. Caribbean-French fusion: fresh catch, lobster bisque, island-spiced steaks. Featured by the official Aruba tourism board as a must-try dining experience. Perfect for a ladies' dinner or adult date night while the teens do their own thing. Small, intimate — reserve early.</div>
+<div class="card-dir">🚗 Drive 10 min S · Bucuti &amp; Tara Resort, Manchebo Beach · Non-guests welcome with reservation</div>
+<div class="card-src"><a href="https://www.bucuti.com/dining/elements" target="_blank">bucuti.com/dining/elements</a> · <a href="https://www.aruba.com/us/dining" target="_blank">aruba.com featured dining</a></div></div></div>
 
 <div class="sec-label" data-cat="dads">🎣 Dads' Hangout Activities</div>
 
@@ -1841,6 +1883,9 @@ const QUICK={
   yoga:      {cat:'ladies',   img:'yoga+beach+sunrise+women+outdoor',        blurb:'Morning yoga on the beach — breathe, stretch, and greet the day before anyone else is up.'},
   aloe:      {cat:'ladies',   img:'aloe+factory+natural+skincare+aruba',    blurb:'Free 45-min factory tour of Aruba\'s iconic brand — shop direct at the best prices on the island.'},
   screamingeagle:{cat:'ladies',img:'lounge+restaurant+cocktails+dramatic+night',blurb:'Tableside shows, plush lounge seating, craft cocktails — Aruba\'s most theatrical ladies\' dinner.'},
+  manchebo:  {cat:'chill',   img:'beach+white+sand+serene+quiet+tropical',   blurb:"Aruba's widest, quietest beach — soft powder sand, almost zero vendors, pure peace."},
+  elements:  {cat:'food',    img:'beachfront+restaurant+elegant+outdoor+sea', blurb:'Beachfront cabana dining on Manchebo Beach — seafood, Caribbean sunset, no shoes required.'},
+  pinchos:   {cat:'food',    img:'pier+grill+waterfront+sunset+caribbean',    blurb:'TripAdvisor #2 in Aruba — waterfront pier grill, sunset cocktails, fresh Caribbean seafood.'},
   bbq:       {cat:'resort',   img:'barbecue+grill+beach+charcoal+food',     blurb:'Resort BBQ night — everyone around the fire, zero reservations.'},
   gym:       {cat:'resort',   img:'gym+fitness+modern+equipment+workout',   blurb:'Fully equipped resort fitness center for early risers.'},
   catamaran: {cat:'water',    img:'catamaran+sailing+caribbean+blue+water', blurb:'5 hrs on the sea: WWII wreck snorkel, rope swing, open bar, all 17 together.'},
@@ -1911,6 +1956,9 @@ const PHOTO={
   yoga:       UNS+'photo-1575052814086-f385e2e2ad1b?w=600&h=400&fit=crop&q=80',
   aloe:       'https://arubaaloe.com/cdn/shop/files/2_c4099d86-6002-4da8-ae3b-d6552cdef89a.png?v=1778590448&width=600',
   screamingeagle:'https://images.squarespace-cdn.com/content/v1/5fb6941b52baf75ad0b49437/b860c0ff-db73-4807-b0d4-16a9d4f50903/se_RestaurantFront3.jpg',
+  manchebo:   'https://aruba.bynder.com/m/3ef8e60c09c7b9b4/webimage-Manchebo-Beach.png',
+  elements:   UNS+'photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=80',
+  pinchos:    UNS+'photo-1559339352-11d035aa65de?w=600&h=400&fit=crop&q=80',
   // ── Unsplash CDN (resort/chill activities without a booking source page) ─
   pool:       UNS+'photo-1530549387789-4c1017266635?w=600&h=400&fit=crop&q=80',
   tennis:     UNS+'photo-1554068865-24cecd4e34b8?w=600&h=400&fit=crop&q=80',
@@ -2228,6 +2276,8 @@ function initSync(){
 }
 
 buildQuickRateTab();buildStars();loadCustom();load();renderCustom();initVoter();syncItinerary();showLockBanner();initDayModes();
+// Update "All" filter count dynamically
+(function(){const btn=document.getElementById('filter-all-btn');if(btn){const n=document.querySelectorAll('#p1 .act-card').length;btn.textContent='All ('+n+')';}})();
 // restore manual override banner
 if(manualOverride){const b=document.getElementById('manual-banner');if(b)b.style.display='flex';}
 initDragDrop();initSync();
