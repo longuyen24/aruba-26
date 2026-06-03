@@ -13,7 +13,8 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 /* HERO */
 .hero{background:var(--night);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),var(--gold),var(--teal))}
-.hero-eye{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.hero-eye{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.wx-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:0;color:#fff;display:inline-flex;align-items:center;gap:4px;text-transform:none}
 .hero h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
 .hero-sub{font-size:13.5px;color:rgba(255,255,255,.75);margin-bottom:18px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65}
 .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
@@ -328,7 +329,7 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <body>
 
 <div class="hero">
-  <div class="hero-eye">Jun 27 – Jul 2, 2026 · Divi Aruba Phoenix Beach Resort</div>
+  <div class="hero-eye">Jun 27 – Jul 2, 2026 · Divi Aruba Phoenix Beach Resort<span id="wx-badge" class="wx-badge" style="display:none"></span></div>
   <h1>Aruba 2026 🌴</h1>
   <div class="hero-sub">17 people · 4 families · 2 vehicles · ages 5 to 85 — from a 5-year-old chasing iguanas to an 85-year-old chasing sunsets, everyone's along for the ride.</div>
   <div class="pills">
@@ -383,8 +384,9 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 
 <div class="filter-bar">
   <span class="filter-lbl">Filter:</span>
-  <button class="fbtn active" onclick="filt('all',this)">All (29)</button>
+  <button class="fbtn active" onclick="filt('all',this)">All (36)</button>
   <button class="fbtn" onclick="filt('resort',this)">🏨 Resort</button>
+  <button class="fbtn" onclick="filt('chill',this)">😌 Chill</button>
   <button class="fbtn" onclick="filt('water',this)">🌊 Water</button>
   <button class="fbtn" onclick="filt('land',this)">🏜 Land</button>
   <button class="fbtn" onclick="filt('food',this)">🍽 Food</button>
@@ -446,6 +448,50 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div class="card-meta"><span>⏰ Best 6–9am before heat</span><span>🚶 Walk 1 min</span></div>
 <div class="card-desc">State-of-the-art fitness center with floor-to-ceiling ocean views. Perfect for early-bird adults maintaining their routine. Zero conflict with beach plans if done before 9am.</div>
 <div class="card-src"><a href="https://www.diviresorts.com/phoenix-amenities.htm" target="_blank">diviresorts.com/phoenix-amenities</a></div></div></div>
+
+<div class="sec-label" data-cat="chill">😌 Relax &amp; Recharge — No plans, no pressure</div>
+
+<div class="act-card" data-cat="chill resort" data-id="beachwalk">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="beachwalk"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Palm Beach Sunset Walk (Evening Ritual)</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Best 5:30–7:00pm · Every evening</span><span>🚶 Walk straight out from resort</span></div>
+<div class="card-desc">Walk north or south along the water's edge as the sun drops into the ocean. Palm Beach faces west — perfect sunsets every single night. Ice cream carts on the strip. Kids chase waves. Adults decompress. The daily reset everyone needs between activities.</div></div></div>
+
+<div class="act-card" data-cat="chill resort" data-id="eaglemorning">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="eaglemorning"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Eagle Beach Morning Walk — Fofoti Trees + Quiet Stretch</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Best 6:30–9:00am before heat &amp; crowds</span><span>🚗 5 min drive S · or 20 min walk along beach</span></div>
+<div class="card-desc">Eagle Beach is consistently ranked the #1 beach in the Caribbean — wider, quieter, and less developed than Palm Beach. Walk 20 min south along the water's edge from the resort at sunrise. The iconic leaning fofoti trees glow in morning light. Often just a handful of people. Bring coffee from the suite.</div></div></div>
+
+<div class="act-card" data-cat="chill resort" data-id="poolnap">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="poolnap"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Pool Float + Palapa Nap — Do Absolutely Nothing</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Any time · Palapas fill by 9am — claim early</span><span>🚶 Walk 2–3 min</span></div>
+<div class="card-desc">Grab a palapa chair by 9am, float in the pool, and commit to doing nothing until someone physically moves you. Trade winds keep it cool. Wave Shack delivers drinks. This is the recovery slot between adventure days and everyone needs at least one of these — especially the 5 and 7 year olds after a big day.</div></div></div>
+
+<div class="act-card" data-cat="chill resort" data-id="hottub">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="hottub"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Resort Hot Tub + Whirlpool — Evening Wind-Down</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Best 8–10pm · After dinner · Stars above</span><span>🚶 Walk 2 min · Poolside</span></div>
+<div class="card-desc">The large outdoor hot tub is the resort's secret social hub after dinner. Adults decompress with a drink. Teens eventually wander over. Great way to bring the group back together organically after a split day without forcing a formal activity.</div></div></div>
+
+<div class="act-card" data-cat="chill resort" data-id="readingbeach">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="readingbeach"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Beach Reading + Hammock Time</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Any time · Afternoon trade winds = ideal</span><span>🚶 Walk 2–3 min to beach chairs</span></div>
+<div class="card-desc">A book, a beach chair, the sound of waves, a cold Balashi from the Wave Shack. Flamingo Beach (Renaissance) has hammocks over the water if you want the ultimate version. Some people never need more than this — the Caribbean does the rest.</div></div></div>
+
+<div class="act-card" data-cat="chill" data-id="sunrise">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="sunrise"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Sunrise Watch — East Coast or Resort Beach</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Sunrise ~6:10am in late June · Zero people out</span><span>🚗 Arikok east coast · or walk to resort beach east side</span></div>
+<div class="card-desc">Aruba's east coast (Boca Prins, Dos Playa) faces the sunrise and is completely deserted at dawn. Bring coffee. The wild, rocky Atlantic coast at first light is a completely different island than the resort strip — dramatic, quiet, and free. Even the resort's east-facing side catches it if you don't want to drive.</div></div></div>
+
+<div class="act-card" data-cat="chill" data-id="oranjestad-wander">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="oranjestad-wander"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Wander Oranjestad — No Agenda</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ 9am–1pm best · Before afternoon heat</span><span>🚗 15 min S · Free parking at harbor</span></div>
+<div class="card-desc">Dutch colonial architecture, colorful buildings, free tram, local bakeries, the harbor waterfront. No itinerary — just walk. Pick up pastechis from Pastechi House ($1.50), browse the shops, let the little ones ride the tram, find a coffee on the patio. A morning of gentle people-watching in a Caribbean town unlike any other.</div></div></div>
 
 <div class="sec-label" data-cat="water">🌊 Water &amp; Marine Activities</div>
 
@@ -1429,8 +1475,15 @@ const ACTS={
   casino:     {name:'Casino Night',                       day:0, flex:true },
   sunsetsail: {name:'Sunset Sail',                        day:0, flex:true },
   shopping:   {name:'Oranjestad Shopping',                day:0, flex:true },
-  kukoo:      {name:'Kukoo Kunuku Pub Crawl (18+)',       day:3, flex:false},
-  club:       {name:'Club / Nightlife',                   day:0, flex:true },
+  kukoo:        {name:'Kukoo Kunuku Pub Crawl (18+)',       day:3, flex:false},
+  club:         {name:'Club / Nightlife',                   day:0, flex:true },
+  beachwalk:    {name:'Palm Beach Sunset Walk',             day:0, flex:true },
+  eaglemorning: {name:'Eagle Beach Morning Walk',           day:0, flex:true },
+  poolnap:      {name:'Pool Float + Palapa Nap',            day:0, flex:true },
+  hottub:       {name:'Resort Hot Tub Evening',             day:0, flex:true },
+  readingbeach: {name:'Beach Reading + Hammock Time',       day:0, flex:true },
+  sunrise:      {name:'Sunrise Watch (East Coast)',         day:0, flex:true },
+  'oranjestad-wander':{name:'Wander Oranjestad No Agenda', day:0, flex:true },
 };
 
 // ── SMART SYNC ─────────────────────────────────────────────────────────────
@@ -1665,6 +1718,38 @@ async function autoUpdate(){
 }
 
 buildStars();load();initVoter();syncItinerary();showLockBanner();initDayModes();
+
+// Weather widget — Open-Meteo (free, no key needed), Aruba coords
+(function fetchWeather(){
+  const badge=document.getElementById('wx-badge');
+  if(!badge)return;
+  // lat/lon for Palm Beach, Aruba
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=12.56&longitude=-70.04&current=temperature_2m,weathercode,precipitation&temperature_unit=fahrenheit&timezone=America%2FAruba&forecast_days=1')
+    .then(r=>r.json())
+    .then(d=>{
+      const c=d.current;
+      const temp=Math.round(c.temperature_2m);
+      const code=c.weathercode;
+      const precip=c.precipitation;
+      // WMO weather codes → emoji + label
+      let icon,label;
+      if(code===0){icon='☀️';label='Clear'}
+      else if(code<=2){icon='⛅';label='Partly cloudy'}
+      else if(code<=3){icon='☁️';label='Overcast'}
+      else if(code<=49){icon='🌫️';label='Foggy'}
+      else if(code<=59){icon='🌦️';label='Drizzle'}
+      else if(code<=69){icon='🌧️';label='Rain'}
+      else if(code<=79){icon='❄️';label='Snow'}
+      else if(code<=84){icon='🌦️';label='Showers'}
+      else if(code<=99){icon='⛈️';label='Storms'}
+      else{icon='🌤️';label='Mixed'}
+      const rainNote=precip>0?' · Rain possible':'';
+      badge.textContent=`${icon} ${temp}°F · ${label}${rainNote}`;
+      badge.style.display='inline-flex';
+      badge.title='Current weather in Palm Beach, Aruba (Open-Meteo)';
+    })
+    .catch(()=>{}); // silently fail if offline
+})();
 (function(){document.querySelectorAll('#p4 .rest-name').forEach(function(el){var n=el.textContent.trim();var m=document.createElement('div');m.className='rest-meta';m.innerHTML='🔗 <a href="https://www.google.com/search?q='+encodeURIComponent(n+' Aruba restaurant')+'" target="_blank" rel="noopener">Hours, phone &amp; reserve ↗</a>';el.closest('.rest').appendChild(m);});})();
 </script>
 </body></html>
