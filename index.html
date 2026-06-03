@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aruba 2026 · Family of 17 · Trip Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--sand:#F7F1E4;--ocean:#0B6E8F;--ocean2:#E0F2F7;--coral:#D95C38;--coral2:#FDEEE9;--gold:#C4922A;--gold2:#FDF5DF;--teal:#1A9B86;--teal2:#E0F5F1;--night:#1C2332;--text:#252525;--muted:#6A7282;--border:#E2D9C6;--white:#fff;--bg:#FDFAF4;--purple:#6B4FAE;--purple2:#F0EAFF;--pink:#993556;--pink2:#FFE8F5;--rad:8px;--radlg:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6}
+a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
+/* HERO */
+.hero{background:var(--night);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),var(--gold),var(--teal))}
+.hero-eye{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.hero h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:18px}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,.7)}
+/* TABS */
+.tab-bar{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:2px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 16px}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:13px 18px;font-size:13px;font-weight:500;color:var(--muted);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap;transition:all .2s}
+.tab-btn.active{color:var(--ocean);border-bottom-color:var(--ocean)}
+.tab-btn:hover:not(.active){color:var(--text)}
+/* PAGES */
+.page{display:none;padding:24px 20px 60px;max-width:980px;margin:0 auto}
+.page.active{display:block}
+.pg-badge{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:var(--rad);margin-bottom:8px}
+.badge-blue{background:var(--ocean2);color:var(--ocean)}
+.badge-teal{background:var(--teal2);color:var(--teal)}
+.badge-gold{background:var(--gold2);color:var(--gold)}
+.pg-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.pg-desc{font-size:13.5px;color:var(--muted);border-left:3px solid var(--border);padding-left:12px;margin-bottom:22px;line-height:1.6}
+/* FILTER */
+.filter-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;align-items:center}
+.filter-lbl{font-size:12px;color:var(--muted);margin-right:2px}
+.fbtn{padding:5px 13px;font-size:12px;font-weight:500;border-radius:20px;border:1px solid var(--border);background:var(--white);cursor:pointer;color:var(--muted);transition:all .15s}
+.fbtn.active{background:var(--night);color:#fff;border-color:var(--night)}
+/* SCORE SUMMARY */
+.scores{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.sc-box{background:var(--white);border:1px solid var(--border);border-radius:var(--rad);padding:12px 16px;text-align:center;flex:1;min-width:90px}
+.sc-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700}
+.sc-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+/* SECTION LABELS */
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border);margin:20px 0 10px}
+/* ACTIVITY CARDS */
+.act-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radlg);margin-bottom:9px;overflow:hidden;display:flex;transition:border-color .2s}
+.act-card:hover{border-color:#aac}
+.act-card.resort-card{border-left:3px solid var(--teal)}
+.star-col{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:11px 13px;background:var(--sand);border-right:1px solid var(--border);min-width:70px;flex-shrink:0}
+.star-col .slbl{font-size:9px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;text-align:center}
+.stars-row{display:flex;gap:2px}
+.star-btn{font-size:18px;color:#ddd;cursor:pointer;background:none;border:none;padding:0;line-height:1;transition:color .12s}
+.star-btn.lit{color:#E8A020}
+.card-body{flex:1;padding:11px 13px;min-width:0}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.card-name{font-weight:600;font-size:13.5px;color:var(--text)}
+.card-name a{color:var(--ocean)}
+.badge-row{display:flex;flex-wrap:wrap;gap:3px;flex-shrink:0}
+.bdg{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:500;white-space:nowrap}
+.bfree{background:#EAF3DE;color:#3B6D11}
+.bbudget{background:#E1F5EE;color:#0F6E56}
+.bmid{background:var(--gold2);color:#7A5A0A}
+.bsplurge{background:var(--coral2);color:#9A3018}
+.bresort{background:var(--teal2);color:var(--teal)}
+.ball{background:var(--ocean2);color:var(--ocean)}
+.bteens{background:var(--purple2);color:var(--purple)}
+.badults{background:var(--gold2);color:var(--gold)}
+.bladies{background:var(--pink2);color:var(--pink)}
+.bdads{background:#E6F1FB;color:#185FA5}
+.block{background:#FFF3CD;color:#7A5A00}
+.card-meta{display:flex;flex-wrap:wrap;gap:7px;font-size:11.5px;color:var(--muted);margin-bottom:4px}
+.card-desc{font-size:13px;color:#444;line-height:1.55;margin-bottom:5px}
+.card-dir{font-size:11.5px;color:var(--teal);font-style:italic;margin:3px 0}
+.card-src{font-size:11px;color:var(--muted)}
+.card-src a{color:var(--ocean)}
+/* SURVEY BANNER */
+.survey-banner{background:var(--night);color:#fff;border-radius:var(--radlg);padding:15px 18px;display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+.sb-icon{font-size:26px;flex-shrink:0}
+.survey-banner h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;margin-bottom:4px}
+.survey-banner p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+/* ITINERARY */
+.itin-note{background:var(--gold2);border:1px solid #E8D080;border-radius:var(--rad);padding:13px;font-size:13px;color:#5A4000;margin-bottom:18px;display:flex;gap:9px}
+.checklist{background:var(--sand);border-radius:var(--radlg);padding:15px 18px;margin:15px 0}
+.checklist h4{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:10px}
+.ci{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.ci:last-child{border-bottom:none}
+.ci-n{font-weight:700;color:var(--coral);width:18px;flex-shrink:0}
+.day-card{border:1px solid var(--border);border-radius:var(--radlg);overflow:hidden;margin-bottom:14px}
+.day-head{background:var(--night);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.day-num{width:29px;height:29px;border-radius:50%;background:var(--gold);color:var(--night);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.day-info{flex:1}
+.day-info h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;margin-bottom:1px}
+.day-info p{font-size:11px;color:rgba(255,255,255,.45)}
+.day-theme{font-size:10px;padding:3px 9px;border-radius:10px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.75)}
+.slots{padding:13px 15px}
+.slot{display:flex;gap:13px;padding:8px 0;border-bottom:1px solid var(--border)}
+.slot:last-child{border-bottom:none}
+.slot-t{font-size:11.5px;font-weight:600;color:var(--ocean);min-width:72px;padding-top:2px;flex-shrink:0}
+.slot-body{flex:1}
+.slot-title{font-weight:600;font-size:13px}
+.slot-detail{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5}
+.slot-dir{font-size:11px;color:var(--teal);margin-top:2px;font-style:italic}
+.slot-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
+.stag{font-size:10.5px;padding:2px 6px;border-radius:10px}
+.sfam{background:var(--ocean2);color:var(--ocean)}
+.steen{background:var(--purple2);color:var(--purple)}
+.sadult{background:var(--gold2);color:var(--gold)}
+.sladies{background:var(--pink2);color:var(--pink)}
+.sdads{background:#E6F1FB;color:#185FA5}
+.sdinner{background:var(--coral2);color:var(--coral)}
+.sbudget{background:#EAF3DE;color:#3B6D11}
+.sfree{background:#f2f2f2;color:#555}
+.slock{background:#FFF3CD;color:#7A5A00}
+.sresort{background:var(--teal2);color:var(--teal)}
+.alt-box{background:var(--sand);border-radius:var(--rad);padding:9px 12px;margin-top:7px;font-size:12px;color:var(--muted);line-height:1.5}
+.split-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:8px}
+.split-col{background:var(--sand);border-radius:var(--rad);padding:9px 12px;font-size:12px}
+.split-title{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.split-item{padding:2px 0;color:var(--text)}
+/* CONSULTANT */
+.cons-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radlg);padding:15px;margin-bottom:11px}
+.cons-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cons-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ci-blue{background:var(--ocean2)}.ci-teal{background:var(--teal2)}.ci-gold{background:var(--gold2)}.ci-coral{background:var(--coral2)}.ci-purple{background:var(--purple2)}.ci-pink{background:var(--pink2)}
+.cons-card h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--text)}
+.cons-card p,.cons-card ul{font-size:13.5px;color:#444;line-height:1.65;margin-bottom:8px}
+.cons-card ul{margin-left:18px}
+.cons-card li{margin-bottom:5px}
+.hi{background:var(--teal2);border-left:3px solid var(--teal);border-radius:0 var(--rad) var(--rad) 0;padding:10px 13px;font-size:13px;color:#0F6E56;margin:9px 0;line-height:1.55}
+.hi b{color:var(--teal)}
+.warn{background:var(--coral2);border-left:3px solid var(--coral);border-radius:0 var(--rad) var(--rad) 0;padding:10px 13px;font-size:13px;color:var(--coral);margin:9px 0;line-height:1.55}
+.prow{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.prow:last-child{border-bottom:none}
+.pnum{width:22px;height:22px;border-radius:50%;background:var(--night);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.pname{font-weight:500;flex:1;color:var(--text)}
+.pwhy{font-size:11px;color:var(--muted)}
+.cta-btn{display:block;width:100%;padding:12px;background:var(--night);color:#fff;border:none;border-radius:var(--rad);font-size:15px;cursor:pointer;font-weight:500;text-align:center;margin:20px 0 8px;font-family:'DM Sans',sans-serif}
+@media(max-width:580px){.hero h1{font-size:26px}.split-grid{grid-template-columns:1fr}.card-meta{gap:5px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eye">Family Trip Planner · Jun 27 – Jul 2, 2026</div>
+  <h1>Aruba 🌴 Family of 17</h1>
+  <div class="hero-sub">Divi Aruba Phoenix Beach Resort · 4 families · Ages 14–55 · 2 vehicles</div>
+  <div class="pills">
+    <span class="pill">Palm Beach · Studio Suite</span>
+    <span class="pill">Budget-smart + selective splurge</span>
+    <span class="pill">Teen & college independence</span>
+    <span class="pill">No all-inclusive meals</span>
+    <span class="pill">2 vehicles</span>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('p1',this)">📋 Activities + Rate Them</button>
+    <button class="tab-btn" onclick="showTab('p2',this)">📅 Smart Itinerary</button>
+    <button class="tab-btn" onclick="showTab('p3',this)">🧭 AI Consultant</button>
+  </div>
+</div>
+
+<!-- PAGE 1 -->
+<div id="p1" class="page active">
+<span class="pg-badge badge-blue">Tab 1</span>
+<div class="pg-title">Rate Every Activity · Build Your Trip</div>
+<div class="pg-desc">Rate 1–5 stars. 1=No interest, 5=Must Do. 🔒=Locked into itinerary regardless of votes. Teal left-border=resort amenity. Ratings save in your browser automatically.</div>
+
+<div class="survey-banner">
+  <div class="sb-icon">⭐</div>
+  <div>
+    <h3>How to use this survey</h3>
+    <p>Every family member rates activities below. Locked activities (🔒) happen regardless — rate them anyway so we know enthusiasm levels. Tab 2 shows the itinerary. Share this URL with all 17 people!</p>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-lbl">Filter:</span>
+  <button class="fbtn active" onclick="filt('all',this)">All (29)</button>
+  <button class="fbtn" onclick="filt('resort',this)">🏨 Resort</button>
+  <button class="fbtn" onclick="filt('water',this)">🌊 Water</button>
+  <button class="fbtn" onclick="filt('land',this)">🏜 Land</button>
+  <button class="fbtn" onclick="filt('food',this)">🍽 Food</button>
+  <button class="fbtn" onclick="filt('night',this)">🌙 Nightlife</button>
+  <button class="fbtn" onclick="filt('ladies',this)">💅 Ladies</button>
+  <button class="fbtn" onclick="filt('dads',this)">🎣 Dads</button>
+</div>
+
+<div id="scores" class="scores" style="display:none">
+  <div class="sc-box"><div class="sc-num" id="sc-tot">0</div><div class="sc-lbl">Rated</div></div>
+  <div class="sc-box"><div class="sc-num" id="sc-5">0</div><div class="sc-lbl">Must-Dos ⭐⭐⭐⭐⭐</div></div>
+  <div class="sc-box"><div class="sc-num" id="sc-1">0</div><div class="sc-lbl">Skipping ⭐</div></div>
+  <div class="sc-box"><div class="sc-num" id="sc-avg">—</div><div class="sc-lbl">Avg score</div></div>
+</div>
+
+<div class="sec-label" data-cat="resort">🏨 Resort Amenities — Divi Phoenix · Walk Out · On-Site</div>
+
+<!-- RESORT CARDS -->
+<div class="act-card resort-card" data-cat="resort" data-id="pool">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="pool"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Two Pools + Swim-Up Bar + Palm Beach</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ 7am–10pm daily</span><span>🚶 Walk 2–3 min from lobby</span><span>⭐ TripAdvisor 8.8/10</span></div>
+<div class="card-desc">2 freshwater pools (one with children's section), swim-up bar, whirlpool, large outdoor hot tub, palapas + beach chairs on white sand. Wave Shack poolside bar. Arrive 9–10am to claim palapas. Ask for Julio at the beach stand.</div>
+<div class="card-src"><a href="https://www.diviresorts.com/phoenix-amenities.htm" target="_blank">diviresorts.com</a> · <a href="https://www.tripadvisor.com/Hotel_Review-g147249-d220235-Reviews-Divi_Aruba_Phoenix_Beach_Resort-Palm_Eagle_Beach_Aruba.html" target="_blank">TripAdvisor 8.8/10</a></div></div></div>
+
+<div class="act-card resort-card" data-cat="resort" data-id="tennis">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="tennis"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Tennis &amp; Racquetball Courts</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bfree">Free</span></div></div>
+<div class="card-meta"><span>⏰ Best 7–9am or 5–7pm (avoid midday heat)</span><span>🚶 Walk 1 min from lobby</span></div>
+<div class="card-desc">On-site courts — confirmed by RedWeek and VisitAruba. Great for early-morning 4-family tournament before beach. Bring or rent rackets. Racquetball too. Classic dads or competitive teens activity.</div>
+<div class="card-src"><a href="https://www.redweek.com/resort/P137-divi-aruba-phoenix-beach-resort" target="_blank">RedWeek · confirmed amenity</a></div></div></div>
+
+<div class="act-card resort-card" data-cat="resort" data-id="basketball">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="basketball"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Basketball Court</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bfree">Free</span><span class="bdg bteens">Teens</span></div></div>
+<div class="card-meta"><span>⏰ Best morning or evening</span><span>🚶 Walk 1 min</span></div>
+<div class="card-desc">On-site court. Teens burn energy before or after beach. 4-family tournament: which family wins? Perfect cross-family bonding, zero cost.</div>
+<div class="card-src"><a href="https://www.diviresorts.com/phoenix-amenities.htm" target="_blank">diviresorts.com/phoenix-amenities</a></div></div></div>
+
+<div class="act-card resort-card" data-cat="resort ladies" data-id="spa">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="spa"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">💅 Pure Indulgence Spa — Ladies' Group Morning</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bladies">Ladies</span><span class="bdg bsplurge">$80–150/treatment</span></div></div>
+<div class="card-meta"><span>⏰ By appointment · Call ahead for group slot</span><span>🚶 Walk 2 min — same resort property</span><span>⭐ TripAdvisor 4.8/5 · #1 spa in Aruba</span></div>
+<div class="card-desc">On-site luxury spa. Massages, facials, mani/pedi, body scrubs, hair studio. Two couples suites w/ Microsilk Hydrotherapy Jacuzzi + rain shower + steam room. Views from Eagle Beach to California Lighthouse. Book group appointment — mimosas offered on arrival. Request Angeles (body scrubs) or Francy (massages).</div>
+<div class="card-dir">🚶 Walk 2 min within resort · No car needed</div>
+<div class="card-src"><a href="https://www.purespaaruba.com" target="_blank">purespaaruba.com</a> · +1 (297) 586-6066 · <a href="https://www.tripadvisor.com/Attraction_Review-g147249-d8610583-Reviews-Pure_Indulgence_Spa-Palm_Eagle_Beach_Aruba.html" target="_blank">TripAdvisor 4.8/5</a></div></div></div>
+
+<div class="act-card resort-card" data-cat="resort food" data-id="bbq">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="bbq"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">BBQ Pavilion Night (Resort)</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bbudget">Budget</span><span class="bdg ball">All 17</span></div></div>
+<div class="card-meta"><span>⏰ Any evening</span><span>🚶 Walk 1 min from rooms</span></div>
+<div class="card-desc">Resort BBQ pavilion. Buy groceries at Ling &amp; Sons (5 min drive N in Noord — best prices on island), grill as a group. Great casual family night without restaurant logistics. All 17 together, zero friction.</div>
+<div class="card-dir">🚶 Walk 1 min on-site · Ling &amp; Sons grocery: 5 min drive N on J.E. Irausquin Blvd</div>
+<div class="card-src"><a href="https://www.diviresorts.com/phoenix-amenities.htm" target="_blank">diviresorts.com/phoenix-amenities</a></div></div></div>
+
+<div class="act-card resort-card" data-cat="resort" data-id="gym">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="gym"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Fitness Center with Ocean Views</div><div class="badge-row"><span class="bdg bresort">On-site</span><span class="bdg bfree">Free</span></div></div>
+<div class="card-meta"><span>⏰ Best 6–9am before heat</span><span>🚶 Walk 1 min</span></div>
+<div class="card-desc">State-of-the-art fitness center with floor-to-ceiling ocean views. Perfect for early-bird adults maintaining their routine. Zero conflict with beach plans if done before 9am.</div>
+<div class="card-src"><a href="https://www.diviresorts.com/phoenix-amenities.htm" target="_blank">diviresorts.com/phoenix-amenities</a></div></div></div>
+
+<div class="sec-label" data-cat="water">🌊 Water &amp; Marine Activities</div>
+
+<div class="act-card" data-cat="water" data-id="catamaran">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="catamaran"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.viator.com/tours/Aruba/Jolly-Pirates-Aruba-Sailing-Snorkeling-Tour/d28-2660JOLLYPIR" target="_blank">🔒 Catamaran Snorkel Day (Jolly Pirates / Mi Dushi)</a></div><div class="badge-row"><span class="bdg block">🔒 Day 2</span><span class="bdg bmid">$65–85/pp</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ 9am–2pm · Phoenix pickup: 8:40–8:45am</span><span>🚗 Hotel pickup included · 0 travel</span><span>⭐ TripAdvisor 4.5/5 · Viator top-10</span></div>
+<div class="card-desc">Locked Day 2. SS Antilla WWII shipwreck snorkeling (surface-accessible, all levels), Boca Catalina reef, rope swing, open bar, Caribbean music. 5 hours on the water. Only whole-group anchor activity of the trip. Book 2 boats if 17 can't fit on one.</div>
+<div class="card-dir">🚗 Hotel pickup included — meet lobby 8:35am on Day 2 (Sun Jun 28)</div>
+<div class="card-src"><a href="https://www.viator.com/tours/Aruba/Jolly-Pirates-Aruba-Sailing-Snorkeling-Tour/d28-2660JOLLYPIR" target="_blank">Viator — Jolly Pirates</a> · <a href="https://www.tripadvisor.com/Attractions-g147247-Activities-c61-Aruba.html" target="_blank">TripAdvisor snorkeling</a></div></div></div>
+
+<div class="act-card" data-cat="water land" data-id="utv">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="utv"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.viator.com/tours/Aruba/Aruba-UTV-ATV-Adventure-to-Beach-with-cliff-jumping/d28-5068ATVCLIFF" target="_blank">🔒 UTV/ATV Adventure (Cave Pool + Cliff Jumping)</a></div><div class="badge-row"><span class="bdg block">🔒 Day 3</span><span class="bdg bmid">$162/pp</span><span class="bdg bteens">Teens AM</span><span class="bdg badults">Adults PM</span></div></div>
+<div class="card-meta"><span>⏰ Phoenix AM: 8:35am pickup · PM: 2:10pm pickup</span><span>🚗 Hotel pickup included both slots</span><span>⭐ 9.8/10 · 1,746 Viator reviews · Expedia #1</span></div>
+<div class="card-desc">Locked Day 3. #1 Viator experience in Aruba. Off-road UTVs through Arikok desert → secret beach → natural cave pool → cliff jumping. Teens take AM slot independently; adults take PM slot. Same adventure, very different vibe. Very dusty — wear old clothes.</div>
+<div class="card-dir">🚗 Hotel pickup included both AM + PM slots · Phoenix listed on schedule</div>
+<div class="card-src"><a href="https://www.viator.com/tours/Aruba/Aruba-UTV-ATV-Adventure-to-Beach-with-cliff-jumping/d28-5068ATVCLIFF" target="_blank">Viator — book now</a> · <a href="https://www.tripadvisor.com/AttractionProductReview-g147247-d15305118-or490-Aruba_UTV_ATV_Adventure_to_Secret_Beach_and_Cave_Pool-Aruba.html" target="_blank">TripAdvisor 9.8/10</a></div></div></div>
+
+<div class="act-card" data-cat="water" data-id="depalm">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="depalm"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.depalm.com" target="_blank">De Palm Island — Water Park + All-Day Beach</a></div><div class="badge-row"><span class="bdg bmid">$119 adult / $95 child</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Full day 9am–5pm</span><span>🚗 Hotel pickup included · ~10 min</span><span>⭐ 8.4/10 · 307 Expedia verified · AAA recommended</span></div>
+<div class="card-desc">Water slides, pools, snorkeling reef, banana boats (age 10+, 50" min), beach volleyball. AI food + open bar included in price. Budget-controlled day — no surprise spending. Good for a mixed-energy group day.</div>
+<div class="card-src"><a href="https://www.depalm.com" target="_blank">depalm.com</a> · <a href="https://www.expedia.com/things-to-do/de-palm-island-adventure-awaits.a205568.activity-details" target="_blank">Expedia 8.4/10</a></div></div></div>
+
+<div class="act-card" data-cat="water" data-id="parasail">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="parasail"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Parasailing from Palm Beach</div><div class="badge-row"><span class="bdg bmid">$50–80/pp</span><span class="bdg bteens">Teens love it</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Daily 9am–5pm · No reservation needed</span><span>🚶 Walk 5 min N along beach to operator stands</span><span>⭐ TripAdvisor top Palm Beach water activity</span></div>
+<div class="card-desc">Solo, tandem, or triple parasail launched directly from Palm Beach. 15-min ride with full coastline views. Walk to beach operator stands — no booking needed. Easy spontaneous activity on any free afternoon.</div>
+<div class="card-src"><a href="https://www.aruba.com/us/things-to-do/on-the-water" target="_blank">aruba.com watersports</a></div></div></div>
+
+<div class="act-card" data-cat="water" data-id="arashi">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="arashi"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Arashi Beach + Fisherman's Huts (Self-Drive)</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Anytime · Best afternoon for kite/windsurf watching</span><span>🚗 Drive 15 min N from resort · near California Lighthouse</span><span>⭐ Hotels.com top beach · Expedia top-3</span></div>
+<div class="card-desc">Northwest tip, uncrowded, palapa huts, excellent snorkeling (fan corals, angelfish, blue tang). Adjacent Fisherman's Huts = world-famous kitesurfing to watch. Free. Pack a cooler. Combine with California Lighthouse on same north loop day.</div>
+<div class="card-src"><a href="https://www.expedia.com/Arashi-Beach.d6070797.Vacation-Attraction" target="_blank">Expedia · Arashi Beach</a></div></div></div>
+
+<div class="act-card" data-cat="water" data-id="mangel">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="mangel"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Mangel Halto Reef Snorkel (Self-Drive)</div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg bteens">Advanced swimmers</span></div></div>
+<div class="card-meta"><span>⏰ Best 8–11am · Calmer, clearer water</span><span>🚗 Drive 20 min S from resort</span><span>⭐ Hotels.com top snorkel spot · Kayak guide</span></div>
+<div class="card-desc">Free reef snorkeling on the south coast. Rich corals, sea turtles, dense fish. No tour needed — just drive with own gear. Combine with Zeerovers lunch (10 min N). Teens love the maze-like reef corridors.</div>
+<div class="card-src"><a href="https://hotels.com/go/aruba-things-to-do" target="_blank">Hotels.com Aruba guide</a></div></div></div>
+
+<div class="act-card" data-cat="water" data-id="flamingo">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="flamingo"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.viator.com/tours/Aruba/Flamingo-Beach/d28" target="_blank">Flamingo Beach — Renaissance Island Day Pass</a></div><div class="badge-row"><span class="bdg bmid">~$100+/pp day pass</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ 9am–5pm · Buy pass at Renaissance Marina front desk</span><span>🚗 Drive 15 min S to Oranjestad · boat from marina</span><span>⭐ TimeOut #2 pick · massive social media</span></div>
+<div class="card-desc">Private island via boat from Renaissance Marina. Free-roaming flamingos, hammocks over water, adults-only + family zones, bar. Most Instagrammed spot in Aruba. Great social media content for teens. Day passes for non-hotel guests at marina front desk.</div>
+<div class="card-src"><a href="https://www.timeout.com/aruba/things-to-do/best-things-to-do-in-aruba" target="_blank">TimeOut Aruba #2 pick</a></div></div></div>
+
+<div class="sec-label" data-cat="land">🏜 Land &amp; Sightseeing</div>
+
+<div class="act-card" data-cat="land" data-id="jeep">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="jeep"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.viator.com/tours/Aruba/Natural-Pool-and-Indian-Cave-Safari-by-Jeep/d28-2660JEEPCAVE" target="_blank">Arikok National Park Jeep Safari + Natural Pool</a></div><div class="badge-row"><span class="bdg bbudget">$84–89/pp</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Half-day 9am–1pm · Hotel pickup included</span><span>🚗 Hotel pickup from Divi Phoenix</span><span>⭐ 9.4/10 · 265 Viator reviews · Lonely Planet top pick</span></div>
+<div class="card-desc">Guided Jeep through Arikok (20% of island). Fontein Cave petroglyphs, cactus highlands, Natural Pool "Conchi" (waves crash into volcanic basin). Very bumpy — thrilling. Best guide: Arnold at Fofoti Tours. Combine with Zeerovers + Baby Beach on same south-island day.</div>
+<div class="card-dir">🚗 Hotel pickup from Divi Phoenix · covers northeast + east island</div>
+<div class="card-src"><a href="https://www.viator.com/tours/Aruba/Natural-Pool-and-Indian-Cave-Safari-by-Jeep/d28-2660JEEPCAVE" target="_blank">Viator — Jeep Tour</a> · <a href="https://www.tripadvisor.com/AttractionProductReview-g488162-d24152871-Aruba_Signature_Jeep_Tour_Natural_Pool_and_Baby_Beach-Noord_Aruba.html" target="_blank">TripAdvisor · Arnold/Fofoti Tours</a></div></div></div>
+
+<div class="act-card" data-cat="land" data-id="lighthouse">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="lighthouse"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.tripadvisor.com/Attraction_Review-g147247-d147447-Reviews-California_Lighthouse-Aruba.html" target="_blank">California Lighthouse + Arashi Beach Combo</a></div><div class="badge-row"><span class="bdg bfree">Free</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Open daily · Best at sunset</span><span>🚗 Drive 15 min N from resort</span><span>⭐ TripAdvisor 4.0/5 · every must-see list</span></div>
+<div class="card-desc">Iconic northwest-tip lighthouse — 360° panoramic island views. Named after SS California shipwreck. Free to visit, best group photo spot. Combine with Arashi Beach (adjacent) + Fisherman's Huts on same north loop day.</div>
+<div class="card-src"><a href="https://www.tripadvisor.com/Attraction_Review-g147247-d147447-Reviews-California_Lighthouse-Aruba.html" target="_blank">TripAdvisor 4.0/5</a></div></div></div>
+
+<div class="act-card" data-cat="land" data-id="casibari">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="casibari"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Casibari Rocks + Donkey Sanctuary + Butterfly Farm</div><div class="badge-row"><span class="bdg bfree">Free / $15 Butterfly</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Butterfly Farm: 8:30am–4:30pm · Donkey: 9am–4pm</span><span>🚶 Butterfly Farm: 2 min WALK from resort! · 🚗 Casibari+Donkey: 20 min drive E</span><span>⭐ TripAdvisor 4.3/5 · Family classic</span></div>
+<div class="card-desc">Butterfly Farm is 150m from resort entrance — easiest activity of the trip. Casibari: enormous diorite boulders with steps to climb, panoramic views, Arawak petroglyphs at Ayo. Donkey Sanctuary: free-roaming donkeys (bring carrots). All cheap or free. Teens love these more than they admit.</div>
+<div class="card-dir">🚶 Butterfly Farm: 2 min walk from resort · 🚗 Casibari + Donkey Sanctuary: 20 min drive E (inland)</div>
+<div class="card-src"><a href="https://www.tripadvisor.com/Attraction_Review-g488162-d471386-Reviews-The_Butterfly_Farm-Noord_Aruba.html" target="_blank">TripAdvisor Butterfly Farm 4.3</a> · <a href="https://www.tripadvisor.com/Attraction_Review-g147247-d148094-Reviews-Casibari_Rock_Formations-Aruba.html" target="_blank">Casibari 4.0</a></div></div></div>
+
+<div class="act-card" data-cat="land" data-id="oranjestad">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="oranjestad"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Oranjestad City Walk + Free Tram</div><div class="badge-row"><span class="bdg bfree">Free tram</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Best 9am–noon · Free tram 10am–5pm every 25 min</span><span>🚗 Drive 15 min S · OR bus from resort stop ~$2</span><span>⭐ Lonely Planet · Hotels.com · TripAdvisor 4.2</span></div>
+<div class="card-desc">Dutch colonial architecture, colorful streets. Local Market near bus terminal, Cosecha gallery (best local art + jewelry), Queen Wilhelmina Park iguanas. Free tram loops downtown. Great for adults wanting culture while teens sleep in.</div>
+<div class="card-dir">🚗 Drive 15 min S to downtown Oranjestad · Bus from resort stop: ~$2</div>
+<div class="card-src"><a href="https://www.lonelyplanet.com/aruba/oranjestad" target="_blank">Lonely Planet Oranjestad</a></div></div></div>
+
+<div class="act-card" data-cat="land ladies" data-id="horse">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="horse"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.expedia.com/things-to-do/aruba-horseback-ride-tour-to-wariruri-beach.a2195601.activity-details" target="_blank">Horseback Riding to Wariruri Beach</a></div><div class="badge-row"><span class="bdg bmid">$116/pp</span><span class="bdg bladies">Ladies</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ 1h 40min tours · Multiple daily slots</span><span>🚗 Drive 20 min N to Gold Mine Ranch area</span><span>⭐ 10/10 · 24 Expedia reviews · 9.6/10 Viator</span></div>
+<div class="card-desc">Guided ride through north coast desert to Wariruri Beach. Highest-rated land activity per Expedia (10/10). Popular ladies' group option. Well-trained horses, guides handle beginners. Beautiful coastal scenery, excellent photos.</div>
+<div class="card-dir">🚗 Drive 20 min N to Gold Mine Ranch area, northwest Aruba</div>
+<div class="card-src"><a href="https://www.expedia.com/things-to-do/aruba-horseback-ride-tour-to-wariruri-beach.a2195601.activity-details" target="_blank">Expedia 10/10</a> · <a href="https://www.visitaruba.com/things-to-do/tours-and-activities/horseback-riding/" target="_blank">VisitAruba guide</a></div></div></div>
+
+<div class="sec-label" data-cat="food">🍽 Food &amp; Dining Experiences</div>
+
+<div class="act-card" data-cat="food" data-id="zeerovers">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="zeerovers"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.tripadvisor.com/Restaurant_Review-g488164-d786682-Reviews-Zeerovers-Savaneta_Aruba.html" target="_blank">🔒 Zeerovers — Authentic Pier Fish Lunch</a></div><div class="badge-row"><span class="bdg block">🔒 Day 4</span><span class="bdg bbudget">$10–15/pp</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Wed–Sun 11am–9pm · CLOSED Mon–Tue!</span><span>🚗 Drive 20 min S · Savaneta 270</span><span>⭐ #1 local restaurant on EVERY Aruba list</span></div>
+<div class="card-desc">Locked Day 4 lunch. Fresh-caught fish by the pound fried immediately off the boat (wahoo, snapper, barracuda). Funchi, plantains, pan bati sides. Eat on the pier watching fishermen. Cash preferred. The meal every visitor talks about for years.</div>
+<div class="card-dir">🚗 Drive 20 min S from resort · Savaneta 270 · +297 584 8401 · Cash preferred</div>
+<div class="card-src"><a href="https://www.tripadvisor.com/Restaurant_Review-g488164-d786682-Reviews-Zeerovers-Savaneta_Aruba.html" target="_blank">TripAdvisor</a> · <a href="https://hotels.com/go/aruba/best-local-restaurants-aruba" target="_blank">Hotels.com #1 local</a> · <a href="https://cdn.fodors.com/world/caribbean/aruba/places/savaneta/restaurants" target="_blank">Fodor's</a></div></div></div>
+
+<div class="act-card" data-cat="food" data-id="flyfish">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="flyfish"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.tripadvisor.com/Restaurant_Review-g147247-d782590-Reviews-Flying_Fishbone-Aruba.html" target="_blank">Flying Fishbone — Adults Splurge Dinner</a></div><div class="badge-row"><span class="bdg bsplurge">$60–100/pp</span><span class="bdg badults">Adults only</span></div></div>
+<div class="card-meta"><span>⏰ Dinner only · Reserve ASAP · Request water tables</span><span>🚗 Drive or cab 20 min S · Savaneta 344 · Cab ~$40 one-way recommended</span><span>⭐ Fodor's Choice · TripAdvisor top-10 · AFAR</span></div>
+<div class="card-desc">First toes-in-the-water restaurant in Aruba (1977). Feet literally in the Caribbean Sea at your table. Fresh fish from Savaneta pier. The adults' one non-negotiable splurge night while teens do Kukoo Kunuku. Call +297 584-2506 today.</div>
+<div class="card-src"><a href="https://www.tripadvisor.com/Restaurant_Review-g147247-d782590-Reviews-Flying_Fishbone-Aruba.html" target="_blank">TripAdvisor</a> · <a href="https://cdn.fodors.com/world/caribbean/aruba/places/savaneta/restaurants" target="_blank">Fodor's Choice</a></div></div></div>
+
+<div class="act-card" data-cat="food" data-id="madame">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="madame"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.tripadvisor.com/Restaurant_Review-g488162-d785897-Reviews-Madame_Janette-Noord_Aruba.html" target="_blank">🔒 Madame Janette — Family Dinner for All 17</a></div><div class="badge-row"><span class="bdg block">🔒 Day 4</span><span class="bdg bmid">$40–55/pp</span><span class="bdg ball">All 17</span></div></div>
+<div class="card-meta"><span>⏰ Dinner · Reserve 2+ weeks ahead for 17 people</span><span>🚗 Drive 10 min N · Cunucu Abao · +297 587-0184</span><span>⭐ TripAdvisor Excellence · Fodors · ArubaP top large group</span></div>
+<div class="card-desc">Locked Day 4 dinner. Garden courtyard, spacious, international menu (seafood, steak, vegetarian). Only restaurant consistently recommended for parties of 15+. Book for exactly 17 — tell them dietary needs, request garden table. Allow 2+ hours.</div>
+<div class="card-dir">🚗 Drive 10 min N from resort · Cunucu Abao 37 · +297 587-0184</div>
+<div class="card-src"><a href="https://www.tripadvisor.com/Restaurant_Review-g488162-d785897-Reviews-Madame_Janette-Noord_Aruba.html" target="_blank">TripAdvisor</a> · <a href="https://arubapapers.com/planning-a-dinner-with-a-large-group-check-out-these-7-restaurants-that-can-accommodate-your-party/" target="_blank">ArubaP large groups</a></div></div></div>
+
+<div class="act-card" data-cat="food" data-id="lima">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="lima"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.caribjournal.com/2025/05/13/the-10-best-restaurants-in-aruba/" target="_blank">Lima Bistro — Farewell Dinner (Peruvian Fusion)</a></div><div class="badge-row"><span class="bdg bmid">$40–65/pp</span><span class="bdg ball">All ages</span></div></div>
+<div class="card-meta"><span>⏰ Dinner · Reserve ahead for group</span><span>🚗 Drive 15 min S to Oranjestad marina</span><span>⭐ Caribbean Journal #2 Best Restaurant Aruba 2025</span></div>
+<div class="card-desc">Peruvian fusion by Chef Teddy Bouroncle. Waterfront Oranjestad marina, open kitchen views, vibrant plates, great cocktails. CaribbeanJournal's #2 best restaurant 2025. Top farewell dinner option alongside Quinta del Carmen.</div>
+<div class="card-dir">🚗 Drive 15 min S to Oranjestad marina</div>
+<div class="card-src"><a href="https://www.caribjournal.com/2025/05/13/the-10-best-restaurants-in-aruba/" target="_blank">Caribbean Journal #2 · 2025</a></div></div></div>
+
+<div class="act-card" data-cat="food" data-id="bugaloe">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="bugaloe"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.bugaloe.com" target="_blank">Bugaloe Beach Bar &amp; Grill — Walkable Casual Evenings</a></div><div class="badge-row"><span class="bdg bbudget">$15–25/pp</span><span class="bdg ball">All ages evenings</span></div></div>
+<div class="card-meta"><span>⏰ Daily noon–10pm+ · Happy hour 3–6pm</span><span>🚶 Walk 5–8 min N along beach · De Palm Pier</span><span>⭐ TripAdvisor 4.2/5</span></div>
+<div class="card-desc">Most walkable evening option from resort. Pier-end beach bar, live music some nights, sunset buckets, seafood baskets, cold Balashi beers. No reservations needed. Great for arrival night, teen evenings, casual group hangouts. Under $25/pp.</div>
+<div class="card-dir">🚶 Walk 5–8 min N along beach · De Palm Pier · No car needed</div>
+<div class="card-src"><a href="https://www.bugaloe.com" target="_blank">bugaloe.com</a> · <a href="https://www.tripadvisor.com/Restaurant_Review-g488162-d2104285-Reviews-Bugaloe_Beach_Bar_Grill-Noord_Aruba.html" target="_blank">TripAdvisor 4.2</a></div></div></div>
+
+<div class="sec-label" data-cat="dads">🎣 Dads' Hangout Activities</div>
+
+<div class="act-card" data-cat="dads" data-id="fishing">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="fishing"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.driftwoodfishingcharters.com" target="_blank">Deep Sea Fishing Charter — Dads' Day</a></div><div class="badge-row"><span class="bdg bdads">Dads</span><span class="bdg bmid">$750/boat 4hr (up to 6)</span></div></div>
+<div class="card-meta"><span>⏰ Departs 7–8am daily · 4hr / 6hr / 8hr options</span><span>🚗 Drive 20 min S to Oranjestad Renaissance Marina</span><span>⭐ TripAdvisor top charter · VisitAruba #1 sport fishing</span></div>
+<div class="card-desc">Aruba has 18 sport fishing charters. Deep water just 2 miles from shore. Target: Mahi-Mahi, Blue/White Marlin, Sailfish, Wahoo, Tuna, Barracuda. Driftwood Charters: 35ft Bertram or 45ft Hatteras, up to 6 per boat. Book 1–2 boats. Back by noon — ladies and teens never knew they were gone.</div>
+<div class="card-dir">🚗 Drive 20 min S from resort · Renaissance Marina, Oranjestad · L.G. Smith Blvd 9</div>
+<div class="card-src"><a href="https://www.driftwoodfishingcharters.com" target="_blank">driftwoodfishingcharters.com</a> · <a href="https://www.visitaruba.com/things-to-do/tours-and-activities/fishing-charters/" target="_blank">VisitAruba charters</a></div></div></div>
+
+<div class="act-card" data-cat="dads" data-id="golf">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="golf"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.diviresorts.com/divi-village-golf-beach-resort.htm" target="_blank">Golf — The Links at Divi Aruba (9-hole)</a></div><div class="badge-row"><span class="bdg bdads">Dads</span><span class="bdg bmid">$$</span></div></div>
+<div class="card-meta"><span>⏰ Dawn–dusk · Best early morning (cooler)</span><span>🚗 Drive 5 min S · Divi Village Golf Resort</span><span>⭐ Call 297-581-4653 to book tee time</span></div>
+<div class="card-desc">Meticulously landscaped 9-hole course at Divi Village — literally 5 minutes south of Phoenix. Pro Shop with equipment rental. Weekly tournaments. Dads sneak in an early round while everyone else sleeps in.</div>
+<div class="card-dir">🚗 Drive 5 min S · Divi Village Golf Resort · same resort group as Phoenix</div>
+<div class="card-src"><a href="https://www.diviresorts.com/dutch-village-faqs.htm" target="_blank">Divi Golf info · +297-581-4653</a></div></div></div>
+
+<div class="act-card" data-cat="dads night" data-id="casino">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="casino"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Casino Night (Dads + anyone 18+)</div><div class="badge-row"><span class="bdg bdads">Dads</span><span class="bdg bteens">18+</span><span class="bdg bmid">$$</span></div></div>
+<div class="card-meta"><span>⏰ Opens 6pm · Runs until 4am</span><span>🚶 Crystal Casino: 10 min walk N · Marriott Stellaris: 15 min walk N on strip</span><span>⭐ Aruba: "Las Vegas of the Caribbean" · 12 casinos</span></div>
+<div class="card-desc">Aruba has 12 casinos. Crystal Casino is walkable (10 min N on Palm Beach strip). Marriott Stellaris is more upscale (15 min walk). Blackjack, poker, craps, roulette, slots. Classic dads' evening while ladies do sunset sail and teens do their thing.</div>
+<div class="card-dir">🚶 Crystal Casino: 10 min walk N · Marriott Stellaris: 15 min walk N · No car needed</div>
+<div class="card-src"><a href="https://www.aruba.com/us/things-to-do/nightlife" target="_blank">aruba.com nightlife + casinos</a></div></div></div>
+
+<div class="sec-label" data-cat="ladies">💅 Ladies' Hangout Activities</div>
+
+<div class="act-card" data-cat="ladies" data-id="sunsetsail">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="sunsetsail"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.redsailsaruba.com" target="_blank">Sunset Cocktail Sail — Ladies' Evening</a></div><div class="badge-row"><span class="bdg bladies">Ladies</span><span class="bdg bmid">$60–75/pp · 2hrs</span></div></div>
+<div class="card-meta"><span>⏰ Departs 5pm · Returns ~7:30pm · Book ahead</span><span>🚶 Walk 5–10 min N to Palm Beach pier</span><span>⭐ TripAdvisor top sunset experience</span></div>
+<div class="card-desc">Red Sail Sports or Palm Pleasure catamaran sunset cruise. Open bar, snacks, Caribbean sunset. Ladies' private evening while dads do casino and teens do their thing. Walk to pier — no car needed.</div>
+<div class="card-dir">🚶 Walk 5–10 min N along beach to Palm Beach pier · No car needed</div>
+<div class="card-src"><a href="https://www.redsailsaruba.com" target="_blank">redsailsaruba.com</a> · <a href="https://www.tripadvisor.com/Attractions-g147247-Activities-c55-Aruba.html" target="_blank">TripAdvisor sunset cruises</a></div></div></div>
+
+<div class="act-card" data-cat="ladies" data-id="shopping">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="shopping"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Oranjestad Shopping + Lima Bistro Lunch — Ladies' Morning</div><div class="badge-row"><span class="bdg bladies">Ladies</span><span class="bdg bbudget">$–$$</span></div></div>
+<div class="card-meta"><span>⏰ Morning 9am–1pm · Most shops open 9am</span><span>🚗 Vehicle 2 · Drive 15 min S to Oranjestad</span><span>⭐ Lonely Planet · Hotels.com top shopping</span></div>
+<div class="card-desc">Vehicle 2 ladies' morning: Dutch colonial shopping streets (Renaissance Mall, Royal Plaza, Paseo Herencia), Cosecha gallery (best local art + jewelry — not tourist trinkets). Finish at Lima Bistro or The West Deck for waterfront lunch. While dads fish/golf and teens sleep in.</div>
+<div class="card-dir">🚗 Vehicle 2 → Drive 15 min S to Oranjestad · Park near Renaissance Marina</div>
+<div class="card-src"><a href="https://www.lonelyplanet.com/aruba/oranjestad" target="_blank">Lonely Planet Oranjestad guide</a></div></div></div>
+
+<div class="sec-label" data-cat="night">🌙 Nightlife &amp; Evening Activities</div>
+
+<div class="act-card" data-cat="night" data-id="kukoo">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="kukoo"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name"><a href="https://www.kukookunuku.com" target="_blank">🔒 Kukoo Kunuku Pub Krawl — Young Adults 18+</a></div><div class="badge-row"><span class="bdg block">🔒 Day 3</span><span class="bdg bteens">18+ enforced</span><span class="bdg bmid">$55/pp</span></div></div>
+<div class="card-meta"><span>⏰ Pickup 8:30pm · Home by midnight · Hotel pickup included</span><span>🚗 Hotel pickup from Divi Phoenix · 0 travel logistics</span><span>⭐ TripAdvisor 4.5/5 · Fodor's top nightlife · 25yr institution</span></div>
+<div class="card-desc">Locked Day 3 (young adults). Aruba's most famous party bus — colorful open-air bus, maracas, AYCD on bus, 4 bar stops w/ complimentary shots, dancing, new friends worldwide. 18+ strictly enforced = natural clean split from teens 14–17. Call hotel upon Aruba arrival to confirm room # for pickup. Book at kukookunuku.com.</div>
+<div class="card-dir">🚗 Hotel pickup included from Divi Phoenix · Call hotel # upon arrival in Aruba</div>
+<div class="card-src"><a href="https://www.kukookunuku.com" target="_blank">kukookunuku.com</a> · <a href="https://www.tripadvisor.com/Attraction_Review-g488162-d523470-Reviews-Kukoo_Kunuku-Noord_Aruba.html" target="_blank">TripAdvisor 4.5/5</a></div></div></div>
+
+<div class="act-card" data-cat="night" data-id="club">
+<div class="star-col"><div class="slbl">My<br>Rating</div><div class="stars-row" data-id="club"></div></div>
+<div class="card-body"><div class="card-top"><div class="card-name">Hidden Nightclub / Gusto — Last Night Out</div><div class="badge-row"><span class="bdg bteens">18+ college/grads</span><span class="bdg bmid">$$ cover + drinks</span></div></div>
+<div class="card-meta"><span>⏰ Opens 10pm · Runs until 3–4am · Mon–Sat</span><span>🚗 Drive 5 min N on Palm Beach strip · OR walk 20 min N on J.E. Irausquin</span><span>⭐ Aruba.com #1 club 2025 · VisitAruba top nightlife</span></div>
+<div class="card-desc">Hidden: Aruba's hottest club 2024–25. World-class DJs, deep house + Latin rhythms, industrial-Caribbean design. Gusto: live music + DJs, Latin/international, high energy. Perfect last-night anchor for college grads. Adults do Sopranos Piano Bar or resort hot tub.</div>
+<div class="card-dir">🚗 Drive 5 min N on Palm Beach strip · OR walk 20 min N along J.E. Irausquin Blvd</div>
+<div class="card-src"><a href="https://things-to-do-in-aruba.com/aruba-nightlife/" target="_blank">Aruba Nightlife 2025 guide</a> · <a href="https://www.aruba.com/us/things-to-do/nightlife" target="_blank">aruba.com nightlife</a></div></div></div>
+
+<button class="cta-btn" onclick="calcScores();showTab('p2',document.querySelectorAll('.tab-btn')[1])">
+  📊 See My Ratings Summary → View Smart Itinerary
+</button>
+</div>
+
+<!-- PAGE 2: ITINERARY -->
+<div id="p2" class="page">
+<span class="pg-badge badge-gold">Tab 2</span>
+<div class="pg-title">Smart Itinerary · Jun 27 – Jul 2</div>
+<div class="pg-desc">Built from your ratings + consultant strategy. 🔒 = Locked regardless of votes. Alternates shown for every major slot. Split-day plans show each sub-group's vehicle and activity clearly.</div>
+<div class="itin-note"><span style="font-size:18px">💡</span><div>Rate activities in Tab 1 first. Locked activities happen regardless. Alternates are always shown in the gray boxes below each slot. The booking checklist has every phone number and link you need.</div></div>
+
+<div class="checklist">
+<h4>📋 Book These Now — Time-Sensitive</h4>
+<div class="ci"><span class="ci-n">1</span><span><strong>Catamaran Day 2</strong> · Jolly Pirates +297-586-1603 or <a href="https://www.viator.com/tours/Aruba/Jolly-Pirates-Aruba-Sailing-Snorkeling-Tour/d28-2660JOLLYPIR" target="_blank">Viator</a> · Need 17 spots or 2 boats</span></div>
+<div class="ci"><span class="ci-n">2</span><span><strong>UTV × 2 slots Day 3</strong> · AM (teens, Phoenix pickup 8:35am) + PM (adults, 2:10pm) · <a href="https://www.viator.com/tours/Aruba/Aruba-UTV-ATV-Adventure-to-Beach-with-cliff-jumping/d28-5068ATVCLIFF" target="_blank">Viator — book both</a></span></div>
+<div class="ci"><span class="ci-n">3</span><span><strong>Madame Janette for 17 (Day 4 dinner)</strong> · +297 587-0184 · Tell them 17 guests, dietary needs, garden table</span></div>
+<div class="ci"><span class="ci-n">4</span><span><strong>Flying Fishbone (Day 3, adults ~8–10 pax)</strong> · +297 584-2506 · Request water tables specifically</span></div>
+<div class="ci"><span class="ci-n">5</span><span><strong>Arikok Jeep Safari (Day 4)</strong> · Fofoti Tours guide Arnold or <a href="https://www.viator.com/tours/Aruba/Natural-Pool-and-Indian-Cave-Safari-by-Jeep/d28-2660JEEPCAVE" target="_blank">Viator</a></span></div>
+<div class="ci"><span class="ci-n">6</span><span><strong>Pure Indulgence Spa (ladies Day 3)</strong> · +1 (297) 586-6066 · Group appointment, request Angeles or Francy</span></div>
+<div class="ci"><span class="ci-n">7</span><span><strong>Kukoo Kunuku Pub Krawl (Day 3, 18+)</strong> · <a href="https://www.kukookunuku.com" target="_blank">kukookunuku.com</a> · Call hotel # upon Aruba arrival</span></div>
+<div class="ci"><span class="ci-n">8</span><span><strong>Ling &amp; Sons grocery run (Day 1 afternoon)</strong> · No booking · 5 min drive N · Budget ~$80 · Saves $300+ across trip</span></div>
+</div>
+
+<div class="day-card">
+<div class="day-head"><div class="day-num">1</div><div class="day-info"><h3>Saturday Jun 27 — Arrival Day</h3><p>Check-in 4pm · Settle in · Easy first night</p></div><div class="day-theme">Arrival</div></div>
+<div class="slots">
+<div class="slot"><div class="slot-t">4:00 PM</div><div class="slot-body"><div class="slot-title">🔒 Check-in + Grocery Run (Vehicle 1)</div><div class="slot-detail">Check into Divi Phoenix. Immediately send Vehicle 1 to Ling &amp; Sons in Noord. Stock: breakfast items (5 days), water cases, cold drinks, beer, sandwich fixings, snacks. ~$60–80. Saves $300+ across the trip.</div><div class="slot-dir">🚗 Ling &amp; Sons: 5 min drive N on J.E. Irausquin Blvd · Noord district</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag sbudget">Budget move</span><span class="stag sfam">All families</span></div></div></div>
+<div class="slot"><div class="slot-t">5–7 PM</div><div class="slot-body"><div class="slot-title">Palm Beach + Pool First Look</div><div class="slot-detail">Walk to resort beach. First Caribbean sunset together. Teens find the water. Adults find the beach bar. Everyone orients before real activities start tomorrow.</div><div class="slot-dir">🚶 Walk out from resort · 2–3 min to pool/beach · Free</div><div class="slot-tags"><span class="stag sfam">Whole group</span><span class="stag sfree">Free</span><span class="stag sresort">Resort</span></div></div></div>
+<div class="slot"><div class="slot-t">7:30 PM</div><div class="slot-body"><div class="slot-title">🔒 Welcome Dinner — Bugaloe Beach Bar &amp; Grill</div><div class="slot-detail">Easy, casual, no reservations needed. Fish baskets, cold Balashi beers, seafood. Low-stress arrival night — gets all 17 together without formal restaurant pressure.</div><div class="slot-dir">🚶 Walk 5–8 min N along beach · De Palm Pier · No car needed</div><div class="slot-tags"><span class="stag sdinner">Welcome Dinner</span><span class="stag sfam">All 17</span><span class="stag sbudget">~$15–25/pp</span></div>
+<div class="alt-box"><strong>Alt if group is exhausted from travel:</strong> Resort BBQ pavilion (walk 1 min) + Ling &amp; Sons groceries. Zero logistics, all 17 together, cheapest option of the trip.</div></div></div>
+</div></div>
+
+<div class="day-card">
+<div class="day-head"><div class="day-num">2</div><div class="day-info"><h3>Sunday Jun 28 — Big Group Water Day</h3><p>Catamaran · SS Antilla · Open bar · All 17 together</p></div><div class="day-theme">Group Anchor</div></div>
+<div class="slots">
+<div class="slot"><div class="slot-t">7:30 AM</div><div class="slot-body"><div class="slot-title">Resort Breakfast + Sunscreen Prep</div><div class="slot-detail">Use Ling &amp; Sons supplies. Everyone eats before catamaran (open bar on empty stomach = bad). Pack sunscreen, water shoes, change of clothes.</div><div class="slot-dir">🚶 Resort kitchen / dining area · Free</div><div class="slot-tags"><span class="stag sbudget">Budget breakfast</span><span class="stag sresort">Resort</span></div></div></div>
+<div class="slot"><div class="slot-t">8:35 AM</div><div class="slot-body"><div class="slot-title">🔒 Catamaran Hotel Pickup (Phoenix: 8:40–8:45am)</div><div class="slot-detail">Be in front of resort lobby at 8:35am. If booking 2 boats, coordinate same departure time.</div><div class="slot-dir">🚗 Hotel pickup included · Meet outside resort lobby · 0 cost travel</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag sfam">All 17</span></div></div></div>
+<div class="slot"><div class="slot-t">9 AM–2 PM</div><div class="slot-body"><div class="slot-title">🔒 Catamaran: SS Antilla Wreck + Reef + Rope Swing + Open Bar</div><div class="slot-detail">5 hours on the water. SS Antilla WWII shipwreck snorkeling (all levels OK). Boca Catalina reef. Rope swing. Open bar. Caribbean music. The anchor memory of the trip — every age group loves it.</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag sfam">All 17</span><span class="stag steen">Teen highlight</span><span class="stag sadult">Adult highlight</span></div></div></div>
+<div class="slot"><div class="slot-t">2–5 PM</div><div class="slot-body"><div class="slot-title">Open / Free Afternoon</div><div class="slot-detail">Everyone sun-soaked and happy. Resort pool, nap, explore. Teens rent jet skis on Palm Beach (walk 5 min N to beach operator stands). Adults have afternoon drinks at Wave Shack.</div><div class="slot-dir">🚶 Resort · Walk out to Palm Beach · Jet ski: 5 min walk N to operators</div><div class="slot-tags"><span class="stag sfree">Open time</span><span class="stag sresort">Resort</span></div>
+<div class="alt-box"><strong>Energy option for teens:</strong> Parasailing — walk 5 min N to beach operator stands. No reservation, ~$60/pp. Adults stay at pool bar.</div></div></div>
+<div class="slot"><div class="slot-t">7:30 PM</div><div class="slot-body"><div class="slot-title">Group Dinner — Giannis Restaurant or Resort BBQ</div><div class="slot-detail">Giannis: waterfront, Palm Beach, group-friendly, pasta/seafood/steak. Or resort BBQ pavilion using Ling &amp; Sons supplies for a low-key group cookout.</div><div class="slot-dir">🚗 Giannis: 5 min drive N on Palm Beach strip · OR 🚶 Resort BBQ: 1 min walk</div><div class="slot-tags"><span class="stag sdinner">Group Dinner</span><span class="stag sfam">All 17</span></div></div></div>
+</div></div>
+
+<div class="day-card">
+<div class="day-head"><div class="day-num">3</div><div class="day-info"><h3>Monday Jun 29 — The Big Split Day</h3><p>UTV Adventure · Spa · Fishing · Flying Fishbone · Kukoo Kunuku</p></div><div class="day-theme">Max Freedom</div></div>
+<div class="slots">
+<div class="slot"><div class="slot-t">7:00 AM</div><div class="slot-body"><div class="slot-title">Dads Option: Deep Sea Fishing Departs</div><div class="slot-detail">Driftwood Charters depart 7–8am from Oranjestad Renaissance Marina. 4-hour option recommended — back by noon. Up to 6 per boat.</div><div class="slot-dir">🚗 Vehicle 1 → Renaissance Marina, Oranjestad · 20 min S from resort</div><div class="slot-tags"><span class="stag sdads">Dads</span></div>
+<div class="alt-box"><strong>Dad alt:</strong> Golf at The Links at Divi Village (5 min S drive). Call 297-581-4653 for early tee time. Back by 10am.</div></div></div>
+<div class="slot"><div class="slot-t">8:35 AM</div><div class="slot-body"><div class="slot-title">🔒 Young Adults + Teens 16+: UTV Adventure — AM Slot</div><div class="slot-detail">Hotel pickup 8:35am at Phoenix. Off-road UTVs → Arikok → secret beach → natural cave pool → cliff jumping. Their independent adventure — adults NOT on this slot. Let them own it.</div><div class="slot-dir">🚗 Hotel pickup included · Meet lobby 8:30am</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag steen">Young adults / teens 16+</span></div></div></div>
+<div class="slot"><div class="slot-t">9:00 AM</div><div class="slot-body"><div class="slot-title">Ladies: Pure Indulgence Spa Group Morning</div><div class="slot-detail">Pre-booked group appointment. Arrive together, foot soak with mimosas, massages + mani/pedi. 2–3 hours. Request Angeles (body scrubs) or Francy (massages) per TripAdvisor 4.8/5.</div><div class="slot-dir">🚶 Walk 2 min within resort · Same property · No car needed</div><div class="slot-tags"><span class="stag sladies">Ladies</span></div>
+<div class="alt-box"><strong>Ladies alt if spa is full:</strong> Vehicle 2 → Oranjestad shopping + Lima Bistro lunch (15 min S drive). Equally great ladies' morning.</div></div></div>
+<div class="slot"><div class="slot-t">12:00 PM</div><div class="slot-body"><div class="slot-title">Dads + Ladies Reconvene — Resort Pool/Beach</div><div class="slot-detail">Fishing dads return from marina. Ladies post-spa glow. Everyone meets at resort pool/beach. Order from Wave Shack or use Ling &amp; Sons lunch supplies.</div><div class="slot-dir">🚶 Resort pool/beach · Walk out</div><div class="slot-tags"><span class="stag sadult">Adults chill</span><span class="stag sresort">Resort</span></div></div></div>
+<div class="slot"><div class="slot-t">2:10 PM</div><div class="slot-body"><div class="slot-title">🔒 Adults 35–55: UTV Adventure — PM Slot</div><div class="slot-detail">Adults take the PM slot while young adults get free time at resort/beach. Same caves, same cliff jump — adult pace. Hotel pickup at Phoenix 2:05–2:10pm.</div><div class="slot-dir">🚗 Hotel pickup included · Meet lobby 2:00pm</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag sadult">Adults (35–55)</span></div></div></div>
+<div class="slot"><div class="slot-t">2–6 PM</div><div class="slot-body"><div class="slot-title">Young Adults: Free Afternoon — Eagle Beach or Palm Beach</div><div class="slot-detail">After UTV, they own the afternoon. Eagle Beach (5 min S) or Palm Beach. Jet ski, volleyball, just hang. Vehicle 2 available to them.</div><div class="slot-dir">🚗 Vehicle 2 → Eagle Beach: 5 min drive S · Or walk N along Palm Beach strip</div><div class="slot-tags"><span class="stag steen">Young adults</span><span class="stag sfree">Free time</span></div></div></div>
+<div class="slot"><div class="slot-t">7 PM onwards</div><div class="slot-body"><div class="slot-title">The Big Evening Split</div>
+<div class="split-grid">
+<div class="split-col"><div class="split-title">Adults (8–10 pax)</div><div class="split-item"><strong>Flying Fishbone</strong> dinner</div><div class="split-item">Toes-in-water · sunset tables</div><div class="split-item">Cab both ways (~$40 ea.)</div><div class="split-item">+297 584-2506 · book now</div></div>
+<div class="split-col"><div class="split-title">Young Adults 18+ (~6–8 pax)</div><div class="split-item"><strong>Kukoo Kunuku Pub Krawl</strong></div><div class="split-item">Pickup 8:30pm · home midnight</div><div class="split-item">Hotel pickup included</div><div class="split-item">Call hotel # on arrival in Aruba</div></div>
+</div>
+<div class="alt-box"><strong>Teens 14–17:</strong> Bugaloe Beach Bar dinner (walkable, all-ages, 5 min N) + resort hot tub + beach walk. Set 10pm resort curfew. Two older 18+ young adults informally keep an eye out.</div>
+<div class="slot-tags"><span class="stag sdinner">Adults splurge</span><span class="stag steen">18+ night out</span></div></div></div>
+</div></div>
+
+<div class="day-card">
+<div class="day-head"><div class="day-num">4</div><div class="day-info"><h3>Tuesday Jun 30 — South Island Discovery</h3><p>Jeep Safari · Zeerovers · Baby Beach · Madame Janette</p></div><div class="day-theme">Explorer Day</div></div>
+<div class="slots">
+<div class="slot"><div class="slot-t">8:30 AM</div><div class="slot-body"><div class="slot-title">🔒 Arikok National Park Jeep Safari</div><div class="slot-detail">Guide Arnold (Fofoti Tours) picks up at resort. Fontein Cave, cactus highlands, Natural Pool "Conchi." Very bumpy — wear closed-toe shoes, bring water. Half-day 9am–1pm.</div><div class="slot-dir">🚗 Hotel pickup included from Divi Phoenix</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag sfam">Whole group</span></div>
+<div class="alt-box"><strong>If low jeep interest:</strong> Teens take both vehicles south independently (Baby Beach + San Nicolas street art). Adults do resort tennis/basketball/gym morning. Everyone meets for Zeerovers lunch.</div></div></div>
+<div class="slot"><div class="slot-t">1:00 PM</div><div class="slot-body"><div class="slot-title">🔒 Zeerovers Lunch (Savaneta Fishing Pier)</div><div class="slot-detail">Fresh-fried fish by the pound — wahoo, snapper, barracuda. Funchi + plantains sides. Cash preferred. ~$10–15/pp × 17 = ~$170–255 total. The lunch everyone talks about for years.</div><div class="slot-dir">🚗 Tour drop or own vehicles · Savaneta 270 · 20 min S from resort · +297 584 8401 · Cash</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag sfam">All 17</span><span class="stag sbudget">$10–15/pp</span></div></div></div>
+<div class="slot"><div class="slot-t">2:30–5 PM</div><div class="slot-body"><div class="slot-title">Baby Beach + Mangel Halto Snorkel (Self-Drive)</div><div class="slot-detail">10 min from Zeerovers. Baby Beach calm lagoon for beginners + non-swimmers. Mangel Halto reef (5 min further S) for advanced snorkelers. Both free. Optional: 15-min detour to San Nicolas street murals before heading back north.</div><div class="slot-dir">🚗 Both vehicles · Baby Beach: 10 min from Zeerovers · Mangel Halto: 5 min further S</div><div class="slot-tags"><span class="stag steen">Advanced: Mangel Halto</span><span class="stag sfam">Beginners: Baby Beach</span><span class="stag sfree">Free</span></div></div></div>
+<div class="slot"><div class="slot-t">7:30 PM</div><div class="slot-body"><div class="slot-title">🔒 Family Dinner — Madame Janette (All 17)</div><div class="slot-detail">Garden courtyard, 2+ hours, international menu for all tastes. Pre-booked for 17. The "whole family, all 4 families, together" defining dinner of the trip. Let the evening run long — it's worth it.</div><div class="slot-dir">🚗 Both vehicles · Cunucu Abao 37 · 10 min drive N from resort · +297 587-0184</div><div class="slot-tags"><span class="stag slock">🔒 Locked</span><span class="stag sdinner">Main Family Dinner</span><span class="stag sfam">All 17</span></div></div></div>
+</div></div>
+
+<div class="day-card">
+<div class="day-head"><div class="day-num">5</div><div class="day-info"><h3>Wednesday Jul 1 — North Loop + Farewell Evening</h3><p>Casibari · Lighthouse · Arashi · Butterfly Farm · Last night out</p></div><div class="day-theme">Scenic + Farewell</div></div>
+<div class="slots">
+<div class="slot"><div class="slot-t">7–9 AM</div><div class="slot-body"><div class="slot-title">Tennis / Basketball Tournament — 4 Families (Resort)</div><div class="slot-detail">Early morning court challenge before the heat builds. 4 families, one winner. Losers buy first round at Bugaloe tonight.</div><div class="slot-dir">🚶 Walk 1 min · Resort courts · Free · Best before 9am</div><div class="slot-tags"><span class="stag sresort">Resort</span><span class="stag sfree">Free</span><span class="stag sfam">4 families compete</span></div>
+<div class="alt-box"><strong>Alt:</strong> Lazy pool morning. Last full day — not every morning needs a plan. Let everyone set their own pace.</div></div></div>
+<div class="slot"><div class="slot-t">10 AM–1 PM</div><div class="slot-body"><div class="slot-title">North Loop: Casibari Rocks + Donkey Sanctuary</div><div class="slot-detail">Both vehicles. Casibari boulders (climb, panorama, free). Donkey Sanctuary (15 min away — bring carrot snacks, free/donation). Teens pretend not to love the donkeys. Great group photos at Casibari.</div><div class="slot-dir">🚗 Both vehicles · Casibari: 20 min E from resort (inland) · Donkey Sanctuary: 15 min further</div><div class="slot-tags"><span class="stag sfam">All ages</span><span class="stag sfree">Free</span></div></div></div>
+<div class="slot"><div class="slot-t">1:00 PM</div><div class="slot-body"><div class="slot-title">California Lighthouse + Arashi Beach Picnic</div><div class="slot-detail">Lighthouse photos + 360° views. Then 5 min to Arashi Beach — pack a cooler from Ling &amp; Sons. Palapas, snorkeling, uncrowded, no rush. Teens can rent paddleboards here.</div><div class="slot-dir">🚗 Both vehicles · Lighthouse: 15 min N from resort · Arashi Beach: adjacent to lighthouse</div><div class="slot-tags"><span class="stag sfam">All ages</span><span class="stag sfree">Free + packed lunch</span></div></div></div>
+<div class="slot"><div class="slot-t">3–5 PM</div><div class="slot-body"><div class="slot-title">Butterfly Farm (Walk from Resort — 2 min!)</div><div class="slot-detail">150m from resort entrance — the easiest activity of the trip. Tropical butterfly garden, peaceful and beautiful. Perfect late-afternoon wind-down before farewell dinner. ~$15/pp.</div><div class="slot-dir">🚶 Walk 2 min from resort · J.E. Irausquin Blvd · 150 meters · ~$15/pp</div><div class="slot-tags"><span class="stag sfam">All ages</span><span class="stag sbudget">~$15/pp</span></div></div></div>
+<div class="slot"><div class="slot-t">7:30 PM</div><div class="slot-body"><div class="slot-title">Farewell Dinner — Lima Bistro or Quinta del Carmen (All 17)</div><div class="slot-detail">Lima Bistro: Peruvian fusion, marina setting, CaribbeanJournal #2 2025. Quinta del Carmen: historic cunucu house courtyard, stunning group photo spot, Caribbean/international menu. Both need advance booking for 17.</div><div class="slot-dir">🚗 Lima Bistro: 15 min S to Oranjestad marina · Quinta del Carmen: 15 min N to Noord</div><div class="slot-tags"><span class="stag sdinner">Farewell Dinner</span><span class="stag sfam">All 17</span></div></div></div>
+<div class="slot"><div class="slot-t">After 10 PM</div><div class="slot-body"><div class="slot-title">Last Night Split</div>
+<div class="split-grid">
+<div class="split-col"><div class="split-title">Young Adults 18+</div><div class="split-item"><strong>Hidden Nightclub or Gusto</strong></div><div class="split-item">5 min drive N on strip</div><div class="split-item">Opens 10pm · party till 3am</div><div class="split-item">Vehicle 1 or rideshare</div></div>
+<div class="split-col"><div class="split-title">Adults</div><div class="split-item">Sopranos Piano Bar (walkable N)</div><div class="split-item">OR resort hot tub + nightcap</div><div class="split-item">Pack bags tonight!</div><div class="split-item">Vehicle 2 available</div></div>
+</div>
+<div class="slot-tags"><span class="stag steen">Last night out</span><span class="stag sadult">Quiet close</span></div></div></div>
+</div></div>
+
+<div class="day-card">
+<div class="day-head"><div class="day-num">6</div><div class="day-info"><h3>Thursday Jul 2 — Checkout &amp; Departure</h3><p>Check-out 10am · AUA Airport 15 min S · Queen Beatrix</p></div><div class="day-theme">Departure</div></div>
+<div class="slots">
+<div class="slot"><div class="slot-t">7–9 AM</div><div class="slot-body"><div class="slot-title">Final Beach Walk + Breakfast from Supplies</div><div class="slot-detail">Bags packed the night before. Use remaining Ling &amp; Sons supplies for breakfast. Quick Palm Beach walk for early risers. Load both vehicles before 9am.</div><div class="slot-dir">🚶 Resort beach · Walk out · Free</div></div></div>
+<div class="slot"><div class="slot-t">10:00 AM</div><div class="slot-body"><div class="slot-title">🔒 Checkout + Airport Transfer</div><div class="slot-detail">Check-out by 10am. AUA Queen Beatrix Airport is 15 min S. With 17 people + luggage, 2 vehicles = at least 2 trips. Pre-book a 15-seat van transfer in advance (~$60 flat) to do it in one go. Airport is small — arrive 2 hours early, no more needed.</div><div class="slot-dir">🚗 Both vehicles or pre-booked van · 15 min S · 10.5 km to AUA</div><div class="slot-tags"><span class="stag slock">🔒 Logistics</span><span class="stag sfam">All 17</span></div></div></div>
+</div></div>
+</div>
+
+<!-- PAGE 3: AI CONSULTANT -->
+<div id="p3" class="page">
+<span class="pg-badge badge-teal">Tab 3</span>
+<div class="pg-title">AI Travel Consultant — Full Strategic Brief</div>
+<div class="pg-desc">Deep analysis for your exact situation: 4 families, 17 people, ages 14–55, 2 vehicles, no all-inclusive, budget-smart + selective splurge, teen independence, adult recovery, ladies' time, and dads' time — all in 5 days.</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-coral">🏆</div><h3>Top 8 Priority Activities — Book Immediately</h3></div>
+<div class="prow"><div class="pnum">1</div><div class="pname">Catamaran Snorkel (Day 2)</div><div class="pwhy">Only whole-group anchor · every age group loves it simultaneously · SS Antilla + open bar</div></div>
+<div class="prow"><div class="pnum">2</div><div class="pname">UTV Adventure × 2 slots (Day 3)</div><div class="pwhy">9.8/10 Viator · teens AM, adults PM · Phoenix hotel pickup both slots</div></div>
+<div class="prow"><div class="pnum">3</div><div class="pname">Zeerovers Lunch (Day 4)</div><div class="pwhy">$10–15/pp · authentic · every list agrees · the "I was in Aruba" meal</div></div>
+<div class="prow"><div class="pnum">4</div><div class="pname">Madame Janette Dinner (Day 4)</div><div class="pwhy">Garden courtyard confirmed 17-person capacity · book this week</div></div>
+<div class="prow"><div class="pnum">5</div><div class="pname">Flying Fishbone (Day 3, adults only)</div><div class="pwhy">Adults' non-negotiable splurge · water tables rare · call today +297 584-2506</div></div>
+<div class="prow"><div class="pnum">6</div><div class="pname">Pure Indulgence Spa (ladies, Day 3)</div><div class="pwhy">On-site 2 min walk · TripAdvisor 4.8/5 · group appointment + mimosas = perfect ladies' moment</div></div>
+<div class="prow"><div class="pnum">7</div><div class="pname">Arikok Jeep Safari (Day 4)</div><div class="pwhy">Shows the other Aruba · Natural Pool is a geological wonder · Arnold at Fofoti Tours</div></div>
+<div class="prow"><div class="pnum">8</div><div class="pname">Kukoo Kunuku Pub Krawl (Day 3)</div><div class="pwhy">18+ age limit is the natural clean group split · hotel pickup · 25-year institution</div></div>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-blue">👨‍👩‍👧‍👦</div><h3>Managing 4 Families — The Real Challenge</h3></div>
+<p>The biggest risk with 17 people from 4 families isn't the island — it's decision fatigue. Multiple adults means multiple opinions, and teens add a third layer.</p>
+<div class="hi"><strong>The 3-layer rule:</strong> Every day has (1) a locked activity everyone does together — no voting, just show up. (2) a split window where sub-groups go their own way with a designated vehicle. (3) an open block where nobody owes anyone a plan.</div>
+<ul>
+<li><strong>WhatsApp group for all 17 before landing.</strong> "We're at Zeerovers, come when ready" beats phone-herding every time.</li>
+<li><strong>Each family gets input on the thing they care most about.</strong> The Tab 1 survey surfaces this before opinions collide in Aruba.</li>
+<li><strong>Never force attendance at nightlife.</strong> Adults who want to be in bed at 10pm are not ruining the trip — they're preserving it for everyone else.</li>
+<li><strong>The 14–17 teens need a loose chaperone system.</strong> Two older young adults (18+) informally keep an eye out during beach/bar evenings. Agree to this quietly in advance — nobody calls it babysitting.</li>
+</ul>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-gold">🚗</div><h3>2-Vehicle Strategy — Your Secret Weapon</h3></div>
+<div class="hi"><strong>Standing rule:</strong> Vehicle 1 = primary family vehicle (whoever planned the day). Vehicle 2 = young adults / teens when groups split. Keys are never fought over because roles are pre-assigned.</div>
+<ul>
+<li><strong>Day 1:</strong> Vehicle 1 does Ling &amp; Sons run. Vehicle 2 stays at resort.</li>
+<li><strong>Day 3 (Big Split):</strong> Vehicle 1 takes dads to marina (7am). Vehicle 2 stays for ladies + teens. By afternoon, both cars enable the 3-way split (teens free, adults UTV pickup, ladies post-spa).</li>
+<li><strong>Days 4–5:</strong> Both vehicles convoy to south/north island. Two cars = everyone fits with coolers + beach gear and no one gets separated on unfamiliar roads.</li>
+<li><strong>Fuel:</strong> Fill up at Sol/Citgo on J.E. Irausquin Blvd whenever below half-tank. Gas is inexpensive in Aruba relative to the US.</li>
+</ul>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-teal">💰</div><h3>Budget Framework — Spend Smart, Splurge Right</h3></div>
+<div class="hi"><strong>The formula:</strong> Budget breakfast every day (Ling &amp; Sons, ~$3/pp) + budget lunch 3 days (Zeerovers, Craft Coffee, $10–15/pp) + 2 group dinners mid-range (Madame Janette + Giannis, ~$45/pp) + 1 adults splurge (Flying Fishbone, ~$75/pp for 8–10 adults) = ~$100–120/pp total food over 5 days.</div>
+<ul>
+<li><strong>Grocery run Day 1:</strong> Ling &amp; Sons in Noord. Stock breakfast for 5 days + cold drinks + snacks + beer. ~$60–80 total. Saves $250+ vs. resort pricing for the same items.</li>
+<li><strong>Flying Fishbone math:</strong> $75/pp × 17 = $1,275. $75/pp × 9 adults only = $675. Split saves $600 AND gives teens their own evening (Kukoo Kunuku, ~$55/pp × 6 = $330). Net savings: $270 — plus 2 better experiences than one awkward dinner for 17.</li>
+<li><strong>Tour cost reality:</strong> UTV ($162) + Catamaran ($75) + Jeep ($89) = $326/pp for the three big tours. Budget for this first — it's what makes the trip memorable vs. just a beach vacation.</li>
+</ul>
+<div class="warn"><strong>Budget trap to avoid:</strong> Resort restaurants for every meal. PureOcean and PureBeach are lovely but expensive for 17 people daily. Reserve them for 1 special dinner max. The BBQ pavilion + Ling &amp; Sons groceries is enormous value across 5 days.</div>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-purple">🎓</div><h3>Teen &amp; Young Adult Independence Strategy</h3></div>
+<div class="hi"><strong>The independence framework:</strong> Give them Vehicle 2 on 2 designated days. A budget allocation of their own. Clear "show up" times (catamaran Day 2, both family dinners). Everything else is theirs.</div>
+<ul>
+<li><strong>UTV Adventure AM slot (Day 3):</strong> First slot is theirs alone. No parents. They cliff-jump on their own terms. This one activity does more for group bonding than anything else — they come back with their own story.</li>
+<li><strong>Baby Beach + San Nicolas road trip:</strong> Give them Vehicle 2 on an open afternoon. Zeerovers for lunch (they'll love it), Baby Beach, San Nicolas street art. Back by dinner. Classic young-adult discovers-the-island day.</li>
+<li><strong>Kukoo Kunuku (18+):</strong> Age enforcement is the tour company's job. Natural filter. The 18-year-olds feel grown up. The 14-year-olds get their own evening (beach bar, resort hot tub, basketball).</li>
+<li><strong>Hidden Nightclub (last night):</strong> The natural farewell for young adults. They close out Aruba their way. Adults do Sopranos Piano Bar or resort hot tub. Everyone wins.</li>
+</ul>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-pink">💅</div><h3>Ladies' Time + Dads' Time — Why This Matters</h3></div>
+<p>Family vacations fail when adults feel they never got their own time. 5 days is enough to give every sub-group their moment — if it's planned intentionally on Day 3.</p>
+<div class="hi"><strong>Key insight:</strong> When adults get their own time, they return to family activities with better energy. Day 3 is engineered so every sub-group does something they specifically wanted. It's the release valve that makes the whole trip work without resentment building.</div>
+<ul>
+<li><strong>Ladies' Day 3:</strong> Pure Indulgence Spa morning — on-site, 2 min walk, TripAdvisor 4.8/5. Book group appointment, mimosas on arrival, foot soak together, then individual treatment rooms. 3 hours that feel like a full day. Alt: Oranjestad shopping + Lima Bistro lunch (15 min S drive).</li>
+<li><strong>Dads' Day 3:</strong> Deep sea fishing from Oranjestad marina (20 min S), 7am departure, back by noon. $750/boat (up to 6) = ~$125/dad for an offshore Mahi-Mahi morning. Golf at The Links (5 min S) is the alternative for non-fishing dads.</li>
+<li><strong>Sunset Sail option:</strong> If ladies prefer an evening instead of morning, Red Sail Sports sunset cruise (walk 5–10 min N to Palm Beach pier, 5pm–7:30pm) is the elegant alternative. Same quality ladies' time, different time of day.</li>
+</ul>
+</div>
+
+<div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-blue">☀️</div><h3>Late June Aruba — What to Expect</h3></div>
+<ul>
+<li><strong>Weather:</strong> Average 86°F (30°C), very low humidity, constant NE trade winds. Only 20 inches of rain per year — technically "rainy season" but actual rain is extremely rare. Trade winds make it feel comfortable even at peak heat.</li>
+<li><strong>Crowds:</strong> Low-season shoulder period. Fewer cruise ships. Pool chairs more available. Prices slightly lower on tours — but book UTV + catamaran now regardless of low season.</li>
+<li><strong>Sun intensity:</strong> The trade wind disguises how strong the sun is. SPF 50+ mandatory, reapply every 2 hours on water days. Teens burn before they realize it. Palapas fill by 10am — send someone at 9am.</li>
+<li><strong>Julio:</strong> Per multiple TripAdvisor reviews, Julio at the Divi Phoenix beach stand is the person who sets up palapas. Be friendly to Julio on Day 1.</li>
+<li><strong>Resort renovations complete:</strong> Divi Phoenix confirmed all major renovations finished early 2026 — fully open, refreshed rooms and amenities. No construction concerns for your June stay.</li>
+<li><strong>Airport logistics:</strong> AUA Queen Beatrix is 15 min S. Small airport — 2 hours before flight is plenty. With 17 people + luggage in 2 vehicles, plan 2 trips or pre-book a group van (~$60 flat) to do it in one.</li>
+</ul>
+</div>
+</div>
+
+<script>
+const ratings={};
+function buildStars(){
+  document.querySelectorAll('.stars-row[data-id]').forEach(row=>{
+    const id=row.dataset.id;ratings[id]=0;
+    for(let i=1;i<=5;i++){
+      const b=document.createElement('button');
+      b.className='star-btn';b.innerHTML='★';b.dataset.v=i;
+      b.title=['','No interest','Mild interest','Would do it','Really want this','MUST DO'][i];
+      b.addEventListener('mouseenter',()=>hov(row,i));
+      b.addEventListener('mouseleave',()=>rst(row,id));
+      b.addEventListener('click',()=>setR(id,i,row));
+      row.appendChild(b);
+    }
+  });
+}
+function hov(row,v){row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<v));}
+function rst(row,id){const r=ratings[id]||0;row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<r));}
+function setR(id,v,row){ratings[id]=v;rst(row,id);calcScores();save();}
+function calcScores(){
+  const vals=Object.values(ratings).filter(v=>v>0);
+  if(!vals.length)return;
+  document.getElementById('scores').style.display='flex';
+  document.getElementById('sc-tot').textContent=vals.length;
+  document.getElementById('sc-5').textContent=vals.filter(v=>v===5).length;
+  document.getElementById('sc-1').textContent=vals.filter(v=>v===1).length;
+  document.getElementById('sc-avg').textContent=(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1)+'★';
+}
+function filt(cat,btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.act-card[data-cat]').forEach(c=>{
+    c.style.display=(cat==='all'||c.dataset.cat.split(' ').includes(cat))?'':'none';
+  });
+  document.querySelectorAll('.sec-label[data-cat]').forEach(s=>{
+    const cats=s.dataset.cat.split(' ');
+    s.style.display=(cat==='all'||cats.includes(cat))?'':'none';
+  });
+}
+function showTab(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function save(){try{localStorage.setItem('aruba26',JSON.stringify(ratings));}catch(e){}}
+function load(){
+  try{
+    const s=JSON.parse(localStorage.getItem('aruba26')||'{}');
+    Object.entries(s).forEach(([id,v])=>{
+      if(v>0){ratings[id]=v;const row=document.querySelector(`.stars-row[data-id="${id}"]`);if(row)rst(row,id);}
+    });
+    calcScores();
+  }catch(e){}
+}
+buildStars();load();
+</script>
+</body></html>
