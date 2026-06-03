@@ -15,8 +15,7 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),var(--gold),var(--teal))}
 .hero-eye{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .hero h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
-.hero-count{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.01em;margin-bottom:4px}
-.hero-sub{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:18px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6}
+.hero-sub{font-size:13.5px;color:rgba(255,255,255,.75);margin-bottom:18px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65}
 .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,.7)}
 /* TABS */
@@ -304,8 +303,7 @@ body{font-size:14px}
 <div class="hero">
   <div class="hero-eye">Jun 27 – Jul 2, 2026 · Divi Aruba Phoenix Beach Resort</div>
   <h1>Aruba 2026 🌴</h1>
-  <div class="hero-count">17 people</div>
-  <div class="hero-sub">4 families, 2 vehicles, ages 5 to 85 — from a 5-year-old chasing iguanas to an 85-year-old chasing sunsets, everyone's along for the ride.</div>
+  <div class="hero-sub">17 people · 4 families · 2 vehicles · ages 5 to 85 — from a 5-year-old chasing iguanas to an 85-year-old chasing sunsets, everyone's along for the ride.</div>
   <div class="pills">
     <span class="pill">🏖️ Palm Beach · Studio Suite</span>
     <span class="pill">💰 Budget-smart + selective splurge</span>
@@ -656,20 +654,31 @@ body{font-size:14px}
 
 <!-- CLAUDE CONNECT PANEL -->
 <div class="claude-panel">
-  <h4>🤖 Connect to Claude Code — Regenerate Itinerary from Your Ratings</h4>
-  <p>Rate activities in Tab 1. When your group is done, click below to copy a ready-to-paste prompt. Open Claude Code on your laptop, paste it, and Claude will rewrite the itinerary to match your group's actual preferences — scheduling 5-star picks into prime slots, removing 1-star activities, and flagging conflicts.</p>
-  <div class="claude-steps">
-    <b>Step 1 →</b> Everyone rates activities in Tab 1 on their own device<br>
-    <b>Step 2 →</b> Trip organizer clicks "Copy Prompt" below (reflects <em>your</em> device's ratings)<br>
-    <b>Step 3 →</b> Open Claude Code (terminal or desktop app), paste prompt, hit enter<br>
-    <b>Step 4 →</b> Claude rewrites Tab 2, commits, and the live site updates for everyone
+  <h4>🤖 Auto-Update Itinerary with Claude</h4>
+  <p>Rate activities in Tab 1, then hit <strong>Auto-Update</strong> — Claude rewrites the itinerary around your actual preferences, commits to GitHub, and the live site updates for everyone in ~90 seconds. Or copy the prompt and paste it into Claude Code manually.</p>
+
+  <!-- AUTO-UPDATE SECTION -->
+  <div id="auto-update-section">
+    <div id="pat-setup-prompt" style="display:none;background:rgba(0,0,0,.05);border-radius:8px;padding:12px;margin-bottom:12px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">⚙️ One-time setup — GitHub Token</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Create a GitHub Personal Access Token with <code>workflow</code> scope at <strong>github.com → Settings → Developer settings → Personal access tokens</strong>. Stored only in your browser.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input id="pat-input" type="password" placeholder="ghp_xxxxxxxxxxxx" style="flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;font-family:monospace">
+        <button onclick="savePat()" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:13px;cursor:pointer">Save Token</button>
+        <button onclick="cancelPatSetup()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:7px 12px;font-size:13px;cursor:pointer;color:var(--muted)">Cancel</button>
+      </div>
+    </div>
+    <div class="claude-btn-row" style="flex-wrap:wrap;gap:8px">
+      <button class="cta-claude" id="auto-update-btn" onclick="autoUpdate()" style="background:var(--teal)">⚡ Auto-Update via Claude</button>
+      <button class="cta-claude" onclick="generateClaudePrompt()" style="background:var(--purple)">📋 Copy Prompt for Claude Code</button>
+      <span id="copy-toast" class="copy-toast">✓ Copied!</span>
+    </div>
+    <div id="auto-update-status" style="display:none;margin-top:10px;font-size:12.5px;padding:10px;background:rgba(0,0,0,.05);border-radius:6px;line-height:1.6"></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px">Auto-Update requires: (1) <code>ANTHROPIC_API_KEY</code> in this repo's GitHub Secrets, (2) a GitHub token entered above. First time only.</div>
   </div>
-  <div class="claude-btn-row">
-    <button class="cta-claude" onclick="generateClaudePrompt()">📋 Copy Prompt for Claude Code</button>
-    <span id="copy-toast" class="copy-toast">✓ Copied to clipboard!</span>
-  </div>
-  <button class="lock-cta" onclick="lockItinerary()">🔒 Lock Itinerary after Claude updates it</button>
-  <div class="claude-note">💡 <strong>How ratings work:</strong> Ratings save in <em>this browser's localStorage</em> — they survive page refreshes and browser restarts on the same device. Different device = fresh slate (no account needed). There's no server involved. For best results, the trip organizer collects a verbal top-3 from each family and enters them here before generating the prompt.</div>
+
+  <button class="lock-cta" onclick="lockItinerary()" style="margin-top:10px">🔒 Lock Itinerary</button>
+  <div class="claude-note" style="margin-top:10px">💡 <strong>How ratings work:</strong> Ratings live in <em>this browser's localStorage</em> — survive refresh and restarts on the same device. Different device = fresh vote. No server, no account. The Auto-Update button sends your device's ratings to GitHub Actions, which calls Claude and pushes the updated file. Everyone sees the new itinerary after ~90 seconds.</div>
 </div>
 
 <div class="opt-bar">
@@ -1559,6 +1568,73 @@ function showLockBanner(){
   document.getElementById('lock-title').textContent='✅ Itinerary Finalized';
   document.getElementById('lock-subtitle').textContent=`Locked ${date} by ${by} · Based on group ratings · Refresh won't change it`;
   document.getElementById('lock-banner').classList.add('show');
+}
+
+// ── AUTO-UPDATE via GitHub Actions ─────────────────────────────────────────
+const REPO='longuyen24/aruba-26';
+const WORKFLOW='update-itinerary.yml';
+
+function savePat(){
+  const v=document.getElementById('pat-input').value.trim();
+  if(!v){alert('Please enter your GitHub token.');return;}
+  localStorage.setItem('aruba26_github_pat',v);
+  document.getElementById('pat-setup-prompt').style.display='none';
+  autoUpdate();
+}
+function cancelPatSetup(){
+  document.getElementById('pat-setup-prompt').style.display='none';
+}
+function setStatus(msg,color){
+  const el=document.getElementById('auto-update-status');
+  el.style.display='block';
+  el.style.color=color||'var(--text)';
+  el.innerHTML=msg;
+}
+async function autoUpdate(){
+  const pat=localStorage.getItem('aruba26_github_pat');
+  if(!pat){
+    document.getElementById('pat-setup-prompt').style.display='block';
+    return;
+  }
+  const rated=Object.entries(ratings).filter(([,v])=>v>0);
+  if(!rated.length){
+    alert('Rate some activities in Tab 1 first!');
+    return;
+  }
+  const voter=localStorage.getItem('aruba26_voter')||'the organizer';
+  const btn=document.getElementById('auto-update-btn');
+  btn.disabled=true;btn.textContent='⏳ Sending to Claude...';
+  setStatus('Triggering GitHub Actions workflow — Claude will rewrite the itinerary and push the update...','var(--ocean)');
+  try{
+    const resp=await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${WORKFLOW}/dispatches`,{
+      method:'POST',
+      headers:{'Authorization':`Bearer ${pat}`,'Content-Type':'application/json','Accept':'application/vnd.github+json'},
+      body:JSON.stringify({
+        ref:'main',
+        inputs:{
+          ratings_json:JSON.stringify(ratings),
+          voter_name:voter
+        }
+      })
+    });
+    if(resp.status===204){
+      setStatus(`✅ Workflow triggered! Claude is rewriting the itinerary on GitHub's servers.<br><br>
+        ⏱️ <strong>Check back in ~90 seconds</strong> and refresh this page — the updated itinerary will be live for all 17 people.<br><br>
+        📊 <a href="https://github.com/${REPO}/actions" target="_blank" rel="noopener">Watch it run on GitHub Actions ↗</a>`,'#1B5E20');
+      btn.textContent='✅ Triggered!';
+      setTimeout(()=>{btn.disabled=false;btn.textContent='⚡ Auto-Update via Claude';},15000);
+    } else if(resp.status===401||resp.status===403){
+      setStatus('❌ Token rejected — make sure it has <strong>workflow</strong> scope. <button onclick="localStorage.removeItem(\'aruba26_github_pat\');document.getElementById(\'pat-setup-prompt\').style.display=\'block\'" style="color:var(--coral);background:none;border:none;cursor:pointer;text-decoration:underline">Re-enter token</button>','var(--coral)');
+      btn.disabled=false;btn.textContent='⚡ Auto-Update via Claude';
+    } else {
+      const body=await resp.json().catch(()=>({}));
+      setStatus(`❌ Error ${resp.status}: ${body.message||'Unknown error'}. Make sure <code>ANTHROPIC_API_KEY</code> is set in repo Secrets.`,'var(--coral)');
+      btn.disabled=false;btn.textContent='⚡ Auto-Update via Claude';
+    }
+  }catch(e){
+    setStatus(`❌ Network error: ${e.message}`,'var(--coral)');
+    btn.disabled=false;btn.textContent='⚡ Auto-Update via Claude';
+  }
 }
 
 buildStars();load();initVoter();syncItinerary();showLockBanner();

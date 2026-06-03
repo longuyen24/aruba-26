@@ -1,0 +1,149 @@
+name: Update Itinerary with Claude
+
+on:
+  workflow_dispatch:
+    inputs:
+      ratings_json:
+        description: 'Activity ratings as JSON string'
+        required: true
+      voter_name:
+        description: 'Name of person who triggered update'
+        required: false
+        default: 'the organizer'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Call Claude API and update itinerary
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RATINGS_JSON: ${{ github.event.inputs.ratings_json }}
+          VOTER_NAME: ${{ github.event.inputs.voter_name }}
+        run: |
+          python3 << 'PYEOF'
+          import os, json, re, urllib.request, datetime
+
+          ratings = json.loads(os.environ['RATINGS_JSON'])
+          voter   = os.environ.get('VOTER_NAME', 'the organizer')
+          api_key = os.environ['ANTHROPIC_API_KEY']
+
+          ACT_NAMES = {
+            'pool':'Resort Pool + Swim-Up Bar','tennis':'Tennis & Racquetball',
+            'basketball':'Basketball Court','spa':'Pure Indulgence Spa',
+            'bbq':'Resort BBQ Night','gym':'Fitness Center',
+            'catamaran':'Catamaran Snorkel Day','utv':'UTV / ATV Adventure',
+            'depalm':'De Palm Island Water Park','parasail':'Parasailing',
+            'arashi':'Arashi Beach (self-drive)','mangel':'Mangel Halto Reef Snorkel',
+            'flamingo':'Flamingo Beach Day Pass','jeep':'Arikok Jeep Safari + Natural Pool',
+            'lighthouse':'California Lighthouse Drive','casibari':'Casibari Rocks + Butterfly Farm',
+            'oranjestad':'Oranjestad City Walk','horse':'Horseback Riding',
+            'zeerovers':'Zeerovers Pier Fish Lunch','flyfish':'Flying Fishbone Dinner',
+            'madame':'Madame Janette (all 17)','lima':'Lima Bistro Farewell Dinner',
+            'bugaloe':'Bugaloe Beach Bar','fishing':'Deep Sea Fishing Charter',
+            'golf':'Golf','casino':'Casino Night','sunsetsail':'Sunset Sail',
+            'shopping':'Oranjestad Shopping','kukoo':'Kukoo Kunuku Pub Crawl (18+)',
+            'club':'Club / Nightlife',
+          }
+
+          ACT_DAY = {
+            'spa':3,'catamaran':2,'utv':3,'fishing':3,'flyfish':3,
+            'kukoo':3,'zeerovers':4,'jeep':4,'madame':4,'lima':5,
+          }
+
+          def stars(n): return '★'*n + '☆'*(5-n)
+
+          lines = []
+          for score in [5,4,3,2,1]:
+            acts = [(k,v) for k,v in ratings.items() if v==score]
+            if acts:
+              label = {5:'MUST DO',4:'Really want',3:'Would do',2:'Mild interest',1:'Skip / No interest'}[score]
+              lines.append(f"\n{stars(score)} {label}:")
+              for k,v in acts:
+                name = ACT_NAMES.get(k, k)
+                day  = ACT_DAY.get(k)
+                suffix = f" (currently Day {day})" if day else " (flexible day)"
+                lines.append(f"  - {name}{suffix}")
+
+          ratings_text = '\n'.join(lines)
+
+          with open('index.html','r') as f:
+            html = f.read()
+
+          # Extract the p2 section for context (cap at 12k chars)
+          p2_match = re.search(r'(<div id="p2" class="page">.*?)(?=<div id="p3")', html, re.DOTALL)
+          p2_html  = (p2_match.group(1) if p2_match else '')[:12000]
+
+          today = datetime.date.today().strftime('%b %d, %Y')
+
+          prompt = f"""You are updating an Aruba 2026 family trip planner itinerary (HTML).
+
+GROUP ACTIVITY RATINGS (from Tab 1, rated by {voter} on {today}):
+{ratings_text}
+
+CURRENT TAB 2 ITINERARY HTML (the <div id="p2"> section, truncated for context):
+{p2_html}
+
+INSTRUCTIONS — return ONLY valid HTML for the complete updated <div id="p2" class="page"> element:
+1. Keep the .pg-badge, .pg-title, .pg-desc, #lock-banner, .itin-note, .checklist, options panel, and all day-card divs structurally intact.
+2. After the .itin-note div, ADD a div with class "auto-update-banner" and style "background:#E3F2FD;border:1px solid #90CAF9;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:#0D47A1" containing: "🤖 Itinerary auto-updated on {today} by {voter} based on group ratings. Changes: [list what you changed]."
+3. For each day-card: give 5-star activities the best time slots; if a 5-star flexible activity isn't in the plan, add it to the most natural slot.
+4. Move 1-star activities OUT of the main slots into their alt-box, OR add a note "(Low interest — see alt)" next to the slot title.
+5. If two 5-star activities would be on the same day, note the conflict in the banner.
+6. Do NOT change the Options panel, booking checklist structure, or CSS classes.
+7. Return the COMPLETE updated <div id="p2" class="page">...</div> — no other text before or after."""
+
+          payload = json.dumps({
+            "model": "claude-sonnet-4-6",
+            "max_tokens": 16000,
+            "messages": [{"role":"user","content": prompt}]
+          }).encode()
+
+          req = urllib.request.Request(
+            'https://api.anthropic.com/v1/messages',
+            data=payload,
+            headers={
+              'x-api-key': api_key,
+              'anthropic-version': '2023-06-01',
+              'content-type': 'application/json',
+            }
+          )
+
+          with urllib.request.urlopen(req, timeout=120) as resp:
+            result = json.loads(resp.read())
+
+          new_p2 = result['content'][0]['text'].strip()
+
+          # Validate response starts/ends with the right tags
+          if not new_p2.startswith('<div id="p2"'):
+            print("WARNING: Claude response didn't start with <div id=\"p2\"> — skipping replace")
+            print("Response preview:", new_p2[:200])
+            exit(1)
+
+          # Replace p2 section in the full HTML
+          new_html = re.sub(
+            r'<div id="p2" class="page">.*?(?=<div id="p3")',
+            new_p2 + '\n\n',
+            html,
+            count=1,
+            flags=re.DOTALL
+          )
+
+          with open('index.html','w') as f:
+            f.write(new_html)
+
+          print(f"✅ Itinerary updated successfully for {voter} on {today}")
+          PYEOF
+
+      - name: Commit and push updated itinerary
+        run: |
+          git config user.email "aruba-bot@noreply.github.com"
+          git config user.name "Aruba Trip Planner Bot"
+          git add index.html
+          git diff --staged --quiet || git commit -m "Auto-update itinerary from group ratings — ${{ github.event.inputs.voter_name }}"
+          git push
