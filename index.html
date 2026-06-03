@@ -252,6 +252,26 @@ body{font-size:14px}
 .fam-head{font-weight:700;font-size:13px;margin-bottom:5px}
 .fam-body{font-size:12px;color:var(--muted);line-height:1.65}
 @media(max-width:600px){.opt-row{grid-template-columns:70px 1fr}.grp-grid,.fam-grid{grid-template-columns:1fr}}
+/* PER-DAY MODE TABS */
+.day-mode-bar{display:flex;gap:6px;padding:8px 14px;background:var(--sand);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.dmb{padding:4px 13px;font-size:12px;border-radius:20px;border:1px solid var(--border);background:var(--white);cursor:pointer;color:var(--muted);font-weight:500;transition:all .15s;font-family:inherit}
+.dmb.active{background:var(--night);color:#fff;border-color:var(--night)}
+.dmb.dmb-budget.active{background:var(--teal);border-color:var(--teal)}
+.dmb.dmb-age.active{background:var(--purple);border-color:var(--purple)}
+.day-alt-area{padding:14px 16px;display:none}
+.da-intro{background:var(--sand);border-radius:var(--rad);padding:10px 13px;font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.55}
+.da-h{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:12px 0 7px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.da-h:first-child{margin-top:0}
+.da-row{display:grid;grid-template-columns:80px 1fr;gap:8px;padding:6px 0;font-size:12.5px;border-bottom:1px solid rgba(0,0,0,.04)}
+.da-row:last-child{border-bottom:none}
+.da-t{color:var(--ocean);font-weight:600;font-size:11.5px;padding-top:2px}
+.da-b{color:var(--text);line-height:1.55}
+.da-save{display:inline-block;background:var(--teal2);color:var(--teal);border-radius:4px;padding:1px 7px;font-size:10.5px;font-weight:700;margin-top:2px}
+.age-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:4px}
+.age-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rad);padding:10px 12px}
+.age-lbl{font-weight:700;font-size:12.5px;margin-bottom:4px}
+.age-body{font-size:12px;color:var(--muted);line-height:1.65}
+@media(max-width:560px){.da-row{grid-template-columns:64px 1fr}.age-grid{grid-template-columns:1fr}}
 /* SMART SYNC */
 .act-card.card-hot{border-color:var(--gold);box-shadow:0 0 0 2px rgba(196,146,42,.18)}
 .act-card.card-hot .star-col{background:var(--gold2)}
@@ -681,143 +701,6 @@ body{font-size:14px}
   <div class="claude-note" style="margin-top:10px">💡 <strong>How ratings work:</strong> Ratings live in <em>this browser's localStorage</em> — survive refresh and restarts on the same device. Different device = fresh vote. No server, no account. The Auto-Update button sends your device's ratings to GitHub Actions, which calls Claude and pushes the updated file. Everyone sees the new itinerary after ~90 seconds.</div>
 </div>
 
-<div class="opt-bar">
-  <span class="opt-label">View alternate plans:</span>
-  <button class="opt-btn" onclick="toggleOpt('opt-budget',this)">💰 Budget Mode</button>
-  <button class="opt-btn" onclick="toggleOpt('opt-fam',this)">👨‍👩‍👧‍👦 Split by Family</button>
-  <button class="opt-btn" onclick="toggleOpt('opt-age',this)">🎂 Split by Age Group</button>
-</div>
-
-<!-- BUDGET MODE -->
-<div id="opt-budget" class="opt-panel">
-<div class="opt-panel-head ob-budget">💰 Budget Mode — All 5 Days for ~$150–200 less per person · Same great trip, smarter spending</div>
-
-<div class="opt-day">
-<div class="opt-day-h">Day 1 · Arrival · No changes needed</div>
-<div class="opt-row"><div class="ot">4:00 PM</div><div class="od">Check-in + Ling &amp; Sons run — same as primary plan. This grocery run IS the budget play. $80 total saves $300+ across the trip.</div></div>
-<div class="opt-row"><div class="ot">7:30 PM</div><div class="od"><strong>Welcome dinner at resort BBQ pavilion</strong> — use Ling &amp; Sons supplies. Zero logistics, all 17 together. $5–8/pp vs. ~$22/pp at Bugaloe. <span class="opt-save">Save ~$240 group</span></div></div>
-</div>
-
-<div class="opt-day">
-<div class="opt-day-h">Day 2 · Skip the catamaran — free water day instead</div>
-<div class="opt-row"><div class="ot">8:00 AM</div><div class="od"><strong>Boca Catalina Beach</strong> — free, calm, crystal-clear, pelicans, shallow snorkeling. Bring resort snorkel gear. Drive 10 min N.</div></div>
-<div class="opt-row"><div class="ot">10:30 AM</div><div class="od"><strong>Mangel Halto</strong> — locals' #1 snorkeling beach. Free. Turquoise lagoon, sea horses, reef fish. Better visibility than most paid tours. Drive 20 min S.</div></div>
-<div class="opt-row"><div class="ot">1:00 PM</div><div class="od"><strong>Tres Trapi cove swim</strong> — secret local spot, free, 5 min from Mangel Halto. Float in crystal pool. Pack Ling &amp; Sons lunch. <span class="opt-save">Save $70–85/pp vs. catamaran</span></div></div>
-<div class="opt-row"><div class="ot">3:30 PM</div><div class="od">Resort pool + beach free afternoon. Same vibe as post-catamaran, zero cost.</div></div>
-<div class="opt-row"><div class="ot">7:00 PM</div><div class="od"><strong>Zeerovers</strong> — fishermen's shack dinner, $8–10/plate, cash only. The real Aruba fish experience. Drive 20 min S. <span class="opt-save">Save ~$15–20/pp vs. restaurant</span></div></div>
-</div>
-
-<div class="opt-day">
-<div class="opt-day-h">Day 3 · Replace paid tours with DIY adventure</div>
-<div class="opt-row"><div class="ot">7:30 AM</div><div class="od"><strong>Pastechi House breakfast</strong> — drive to Oranjestad, $1.50 each. Everyone gets 2-3 pastechis. Group of 17 = $50 total. <span class="opt-save">Save $170 vs. resort breakfast</span></div></div>
-<div class="opt-row"><div class="ot">9:00 AM</div><div class="od"><strong>Arikok National Park DIY</strong> — $15/pp entry, rent a car and self-guide. Quadirikiri Cave, Fontein Cave paintings, Natural Pool overlook, iguana spotting. 4 hours. <span class="opt-save">Save $65/pp vs. guided UTV</span></div></div>
-<div class="opt-row"><div class="ot">1:30 PM</div><div class="od"><strong>Baby Beach</strong> — 15 min from Arikok exit. Free. The best kid and family beach in the Caribbean. Pack Ling &amp; Sons lunch, swim for 2 hours.</div></div>
-<div class="opt-row"><div class="ot">5:00 PM</div><div class="od">Resort return. Ladies: resort spa (on-property, cheaper than external booking). Dads: resort beach bar.</div></div>
-<div class="opt-row"><div class="ot">7:00 PM</div><div class="od"><strong>Texas de Brazil or Gianni's</strong> — both on Palm Beach strip, group-friendly, walkable. ~$35–45/pp vs. Flying Fishbone $80+/pp. <span class="opt-save">Save $35–40/pp on dinner</span></div></div>
-</div>
-
-<div class="opt-day">
-<div class="opt-day-h">Day 4 · Keep the highlights, trim the add-ons</div>
-<div class="opt-row"><div class="ot">11:00 AM</div><div class="od"><strong>Zeerovers fish lunch</strong> — keep this on plan. $10/pp, best meal on the island. The one food experience worth every cent.</div></div>
-<div class="opt-row"><div class="ot">2:00 PM</div><div class="od"><strong>California Lighthouse + Alto Vista Chapel scenic drive</strong> — free. Beautiful, photogenic, no entry fee. 30 min round trip each. Better than paying for a jeep safari.</div></div>
-<div class="opt-row"><div class="ot">5:30 PM</div><div class="od"><strong>Sunset at Eagle Beach</strong> — free. Best sunset beach in the Caribbean. Bring Ling &amp; Sons drinks. The fofoti trees glow at golden hour.</div></div>
-<div class="opt-row"><div class="ot">7:30 PM</div><div class="od"><strong>Keep Madame Janette</strong> — this one IS worth the splurge for 17 together. Or substitute: resort BBQ cookout for $15/pp total. <span class="opt-save">Save $50–70/pp if you do resort BBQ</span></div></div>
-</div>
-
-<div class="opt-day">
-<div class="opt-day-h">Day 5 · Departure · No changes — beach morning is already free</div>
-<div class="opt-row"><div class="ot">All day</div><div class="od">Resort beach + pool until checkout. Eat remaining Ling &amp; Sons supplies. Airport at 2pm. Budget breakfast saves last-day costs vs. eating out.</div></div>
-<div class="opt-row"><div class="ot">Est. savings</div><div class="od"><strong>Full Budget Mode savings: $200–350 per adult, $100–150 per child.</strong> Group of 17 saves $3,000–5,000 total with no material drop in fun — the free beaches rival any paid activity.</div></div>
-</div>
-</div>
-
-<!-- FAMILY SPLITS -->
-<div id="opt-fam" class="opt-panel">
-<div class="opt-panel-head ob-fam">👨‍👩‍👧‍👦 Split by Family — Day 4 afternoon is your best "family unit" window (everyone reconvenes at 7pm for Madame Janette)</div>
-
-<div class="opt-day">
-<div class="opt-day-h">When to split · Best windows by day</div>
-<div class="opt-row"><div class="ot">Day 1</div><div class="od">Everyone together — arrival and first-night bonding. Keep as a group.</div></div>
-<div class="opt-row"><div class="ot">Day 2</div><div class="od">Catamaran fits all 17 → everyone together. Or: families split beach spots in the afternoon.</div></div>
-<div class="opt-row"><div class="ot">Day 3</div><div class="od">Already split by role (dads fishing, ladies spa, teens UTV). Families are naturally separated by activity.</div></div>
-<div class="opt-row"><div class="ot">Day 4 PM</div><div class="od"><strong>Best family split window.</strong> After Zeerovers lunch (~1pm), each family goes their own way until 6:30pm, then reunites at Madame Janette. 4 families = 4 adventures. See options below.</div></div>
-<div class="opt-row"><div class="ot">Day 5</div><div class="od">Resort beach morning — families naturally cluster by vibe. Some pack early, some live their last beach hour.</div></div>
-</div>
-
-<div class="fam-grid">
-<div class="fam-card"><div class="fam-head">🏖️ Family A — Little Ones (with ages 5 &amp; 7)</div><div class="fam-body">After Zeerovers, drive 5 min east to <strong>Baby Beach</strong> — the perfect kid lagoon. Then <strong>Red Anchor at Boca Grandi</strong> for photos. If kids have energy: short <strong>tide pool walk</strong>. Back to resort by 5pm for nap + dress-up before Madame Janette. This is the exact day-trip your youngest travelers need.</div></div>
-<div class="fam-card"><div class="fam-head">🏄 Family B — Teens &amp; Young Adults</div><div class="fam-body">After Zeerovers, drive to <strong>Arikok National Park</strong> (20 min N). Iguana spotting, Quadirikiri Cave, hike to Natural Pool overlook. Teens love having "wilderness time" without adults helicoptering. Back via <strong>Blackstone Beach</strong> detour if energy allows. Arrive at Madame Janette sun-kissed and happy.</div></div>
-<div class="fam-card"><div class="fam-head">🎨 Family C — Culture &amp; Discovery</div><div class="fam-body">After Zeerovers, head to <strong>San Nicolas</strong> (10 min south). Street murals, Cosecha Art Gallery, local vibe. Then <strong>Balashi Brewery Cold Zone</strong> for an afternoon beer (locals' spot). Oranjestad harbor walk at Waf'i Rancho before heading to dinner. Completely different Aruba than the resort strip.</div></div>
-<div class="fam-card"><div class="fam-head">🚗 Family D — Scenic &amp; Relaxed</div><div class="fam-body">After Zeerovers, drive the scenic south coast up to <strong>California Lighthouse</strong> (40 min with stops). Detour to <strong>Alto Vista Chapel</strong>. Stop at <strong>Bright Bakery in Paradera</strong> for pastries. Arrive at California Lighthouse for golden-hour views, then straight to Madame Janette. Perfect pacing for anyone who prefers beauty over adrenaline.</div></div>
-</div>
-</div>
-
-<!-- AGE GROUPS -->
-<div id="opt-age" class="opt-panel">
-<div class="opt-panel-head ob-age">🎂 Split by Age Group — Signature activities &amp; best matches for each generation in your group of 17</div>
-
-<div class="grp-grid">
-<div class="grp-card"><div class="grp-emoji">🧒</div><div class="grp-head">Ages 5–7 · Little Explorers</div><div class="grp-items"><ul>
-<li>Baby Beach (shallow lagoon, zero waves)</li>
-<li>Flamingo Beach — flamingos walk up to them</li>
-<li>Butterfly Farm — butterflies land on them</li>
-<li>Arikok iguana spotting</li>
-<li>Tide pools at Boca Mahos</li>
-<li>Evening ice cream walk on Palm Beach strip</li>
-<li>Resort pool every morning before group activities</li>
-</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 4 PM — Baby Beach + Red Anchor</div></div></div>
-
-<div class="grp-card"><div class="grp-emoji">🏄</div><div class="grp-head">Ages 14–17 · Teen Adventurers</div><div class="grp-items"><ul>
-<li>UTV AM slot (book independently — adults on PM)</li>
-<li>Jet ski from Palm Beach operators</li>
-<li>Parasailing off Palm Beach</li>
-<li>Eagle Beach volleyball + hangout</li>
-<li>Bugaloe Beach Bar (all-ages friendly)</li>
-<li>Resort basketball court evenings</li>
-<li>Casino observation (some casinos allow 18+ only — verify)</li>
-</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 3 AM — UTV adventure on their own</div></div></div>
-
-<div class="grp-card"><div class="grp-emoji">🎉</div><div class="grp-head">Ages 18–22 · Young Adults</div><div class="grp-items"><ul>
-<li>Kukoo Kunuku pub crawl (18+ strictly)</li>
-<li>Deep sea fishing charter</li>
-<li>Eagle Beach — all-day hang</li>
-<li>San Nicolas Saturday night art walk</li>
-<li>Balashi Brewery tour + Cold Zone</li>
-<li>Palm Beach bar hop (Moomba → Bugaloe → Pelican Pier)</li>
-<li>Casino evenings (Crystal Casino or Stellaris Marriott)</li>
-</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 3 evening — Kukoo Kunuku + their own night</div></div></div>
-
-<div class="grp-card"><div class="grp-emoji">🌅</div><div class="grp-head">Ages 35–55 · Active Parents</div><div class="grp-items"><ul>
-<li>UTV PM slot (adults' version — same caves, adult pace)</li>
-<li>Pure Indulgence Spa group morning</li>
-<li>Flying Fishbone — adults' splurge dinner</li>
-<li>Golf at The Links at Divi or Tierra del Sol</li>
-<li>Sunset sail (Mi Dushi or similar)</li>
-<li>Madame Janette group dinner for all 17</li>
-<li>Dads: deep sea fishing charter Day 3</li>
-</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 3 — the ultimate age-group split day</div></div></div>
-
-<div class="grp-card"><div class="grp-emoji">🌿</div><div class="grp-head">Ages 60–85 · The Seasoned Explorers</div><div class="grp-items"><ul>
-<li>Butterfly Farm — calm, beautiful, easy walking</li>
-<li>Oranjestad harbor promenade at Waf'i Rancho</li>
-<li>Zeerovers fish lunch on the pier (unforgettable)</li>
-<li>California Lighthouse scenic drive</li>
-<li>Alto Vista Chapel hilltop visit</li>
-<li>Resort beach mornings — best seats in the house</li>
-<li>Arikok NP by car (don't need to hike — drive &amp; stop)</li>
-</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 4 — scenic south coast + lighthouse loop</div></div></div>
-</div>
-
-<div class="opt-day">
-<div class="opt-day-h">How Day 3 breaks down by age group — the cleanest natural split</div>
-<div class="opt-row"><div class="ot">7:00 AM</div><div class="od"><strong>Ages 35–55 (some):</strong> Deep sea fishing departs from Oranjestad</div></div>
-<div class="opt-row"><div class="ot">8:35 AM</div><div class="od"><strong>Ages 14–22:</strong> UTV AM slot hotel pickup — teens &amp; young adults go together. Their adventure, their call.</div></div>
-<div class="opt-row"><div class="ot">9:00 AM</div><div class="od"><strong>Ladies (all ages):</strong> Pure Indulgence Spa group appointment</div></div>
-<div class="opt-row"><div class="ot">10:00 AM</div><div class="od"><strong>Ages 5–7 + Ages 60–85:</strong> Butterfly Farm — both groups love it equally. Easy 45 min, butterflies land on everyone.</div></div>
-<div class="opt-row"><div class="ot">2:10 PM</div><div class="od"><strong>Ages 35–55:</strong> UTV PM slot. Little ones nap at resort. Young adults have Eagle Beach free afternoon.</div></div>
-<div class="opt-row"><div class="ot">7:00 PM+</div><div class="od"><strong>Ages 35–55 + adults:</strong> Flying Fishbone dinner. <strong>Ages 18+:</strong> Kukoo Kunuku departs. <strong>Ages 5–17:</strong> resort evening, Bugaloe, early bedtime.</div></div>
-</div>
-</div>
 
 <div class="day-card">
 <div class="day-head"><div class="day-num">1</div><div class="day-info"><h3>Saturday Jun 27 — Arrival Day</h3><p>Check-in 4pm · Settle in · Easy first night</p></div><div class="day-theme">Arrival</div></div>
@@ -1372,6 +1255,138 @@ function load(){
     calcScores();
   }catch(e){}
 }
+// ── PER-DAY ALTERNATE PLANS ────────────────────────────────────────────────
+const DAY_ALTS={
+  1:{
+    budget:`<div class="da-intro">💰 Day 1 is already the cheapest day of the trip. One swap saves ~$290 for the group.</div>
+<div class="da-h">Evening — Swap Bugaloe for Resort BBQ</div>
+<div class="da-row"><div class="da-t">7:30 PM</div><div class="da-b"><strong>Resort BBQ pavilion</strong> — use Ling &amp; Sons groceries you already bought. Burgers, snacks, cold drinks. ~$5/pp vs $22/pp at Bugaloe. All 17 together, zero logistics. <div class="da-save">Save ~$290 group total</div></div></div>
+<div class="da-row"><div class="da-t">5–7 PM</div><div class="da-b"><strong>Everything else stays the same</strong> — grocery run, first beach look, first sunset. These are free anyway.</div></div>`,
+    age:`<div class="da-intro">🎂 Arrival day — keep it loose. Each age group has a different pace coming off a flight.</div>
+<div class="age-grid">
+<div class="age-card"><div class="age-lbl">🧒 Ages 5–7</div><div class="age-body">Bath, light dinner, in bed by 8pm. Travel days wipe little ones out. Don't fight it — they'll be ready to explode with energy tomorrow.</div></div>
+<div class="age-card"><div class="age-lbl">🏄 Ages 14–17</div><div class="age-body">Find the resort pool and beach immediately. Instagram the view. Stay up a bit later than usual — they'll sleep on their own schedule once they're excited.</div></div>
+<div class="age-card"><div class="age-lbl">🎉 Ages 18–22</div><div class="age-body">Walk north on Palm Beach strip, scope the bar scene. Come back for Bugaloe or join the BBQ — their call. Don't expect them at 7:30pm sharp.</div></div>
+<div class="age-card"><div class="age-lbl">🌅 Ages 35–55</div><div class="age-body">Unpack, shower, drinks at resort bar or Wave Shack. Bugaloe welcome dinner for the adults who want a sit-down. Low pressure first night.</div></div>
+<div class="age-card"><div class="age-lbl">🌿 Ages 60–85</div><div class="age-body">Resort has everything you need. Watch the first Caribbean sunset from the beach chairs, then early dinner. Tomorrow is the big catamaran day — rest up.</div></div>
+</div>`
+  },
+  2:{
+    budget:`<div class="da-intro">💰 Skipping the catamaran saves $65–85/person. The free alternative hits the same beaches, same fish, same snorkeling — without the open bar.</div>
+<div class="da-h">Morning — Free Snorkel Triple</div>
+<div class="da-row"><div class="da-t">8:00 AM</div><div class="da-b"><strong>Boca Catalina Beach</strong> — 10 min north. Calm, crystal-clear water, pelicans, natural snorkeling reef. Bring resort gear. Free. Park roadside.</div></div>
+<div class="da-row"><div class="da-t">10:30 AM</div><div class="da-b"><strong>Tres Trapi ("Three Steps")</strong> — local cove 5 min south of Boca Catalina. Limestone steps into turquoise pool. Zero tourists, locals only. Float and shoot photos from the ledge above. Free.</div></div>
+<div class="da-row"><div class="da-t">12:30 PM</div><div class="da-b"><strong>Mangel Halto</strong> — 20 min south. Locals' #1 snorkel beach. Beats most paid boat tours. Mangrove-framed lagoon, sea horses, reef fish. Pack Ling &amp; Sons lunch. <div class="da-save">Save $65–85/pp vs catamaran</div></div></div>
+<div class="da-h">Afternoon &amp; Evening</div>
+<div class="da-row"><div class="da-t">3:00 PM</div><div class="da-b">Resort pool + free afternoon. Everyone sun-soaked, same vibe as post-catamaran.</div></div>
+<div class="da-row"><div class="da-t">7:00 PM</div><div class="da-b"><strong>Zeerovers dinner</strong> — fishermen's shack, $8–10/plate, eat on the water. The most authentic meal on the island. Cash only. <div class="da-save">Save another $12–15/pp vs restaurant</div></div></div>`,
+    age:`<div class="da-intro">🎂 The catamaran is 5 hours — great for most ages, but little ones may struggle. Consider this split.</div>
+<div class="age-grid">
+<div class="age-card"><div class="age-lbl">🧒 Ages 5–7</div><div class="age-body"><strong>Option A:</strong> Skip catamaran — stay at resort pool with 1 adult. Much better than 5hrs on a rocking boat with an open bar crowd.<br><strong>Option B:</strong> Bring them! The catamaran crew loves kids, snorkeling is gentle, and the rope swing is fun for brave 7-year-olds. Bring reef shoes &amp; floaties.</div></div>
+<div class="age-card"><div class="age-lbl">🏄 Ages 14–17</div><div class="age-body">This is their day. Rope swing, open bar (non-alcoholic for under-18), snorkeling the SS Antilla wreck. Let them explore independently on the boat — don't hover.</div></div>
+<div class="age-card"><div class="age-lbl">🎉 Ages 18–22</div><div class="age-body">Catamaran is peak. Open bar, music, new friends from around the world. Book next to the teens on the boat so the young adults can enjoy it differently.</div></div>
+<div class="age-card"><div class="age-lbl">🌅 Ages 35–55</div><div class="age-body">The WWII shipwreck snorkeling is genuinely impressive even for experienced travelers. Grab the shaded back of the catamaran for the return. Sunscreen is critical — 5hrs on water.</div></div>
+<div class="age-card"><div class="age-lbl">🌿 Ages 60–85</div><div class="age-body">Catamaran is very accessible — you can stay above deck and enjoy the sail without snorkeling. The Caribbean views from the water are worth it alone. Bring a hat and layers for the return trip breeze.</div></div>
+</div>`
+  },
+  3:{
+    budget:`<div class="da-intro">💰 Day 3 is the most expensive day ($162/pp UTV + $80+/pp Flying Fishbone). Swapping both saves ~$200/person.</div>
+<div class="da-h">Morning — Replace UTV with Arikok Self-Drive</div>
+<div class="da-row"><div class="da-t">7:30 AM</div><div class="da-b"><strong>Pastechi House breakfast</strong> in Oranjestad — $1.50 each. Group of 17 = ~$50 total. <div class="da-save">Save $170 vs resort breakfast</div></div></div>
+<div class="da-row"><div class="da-t">9:00 AM</div><div class="da-b"><strong>Arikok National Park self-drive</strong> — $15/pp entry. Same caves (Quadirikiri), same iguanas, same cactus desert. No guide, but the trails are marked. Bring your own 4x4. <div class="da-save">Save $147/pp vs UTV tour</div></div></div>
+<div class="da-row"><div class="da-t">1:00 PM</div><div class="da-b"><strong>Baby Beach</strong> — 15 min from Arikok exit. Free. Best kid beach in the Caribbean. Pack Ling &amp; Sons lunch. Swim 2 hours.</div></div>
+<div class="da-h">Evening — Replace Flying Fishbone + Kukoo</div>
+<div class="da-row"><div class="da-t">5:00 PM</div><div class="da-b">Ladies: Pure Indulgence Spa (still on-plan, on-site, cheapest spa option). Dads: resort beach bar.</div></div>
+<div class="da-row"><div class="da-t">7:30 PM</div><div class="da-b"><strong>Texas de Brazil or Gianni's</strong> on Palm Beach strip — group-friendly, walkable, $35–45/pp vs Flying Fishbone's $80+. <div class="da-save">Save $35–45/pp on dinner</div></div></div>`,
+    age:`<div class="da-intro">🎂 Day 3 is already the best split day — here's the ideal age-group breakdown.</div>
+<div class="age-grid">
+<div class="age-card"><div class="age-lbl">🧒 Ages 5–7</div><div class="age-body"><strong>9am:</strong> Butterfly Farm (45min, butterflies land on them — unforgettable at this age).<br><strong>11am:</strong> Resort pool while everyone else adventures.<br><strong>6pm:</strong> Early Bugaloe dinner + resort evening. In bed before the adults go out.</div></div>
+<div class="age-card"><div class="age-lbl">🏄 Ages 14–17</div><div class="age-body"><strong>8:35am:</strong> UTV AM slot — their own adventure, no adults. Off-road, caves, cliff jump.<br><strong>2pm:</strong> Eagle Beach free afternoon, jet ski.<br><strong>Evening:</strong> Bugaloe or resort hang — Kukoo is 18+ only.</div></div>
+<div class="age-card"><div class="age-lbl">🎉 Ages 18–22</div><div class="age-body"><strong>8:35am:</strong> UTV AM with teens (or their own separate activity).<br><strong>Evening:</strong> Kukoo Kunuku pub crawl (18+ strictly enforced). Their night to own completely.</div></div>
+<div class="age-card"><div class="age-lbl">🌅 Ages 35–55</div><div class="age-body"><strong>7am:</strong> Dads → deep sea fishing.<br><strong>9am:</strong> Ladies → Pure Indulgence Spa group morning.<br><strong>2:10pm:</strong> Adults UTV PM slot.<br><strong>7pm:</strong> Flying Fishbone — adults-only splurge dinner.</div></div>
+<div class="age-card"><div class="age-lbl">🌿 Ages 60–85</div><div class="age-body"><strong>9am:</strong> Butterfly Farm with the little ones — both groups love it equally.<br><strong>11am:</strong> Oranjestad harbor walk (Waf'i Rancho).<br><strong>Evening:</strong> Join kids at Bugaloe OR join adults at Flying Fishbone — flexible.</div></div>
+</div>`
+  },
+  4:{
+    budget:`<div class="da-intro">💰 Day 4 has the Jeep Safari ($84–89/pp) and Madame Janette (~$50/pp). Swapping saves $100–130/person.</div>
+<div class="da-h">Replace Jeep Safari with Free Scenic Drive</div>
+<div class="da-row"><div class="da-t">9:00 AM</div><div class="da-b"><strong>California Lighthouse</strong> — free, 30 min north. Climb to the top for panoramic views. Best photography spot on the island. Same dramatic coastline as the safari.</div></div>
+<div class="da-row"><div class="da-t">10:30 AM</div><div class="da-b"><strong>Alto Vista Chapel</strong> — free, hilltop, cacti everywhere, built 1750. 15 min from lighthouse. Completely unique. Zero tourists on a weekday morning. <div class="da-save">Save $84–89/pp vs Jeep Safari</div></div></div>
+<div class="da-row"><div class="da-t">11:30 AM</div><div class="da-b"><strong>Bright Bakery (Paradera)</strong> — local spice cake and donuts, ~$2 each. Then drive to Zeerovers for lunch ($10/pp). Keep Zeerovers — this is the one food experience you absolutely cannot skip.</div></div>
+<div class="da-h">Afternoon — Free Beaches</div>
+<div class="da-row"><div class="da-t">2:00 PM</div><div class="da-b"><strong>Baby Beach</strong> (right near Zeerovers) — free shallow lagoon, perfect for everyone. 2–3 hrs. Then sunset at Eagle Beach on the way back (free).</div></div>
+<div class="da-h">Evening — Replace Madame Janette</div>
+<div class="da-row"><div class="da-t">7:30 PM</div><div class="da-b"><strong>Resort BBQ</strong> — $15/pp total using Ling &amp; Sons. All 17 together, no reservation stress, same group-dinner feeling. <div class="da-save">Save $35–40/pp on dinner · Total Day 4 savings: $120–130/pp</div></div></div>`,
+    age:`<div class="da-intro">🎂 Day 4 afternoon is the best "family unit" window — Zeerovers lunch reunites everyone at noon, then each age group branches off until Madame Janette at 7pm.</div>
+<div class="da-h">After Zeerovers Lunch (~1pm) — Branch by Age Group</div>
+<div class="age-grid">
+<div class="age-card"><div class="age-lbl">🧒 Ages 5–7 — Baby Beach</div><div class="age-body">Drive 5 min east from Zeerovers → <strong>Baby Beach</strong>. Shallow lagoon, zero waves, water stays waist-deep for 200 feet. This is THE beach for this age group. Add the Red Anchor at Boca Grandi for photos. Back to resort by 5pm for nap + dinner prep.</div></div>
+<div class="age-card"><div class="age-lbl">🏄 Ages 14–17 — Arikok</div><div class="age-body">Drive 20 min north → <strong>Arikok National Park</strong>. Giant iguanas, Quadirikiri Cave, hike to Natural Pool overlook. Teens love having unstructured wilderness time. Drop them with Vehicle 2 and let them navigate.</div></div>
+<div class="age-card"><div class="age-lbl">🎉 Ages 18–22 — San Nicolas</div><div class="age-body">Drive 10 min south → <strong>San Nicolas</strong> art district. Street murals, Cosecha Gallery, local vibe completely different from the resort strip. Then Balashi Cold Zone for a local afternoon beer. Back for Madame Janette at 7pm.</div></div>
+<div class="age-card"><div class="age-lbl">🌅 Ages 35–55 — Jeep Safari</div><div class="age-body"><strong>Arikok Jeep Safari</strong> — the full guided experience with Natural Pool and Fontein Cave. Best afternoon activity for this age group. Meets up with everyone at Madame Janette for the 7pm group dinner.</div></div>
+<div class="age-card"><div class="age-lbl">🌿 Ages 60–85 — Scenic Coast Loop</div><div class="age-body">Drive the scenic south coast → <strong>California Lighthouse</strong> (40 min with stops) → <strong>Alto Vista Chapel</strong> detour → <strong>Bright Bakery pastries</strong> → arrive at Madame Janette for the group dinner. Beautiful, easy, no hiking required.</div></div>
+</div>`
+  },
+  5:{
+    budget:`<div class="da-intro">💰 Day 5 is the easiest day to budget — beach morning is completely free.</div>
+<div class="da-row"><div class="da-t">All morning</div><div class="da-b"><strong>Resort beach + pool.</strong> Use remaining Ling &amp; Sons breakfast supplies. Walk the strip one last time. Zero cost.</div></div>
+<div class="da-row"><div class="da-t">Lunch</div><div class="da-b"><strong>Bugaloe or Pelican Pier walkable lunch</strong> (~$15–20/pp) — OR Lima Bistro farewell dinner if this is your last full evening. No need to change plans on departure day.</div></div>
+<div class="da-row"><div class="da-t">Travel</div><div class="da-b">Queen Beatrix Airport (AUA) is 15 min south. Build in 2.5 hours before departure. Return rental car 30 min before that.</div></div>`,
+    age:`<div class="da-intro">🎂 Departure day — different ages pack and move at different speeds.</div>
+<div class="age-grid">
+<div class="age-card"><div class="age-lbl">🧒 Ages 5–7</div><div class="age-body">Pack their bags the night before. Morning is resort pool time. They need a snack before the airport. Stroller-accessible — AUA is small and easy.</div></div>
+<div class="age-card"><div class="age-lbl">🏄 Ages 14–17</div><div class="age-body">Last beach morning. Will try to be the last one in the water. Set a hard "meet in lobby" time — teens run late on vacation endings.</div></div>
+<div class="age-card"><div class="age-lbl">🎉 Ages 18–22</div><div class="age-body">If anyone did Kukoo Kunuku or stayed out late: plan for slow mornings. Don't schedule anything before 9am for this group on departure day.</div></div>
+<div class="age-card"><div class="age-lbl">🌅 Ages 35–55</div><div class="age-body">Coordinate vehicle logistics — 17 people + luggage in 2 vehicles. Confirm checkout, split into 2 airport runs if needed, or book a shuttle van.</div></div>
+<div class="age-card"><div class="age-lbl">🌿 Ages 60–85</div><div class="age-body">Leave earliest buffer — AUA is usually fast but check-in lines can surprise. Plan to arrive 2.5 hrs before departure. Wheelchair/assist available if needed, request at booking.</div></div>
+</div>`
+  },
+};
+
+function initDayModes(){
+  document.querySelectorAll('#p2 .day-card').forEach((card,i)=>{
+    const day=i+1;
+    if(!DAY_ALTS[day])return;
+    // inject mode bar
+    const bar=document.createElement('div');
+    bar.className='day-mode-bar';
+    bar.innerHTML=`<span style="font-size:11px;color:rgba(255,255,255,.6);align-self:center;margin-right:2px">View:</span>
+      <button class="dmb active" onclick="setDayMode(${day},'main',this)">📋 Current Plan</button>
+      <button class="dmb dmb-budget" onclick="setDayMode(${day},'budget',this)">💰 Budget Alt</button>
+      <button class="dmb dmb-age" onclick="setDayMode(${day},'age',this)">🎂 By Age Group</button>`;
+    // mode bar sits inside day-head styling — update day-head to hold it
+    const head=card.querySelector('.day-head');
+    head.after(bar);
+    // inject alt area
+    const alt=document.createElement('div');
+    alt.className='day-alt-area';
+    alt.id=`dalt-${day}`;
+    card.appendChild(alt);
+  });
+  // update mode bar bg to match day-head
+  document.querySelectorAll('.day-mode-bar').forEach(b=>{
+    b.style.background='#252D3F';
+    b.style.borderColor='rgba(255,255,255,.1)';
+  });
+  document.querySelectorAll('.day-mode-bar span').forEach(s=>s.style.color='rgba(255,255,255,.5)');
+}
+
+function setDayMode(day,mode,btn){
+  const card=btn.closest('.day-card');
+  const slots=card.querySelector('.slots');
+  const alt=card.querySelector('.day-alt-area');
+  card.querySelectorAll('.dmb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(mode==='main'){
+    slots.style.display='';
+    alt.style.display='none';
+  }else{
+    slots.style.display='none';
+    alt.style.display='block';
+    alt.innerHTML=DAY_ALTS[day]?DAY_ALTS[day][mode]||'<p style="color:var(--muted);padding:8px">No alternate plan for this day.</p>':'';
+  }
+}
+
 // ── ACTIVITY METADATA ──────────────────────────────────────────────────────
 const ACTS={
   pool:       {name:'Resort Pool + Swim-Up Bar',         day:0, flex:true },
@@ -1637,7 +1652,7 @@ async function autoUpdate(){
   }
 }
 
-buildStars();load();initVoter();syncItinerary();showLockBanner();
+buildStars();load();initVoter();syncItinerary();showLockBanner();initDayModes();
 (function(){document.querySelectorAll('#p4 .rest-name').forEach(function(el){var n=el.textContent.trim();var m=document.createElement('div');m.className='rest-meta';m.innerHTML='🔗 <a href="https://www.google.com/search?q='+encodeURIComponent(n+' Aruba restaurant')+'" target="_blank" rel="noopener">Hours, phone &amp; reserve ↗</a>';el.closest('.rest').appendChild(m);});})();
 </script>
 </body></html>
