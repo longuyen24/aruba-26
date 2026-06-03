@@ -29,6 +29,19 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .manual-banner strong{color:#E65100}
 .resume-auto-btn{background:#FF9800;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;white-space:nowrap}
 .resume-auto-btn:hover{opacity:.85}
+/* QUICK RATE TAB */
+.qr-section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.qr-section-label:first-child{margin-top:4px}
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:6px}
+.qr-card{border-radius:var(--radlg);overflow:hidden;border:1px solid var(--border);background:var(--white);box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .15s,box-shadow .15s}
+.qr-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.11)}
+.qr-img{width:100%;height:170px;object-fit:cover;display:block;background:var(--bg)}
+.qr-body{padding:11px 13px 13px}
+.qr-name{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.3}
+.qr-blurb{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.qr-body .stars-row{gap:4px}
+.qr-body .star-btn{font-size:20px}
+@media(max-width:600px){.qr-grid{grid-template-columns:repeat(2,1fr);gap:10px}.qr-img{height:120px}.qr-body{padding:8px 10px 10px}.qr-name{font-size:12.5px}.qr-blurb{display:none}}
 .hero h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
 .hero-sub{font-size:13.5px;color:rgba(255,255,255,.75);margin-bottom:18px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65}
 .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
@@ -357,7 +370,8 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 
 <div class="tab-bar">
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('p1',this)">📋 Activities + Rate Them</button>
+    <button class="tab-btn active" onclick="showTab('p0',this)">📸 Quick Rate</button>
+    <button class="tab-btn" onclick="showTab('p1',this)">📋 Full Details + Rate</button>
     <button class="tab-btn" onclick="showTab('p2',this)">📅 Smart Itinerary</button>
     <button class="tab-btn" onclick="showTab('p3',this)">🧭 AI Consultant</button>
     <button class="tab-btn" onclick="showTab('p4',this)">🍽 Dining by Cuisine</button>
@@ -367,8 +381,16 @@ details[open] .org-summary::after{transform:rotate(90deg)}
   </div>
 </div>
 
+<!-- PAGE 0: QUICK RATE -->
+<div id="p0" class="page active">
+<span class="pg-badge badge-gold">Quick Rate</span>
+<div class="pg-title">Quick Rate — Photo &amp; Vibe</div>
+<div class="pg-desc">Rate 1–5 stars. One photo, one sentence — that's it. Ratings sync live with Tab 1. Full details, directions, and tips are in the next tab.</div>
+<div id="p0-grid"></div>
+</div>
+
 <!-- PAGE 1 -->
-<div id="p1" class="page active">
+<div id="p1" class="page">
 <span class="pg-badge badge-blue">Tab 1</span>
 <div class="pg-title">Rate Every Activity · Build Your Trip</div>
 <div class="pg-desc">Rate 1–5 stars. 1=No interest, 5=Must Do. ⏳=Limited availability — only offered on certain days/times, so we get just a few chances to do it (book early!). Teal left-border=resort amenity. Ratings save in your browser automatically.</div>
@@ -1301,7 +1323,8 @@ function buildStars(){
 }
 function hov(row,v){row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<v));}
 function rst(row,id){const r=ratings[id]||0;row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<r));}
-function setR(id,v,row){ratings[id]=v;rst(row,id);calcScores();save();syncItinerary();schedulePush();}
+function rstAll(id){document.querySelectorAll(`.stars-row[data-id="${id}"]`).forEach(row=>rst(row,id));}
+function setR(id,v,row){ratings[id]=v;rstAll(id);calcScores();save();syncItinerary();schedulePush();}
 function calcScores(){
   const vals=Object.values(ratings).filter(v=>v>0);
   if(!vals.length)return;
@@ -1341,7 +1364,7 @@ function load(){
   try{
     const s=JSON.parse(localStorage.getItem('aruba26')||'{}');
     Object.entries(s).forEach(([id,v])=>{
-      if(v>0){ratings[id]=v;const row=document.querySelector(`.stars-row[data-id="${id}"]`);if(row)rst(row,id);}
+      if(v>0){ratings[id]=v;rstAll(id);}
     });
     calcScores();
   }catch(e){}
@@ -1755,6 +1778,82 @@ async function autoUpdate(){
   }
 }
 
+// ── QUICK RATE TAB ─────────────────────────────────────────────────────────
+const QUICK={
+  pool:      {cat:'resort',   img:'resort+pool+swim+bar+caribbean',         blurb:'Swim-up bar, infinity pool, afternoon floats — the resort social hub.'},
+  tennis:    {cat:'resort',   img:'tennis+court+tropical+sunny+outdoor',    blurb:'Challenge another family to a match before the heat builds.'},
+  basketball:{cat:'resort',   img:'basketball+court+outdoor+sunny',         blurb:'Quick 3-on-3 between families on the resort court.'},
+  spa:       {cat:'ladies',   img:'spa+massage+luxury+tropical+relax',      blurb:'Group booking — foot soaks with mimosas, massages, mani/pedis.'},
+  bbq:       {cat:'resort',   img:'barbecue+grill+beach+charcoal+food',     blurb:'Resort BBQ night — everyone around the fire, zero reservations.'},
+  gym:       {cat:'resort',   img:'gym+fitness+modern+equipment+workout',   blurb:'Fully equipped resort fitness center for early risers.'},
+  catamaran: {cat:'water',    img:'catamaran+sailing+caribbean+blue+water', blurb:'5 hrs on the sea: WWII wreck snorkel, rope swing, open bar, all 17 together.'},
+  utv:       {cat:'land',     img:'atv+offroad+desert+adventure+dust',      blurb:'Off-road UTVs through Arikok, secret beach, cave pool, cliff jump.'},
+  depalm:    {cat:'water',    img:'water+park+slides+tropical+fun+pool',    blurb:'De Palm Island — slides, trampolines, snorkeling, and sun all day.'},
+  parasail:  {cat:'water',    img:'parasailing+ocean+caribbean+blue+sky',   blurb:'400 feet above Palm Beach — Caribbean panorama in every direction.'},
+  arashi:    {cat:'water',    img:'snorkeling+coral+reef+caribbean+clear',  blurb:"Aruba's clearest reef — calm, colorful, 15 min north of resort."},
+  mangel:    {cat:'water',    img:'coral+reef+snorkel+tropical+fish',       blurb:"Mangrove-lined southern reef — the advanced snorkelers' secret."},
+  flamingo:  {cat:'water',    img:'flamingo+pink+bird+beach+tropical',      blurb:'Renaissance Island — flamingos walk right up to you on a private beach.'},
+  jeep:      {cat:'land',     img:'jeep+safari+desert+aruba+rugged',        blurb:'Full-day Arikok safari — cave paintings, Natural Pool, cactus highlands.'},
+  lighthouse:{cat:'land',     img:'lighthouse+caribbean+scenic+coast+white',blurb:'California Lighthouse at the north tip — 360° panorama across the island.'},
+  casibari:  {cat:'land',     img:'rocks+boulders+desert+landscape+climb',  blurb:'Giant diorite boulders you can climb — surprising views in the interior.'},
+  oranjestad:{cat:'land',     img:'dutch+colonial+colorful+caribbean+town', blurb:'Pastel harbor town — local shops, rum, aloe, and Aruba street culture.'},
+  horse:     {cat:'land',     img:'horseback+riding+beach+sunset+tropical', blurb:'Guided beach ride at sunset — calm, scenic, and deeply memorable.'},
+  zeerovers: {cat:'food',     img:'fried+fish+local+food+pier+seafood',     blurb:'Fresh-fried fish by the pound at a local pier — ~$12/person, trip highlight.'},
+  flyfish:   {cat:'food',     img:'waterfront+restaurant+sunset+elegant',   blurb:'Toes-in-water dinner at the most beautiful spot in the Caribbean.'},
+  madame:    {cat:'food',     img:'garden+restaurant+dinner+tropical+romantic',blurb:'All 17 in a garden courtyard — the defining family dinner of the trip.'},
+  lima:      {cat:'food',     img:'peruvian+restaurant+marina+modern+food', blurb:'Farewell at Lima Bistro — Peruvian fusion on the Oranjestad harbor.'},
+  bugaloe:   {cat:'food',     img:'beach+bar+pier+tropical+drinks',         blurb:'Cold Balashi, fish baskets, sandals-on tables — no dress code required.'},
+  fishing:   {cat:'dads',     img:'deep+sea+fishing+charter+boat+ocean',    blurb:'Sunrise charter out of Oranjestad — wahoo, mahi-mahi, barracuda.'},
+  golf:      {cat:'dads',     img:'golf+course+ocean+view+tropical+green',  blurb:'18 holes at Divi Links with trade winds and Caribbean sea views.'},
+  casino:    {cat:'nightlife',img:'casino+roulette+night+luxury+chips',     blurb:'Slots, blackjack, roulette 5 min from resort — open until 4am.'},
+  sunsetsail:{cat:'water',    img:'catamaran+sunset+cocktails+sailing+sky', blurb:'Sunset cruise — cocktails and the best view of the Aruba skyline.'},
+  shopping:  {cat:'land',     img:'colorful+shopping+street+market+caribbean',blurb:'Duty-free gems, local rum, aloe, and Aruba gold in the harbor district.'},
+  kukoo:     {cat:'nightlife',img:'party+bus+nightlife+fun+tropical',       blurb:'Party bus pub crawl — 6 bars, open bar, costumes. 18+ only.'},
+  club:      {cat:'nightlife',img:'nightclub+dancing+music+dj+lights',      blurb:'Hidden dance clubs and beach bars open until 4am — bring the energy.'},
+  beachwalk: {cat:'chill',    img:'palm+beach+sunset+walk+tropical',        blurb:'30-minute stroll along Palm Beach at golden hour — free, effortless, beautiful.'},
+  eaglemorning:{cat:'chill',  img:'tropical+beach+sunrise+peaceful+quiet',  blurb:'Walk to Eagle Beach at sunrise — leaning fofoti trees, no crowds, pure quiet.'},
+  poolnap:   {cat:'chill',    img:'pool+float+relax+hammock+resort',        blurb:'Float on a noodle, claim a palapa, fully unplug — zero plans required.'},
+  hottub:    {cat:'chill',    img:'hot+tub+evening+outdoor+resort+stars',   blurb:'Resort whirlpool under the stars — the perfect wind-down after a full day.'},
+  readingbeach:{cat:'chill',  img:'hammock+beach+book+reading+ocean',       blurb:'Hammock, book, ocean breeze — the most underrated activity of any trip.'},
+  sunrise:   {cat:'chill',    img:'sunrise+dramatic+coast+ocean+wild',      blurb:'Drive to the deserted east coast before 6am for a wild Atlantic sunrise.'},
+  'oranjestad-wander':{cat:'chill',img:'oranjestad+street+aruba+colorful+explore',blurb:'No agenda, no map — wander the streets and see what finds you.'},
+};
+const QUICK_CAT_ORDER=['chill','resort','water','land','food','nightlife','ladies','dads'];
+const QUICK_CAT_LABELS={chill:'😌 Relax & Recharge',resort:'🏨 Resort',water:'🌊 Water',land:'🏜 Land',food:'🍽 Food & Dining',nightlife:'🌙 Nightlife',ladies:'💅 Ladies',dads:'🎣 Dads'};
+const QUICK_CAT_COLOR={chill:'#00796B',resort:'#1565C0',water:'#0277BD',land:'#E65100',food:'#6A1B9A',nightlife:'#1A237E',ladies:'#880E4F',dads:'#1B5E20'};
+const UNSPLASH='https://source.unsplash.com/featured/600x400/?';
+
+function buildQuickRateTab(){
+  const container=document.getElementById('p0-grid');
+  if(!container)return;
+  const grouped={};
+  Object.entries(QUICK).forEach(([id,q])=>{
+    if(!grouped[q.cat])grouped[q.cat]=[];
+    grouped[q.cat].push({id,...q});
+  });
+  let html='';
+  QUICK_CAT_ORDER.forEach(cat=>{
+    if(!grouped[cat])return;
+    html+=`<div class="qr-section-label">${QUICK_CAT_LABELS[cat]}</div><div class="qr-grid">`;
+    grouped[cat].forEach(a=>{
+      const name=ACTS[a.id]?.name||a.id;
+      const fb=QUICK_CAT_COLOR[cat]||'#546E7A';
+      const BLANK='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      html+=`<div class="qr-card">
+        <img class="qr-img" src="${UNSPLASH}${a.img}" alt="${name}" loading="lazy"
+          onerror="this.onerror=null;this.src='${BLANK}';this.style.background='${fb}';this.style.opacity='.55'">
+        <div class="qr-body">
+          <div class="qr-name">${name}</div>
+          <div class="qr-blurb">${a.blurb}</div>
+          <div class="stars-row" data-id="${a.id}"></div>
+        </div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  container.innerHTML=html;
+}
+
 // ── MANUAL OVERRIDE ────────────────────────────────────────────────────────
 let manualOverride=!!localStorage.getItem('aruba26_manual');
 function setManualOverride(on){
@@ -1833,9 +1932,7 @@ async function gistFetch(){
       syncTs=remote.ts||0;
       const remoteRatings=remote.ratings||{};
       Object.entries(remoteRatings).forEach(([id,v])=>{
-        ratings[id]=v;
-        const row=document.querySelector('.stars-row[data-id="'+id+'"]');
-        if(row)rst(row,id);
+        ratings[id]=v;rstAll(id);
       });
       save();calcScores();syncItinerary();
       setSyncPill('↓ '+new Date().toLocaleTimeString(),'ok');
@@ -1907,7 +2004,7 @@ function initSync(){
   // auto-create gist on first rating if PAT exists but no gist yet
 }
 
-buildStars();load();initVoter();syncItinerary();showLockBanner();initDayModes();
+buildQuickRateTab();buildStars();load();initVoter();syncItinerary();showLockBanner();initDayModes();
 // restore manual override banner
 if(manualOverride){const b=document.getElementById('manual-banner');if(b)b.style.display='flex';}
 initDragDrop();initSync();
