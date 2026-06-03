@@ -15,7 +15,7 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),var(--gold),var(--teal))}
 .hero-eye{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .hero h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
-.hero-count{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px}
+.hero-count{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.01em;margin-bottom:4px}
 .hero-sub{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:18px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6}
 .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,.7)}
@@ -253,6 +253,50 @@ body{font-size:14px}
 .fam-head{font-weight:700;font-size:13px;margin-bottom:5px}
 .fam-body{font-size:12px;color:var(--muted);line-height:1.65}
 @media(max-width:600px){.opt-row{grid-template-columns:70px 1fr}.grp-grid,.fam-grid{grid-template-columns:1fr}}
+/* SMART SYNC */
+.act-card.card-hot{border-color:var(--gold);box-shadow:0 0 0 2px rgba(196,146,42,.18)}
+.act-card.card-hot .star-col{background:var(--gold2)}
+.act-card.card-cold{opacity:.45;filter:grayscale(35%)}
+.top-picks{background:var(--gold2);border:1px solid #E8D080;border-radius:var(--radlg);padding:14px 16px;margin-bottom:14px;display:none}
+.top-picks.show{display:block}
+.tp-head{font-weight:700;font-size:13.5px;color:#7A5C00;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.tp-row{display:flex;align-items:center;gap:7px;padding:5px 0;font-size:12.5px;border-bottom:1px solid rgba(0,0,0,.06)}
+.tp-row:last-child{border-bottom:none}
+.tp-stars{color:var(--gold);letter-spacing:-1px;font-size:13px;flex-shrink:0}
+.tp-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tp-day{font-size:10.5px;background:var(--ocean2);color:var(--ocean);border-radius:4px;padding:1px 7px;font-weight:700;flex-shrink:0}
+.tp-flex{font-size:10.5px;background:var(--teal2);color:var(--teal);border-radius:4px;padding:1px 7px;font-weight:700;flex-shrink:0}
+.tp-skip{font-size:10.5px;background:#FFE4E4;color:#B22222;border-radius:4px;padding:1px 7px;font-weight:700;flex-shrink:0}
+.conflict-warn{background:#FFF4E0;border:1px solid #E8A030;border-radius:var(--rad);padding:10px 13px;margin-bottom:8px;font-size:12px;color:#7A4000;display:flex;gap:8px;line-height:1.5}
+.unscheduled-note{font-size:12px;color:var(--coral);padding:6px 0;border-top:1px dashed var(--border);margin-top:4px}
+/* CLAUDE CONNECT */
+.claude-panel{background:var(--purple2);border:1px solid #C4AEF5;border-radius:var(--radlg);padding:16px 18px;margin-bottom:16px}
+.claude-panel h4{color:var(--purple);font-size:15px;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.claude-panel p{font-size:12.5px;color:var(--muted);margin-bottom:10px;line-height:1.55}
+.claude-steps{font-size:12.5px;line-height:1.85;margin-bottom:12px;color:var(--text)}
+.claude-steps b{color:var(--purple)}
+.claude-btn-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cta-claude{background:var(--purple);color:#fff;border:none;border-radius:var(--rad);padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.cta-claude:hover{opacity:.82}
+.copy-toast{font-size:12px;color:var(--teal);font-weight:600;opacity:0;transition:opacity .4s}
+.copy-toast.show{opacity:1}
+.claude-note{font-size:11.5px;color:var(--muted);background:rgba(0,0,0,.04);border-radius:var(--rad);padding:8px 12px;margin-top:10px;line-height:1.6}
+/* VOTER IDENTITY */
+.voter-banner{background:var(--ocean2);border:1px solid #B2D8E8;border-radius:var(--rad);padding:10px 14px;margin-bottom:14px;font-size:12.5px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.voter-change{font-size:11px;background:none;border:1px solid var(--ocean);color:var(--ocean);border-radius:20px;padding:2px 10px;cursor:pointer}
+.voter-info{font-size:11px;color:var(--muted)}
+.voter-input{border:1px solid var(--border);border-radius:var(--rad);padding:5px 10px;font-size:13px;font-family:inherit;width:160px;outline:none}
+.voter-input:focus{border-color:var(--ocean)}
+.voter-save{background:var(--ocean);color:#fff;border:none;border-radius:var(--rad);padding:5px 14px;font-size:12.5px;cursor:pointer;font-family:inherit}
+/* LOCK BANNER */
+.lock-banner{background:#E8F5E9;border:1.5px solid #81C784;border-radius:var(--radlg);padding:13px 16px;margin-bottom:14px;display:none;align-items:center;gap:12px;flex-wrap:wrap}
+.lock-banner.show{display:flex}
+.lock-icon{font-size:22px;flex-shrink:0}
+.lock-text{flex:1;font-size:13px;color:#2E6B2E;line-height:1.5}
+.lock-text strong{display:block;font-size:14px}
+.unlock-btn{font-size:12px;background:none;border:1px solid #81C784;color:#2E6B2E;border-radius:20px;padding:4px 14px;cursor:pointer}
+.lock-cta{background:#2E7D32;color:#fff;border:none;border-radius:var(--rad);padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:8px}
+.lock-cta:hover{opacity:.85}
 </style>
 </head>
 <body>
@@ -289,11 +333,26 @@ body{font-size:14px}
 <div class="pg-title">Rate Every Activity · Build Your Trip</div>
 <div class="pg-desc">Rate 1–5 stars. 1=No interest, 5=Must Do. ⏳=Limited availability — only offered on certain days/times, so we get just a few chances to do it (book early!). Teal left-border=resort amenity. Ratings save in your browser automatically.</div>
 
+<!-- VOTER IDENTITY BANNER -->
+<div id="voter-banner" class="voter-banner">
+  <div id="voter-display" style="display:none">
+    <span>⭐ Rating as: <strong id="voter-name-display"></strong></span>
+    <button class="voter-change" onclick="showVoterInput()">Change</button>
+    <span class="voter-info">· Saves on this device · Survives refresh ✓</span>
+  </div>
+  <div id="voter-input-row">
+    <span style="font-size:13px;font-weight:500">👋 Who's rating? </span>
+    <input id="voter-name-input" class="voter-input" type="text" placeholder="Your first name..." maxlength="20">
+    <button class="voter-save" onclick="saveVoterName()">Save my name</button>
+    <span class="voter-info"> — one name per device, no account needed</span>
+  </div>
+</div>
+
 <div class="survey-banner">
   <div class="sb-icon">⭐</div>
   <div>
     <h3>How to use this survey</h3>
-    <p>Every family member rates activities below. Keep an eye on ⏳ activities — they're only offered at certain times or on certain days, so we only get a few chances to do them (book early). Rate everything so we know enthusiasm levels. Tab 2 shows the itinerary. Share this URL with all 17 people!</p>
+    <p>Every family member rates activities on <em>their own device</em>. Ratings auto-save in your browser — refresh is fine, they stick. Different device = fresh vote. When done, go to Tab 2 → "Copy Prompt for Claude Code" to let Claude rebuild the itinerary around your group's actual preferences.</p>
   </div>
 </div>
 
@@ -570,6 +629,13 @@ body{font-size:14px}
 <span class="pg-badge badge-gold">Tab 2</span>
 <div class="pg-title">Smart Itinerary · Jun 27 – Jul 2</div>
 <div class="pg-desc">Built from your ratings + consultant strategy. ⏳ = limited availability — only offered at certain times, so book it early before the slots fill. Alternates shown for every major slot. Split-day plans show each sub-group's vehicle and activity clearly.</div>
+
+<div id="lock-banner" class="lock-banner">
+  <span class="lock-icon">✅</span>
+  <div class="lock-text"><strong id="lock-title">Itinerary Locked</strong><span id="lock-subtitle"></span></div>
+  <button class="unlock-btn" onclick="unlockItinerary()">Unlock to edit</button>
+</div>
+
 <div class="itin-note"><span style="font-size:18px">💡</span><div>Rate activities in Tab 1 first. ⏳ activities have limited availability — they only run at certain times/days, so book them early. Alternates are always shown in the gray boxes below each slot. The booking checklist has every phone number and link you need.</div></div>
 
 <div class="checklist">
@@ -585,6 +651,27 @@ body{font-size:14px}
 </div>
 
 <!-- OPTIONS PANEL -->
+<!-- SMART TOP PICKS (populated by JS) -->
+<div id="top-picks" class="top-picks"></div>
+
+<!-- CLAUDE CONNECT PANEL -->
+<div class="claude-panel">
+  <h4>🤖 Connect to Claude Code — Regenerate Itinerary from Your Ratings</h4>
+  <p>Rate activities in Tab 1. When your group is done, click below to copy a ready-to-paste prompt. Open Claude Code on your laptop, paste it, and Claude will rewrite the itinerary to match your group's actual preferences — scheduling 5-star picks into prime slots, removing 1-star activities, and flagging conflicts.</p>
+  <div class="claude-steps">
+    <b>Step 1 →</b> Everyone rates activities in Tab 1 on their own device<br>
+    <b>Step 2 →</b> Trip organizer clicks "Copy Prompt" below (reflects <em>your</em> device's ratings)<br>
+    <b>Step 3 →</b> Open Claude Code (terminal or desktop app), paste prompt, hit enter<br>
+    <b>Step 4 →</b> Claude rewrites Tab 2, commits, and the live site updates for everyone
+  </div>
+  <div class="claude-btn-row">
+    <button class="cta-claude" onclick="generateClaudePrompt()">📋 Copy Prompt for Claude Code</button>
+    <span id="copy-toast" class="copy-toast">✓ Copied to clipboard!</span>
+  </div>
+  <button class="lock-cta" onclick="lockItinerary()">🔒 Lock Itinerary after Claude updates it</button>
+  <div class="claude-note">💡 <strong>How ratings work:</strong> Ratings save in <em>this browser's localStorage</em> — they survive page refreshes and browser restarts on the same device. Different device = fresh slate (no account needed). There's no server involved. For best results, the trip organizer collects a verbal top-3 from each family and enters them here before generating the prompt.</div>
+</div>
+
 <div class="opt-bar">
   <span class="opt-label">View alternate plans:</span>
   <button class="opt-btn" onclick="toggleOpt('opt-budget',this)">💰 Budget Mode</button>
@@ -1231,7 +1318,7 @@ function buildStars(){
 }
 function hov(row,v){row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<v));}
 function rst(row,id){const r=ratings[id]||0;row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<r));}
-function setR(id,v,row){ratings[id]=v;rst(row,id);calcScores();save();}
+function setR(id,v,row){ratings[id]=v;rst(row,id);calcScores();save();syncItinerary();}
 function calcScores(){
   const vals=Object.values(ratings).filter(v=>v>0);
   if(!vals.length)return;
@@ -1276,7 +1363,205 @@ function load(){
     calcScores();
   }catch(e){}
 }
-buildStars();load();
+// ── ACTIVITY METADATA ──────────────────────────────────────────────────────
+const ACTS={
+  pool:       {name:'Resort Pool + Swim-Up Bar',         day:0, flex:true },
+  tennis:     {name:'Tennis & Racquetball',               day:0, flex:true },
+  basketball: {name:'Basketball Court',                   day:0, flex:true },
+  spa:        {name:'Pure Indulgence Spa',                day:3, flex:false},
+  bbq:        {name:'Resort BBQ Night',                   day:0, flex:true },
+  gym:        {name:'Fitness Center',                     day:0, flex:true },
+  catamaran:  {name:'Catamaran Snorkel Day',              day:2, flex:false},
+  utv:        {name:'UTV / ATV Adventure',                day:3, flex:false},
+  depalm:     {name:'De Palm Island Water Park',          day:0, flex:true },
+  parasail:   {name:'Parasailing',                        day:0, flex:true },
+  arashi:     {name:'Arashi Beach (self-drive)',          day:0, flex:true },
+  mangel:     {name:'Mangel Halto Reef Snorkel',          day:0, flex:true },
+  flamingo:   {name:'Flamingo Beach Day Pass',            day:0, flex:true },
+  jeep:       {name:'Arikok Jeep Safari + Natural Pool',  day:4, flex:false},
+  lighthouse: {name:'California Lighthouse Drive',        day:0, flex:true },
+  casibari:   {name:'Casibari Rocks + Butterfly Farm',   day:0, flex:true },
+  oranjestad: {name:'Oranjestad City Walk',               day:0, flex:true },
+  horse:      {name:'Horseback Riding',                   day:0, flex:true },
+  zeerovers:  {name:'Zeerovers Pier Fish Lunch',          day:4, flex:false},
+  flyfish:    {name:'Flying Fishbone Dinner',             day:3, flex:false},
+  madame:     {name:'Madame Janette (all 17)',            day:4, flex:false},
+  lima:       {name:'Lima Bistro Farewell Dinner',        day:5, flex:false},
+  bugaloe:    {name:'Bugaloe Beach Bar',                  day:0, flex:true },
+  fishing:    {name:'Deep Sea Fishing Charter',           day:3, flex:false},
+  golf:       {name:'Golf',                               day:0, flex:true },
+  casino:     {name:'Casino Night',                       day:0, flex:true },
+  sunsetsail: {name:'Sunset Sail',                        day:0, flex:true },
+  shopping:   {name:'Oranjestad Shopping',                day:0, flex:true },
+  kukoo:      {name:'Kukoo Kunuku Pub Crawl (18+)',       day:3, flex:false},
+  club:       {name:'Club / Nightlife',                   day:0, flex:true },
+};
+
+// ── SMART SYNC ─────────────────────────────────────────────────────────────
+function syncItinerary(){
+  const panel=document.getElementById('top-picks');
+  if(!panel)return;
+  const rated=Object.entries(ACTS)
+    .map(([id,meta])=>({id,...meta,r:ratings[id]||0}))
+    .filter(a=>a.r>0)
+    .sort((a,b)=>b.r-a.r);
+  if(!rated.length){panel.classList.remove('show');updateCardStyles();return;}
+
+  // conflict detection — two 5-star fixed activities on same day
+  const conflicts={};
+  rated.filter(a=>a.r===5&&a.day>0).forEach(a=>{
+    if(!conflicts[a.day])conflicts[a.day]=[];
+    conflicts[a.day].push(a.name);
+  });
+
+  let html='<div class="tp-head">⭐ Your Top Picks — Live from Tab 1</div>';
+
+  Object.entries(conflicts).forEach(([day,names])=>{
+    if(names.length>1)
+      html+=`<div class="conflict-warn">⚠️ <div><strong>Day ${day} conflict:</strong> You rated <strong>${names.join('</strong> & <strong>')}</strong> both 5 stars — they're on the same day. Use the Claude Code prompt below to reschedule.</div></div>`;
+  });
+
+  // unscheduled 5-stars (flexible, could add to plan)
+  const unscheduled=rated.filter(a=>a.r===5&&a.day===0);
+
+  // top 12 picks
+  rated.slice(0,12).forEach(a=>{
+    const stars='★'.repeat(a.r)+'☆'.repeat(5-a.r);
+    const dayTag=a.day>0
+      ?`<span class="tp-day">Day ${a.day}</span>`
+      :`<span class="tp-flex">Flexible</span>`;
+    const skipTag=a.r===1?'<span class="tp-skip">Consider skipping</span>':'';
+    html+=`<div class="tp-row"><span class="tp-stars">${stars}</span><span class="tp-name">${a.name}</span>${dayTag}${skipTag}</div>`;
+  });
+
+  if(unscheduled.length)
+    html+=`<div class="unscheduled-note">💡 <strong>${unscheduled.map(a=>a.name).join(', ')}</strong> rated 5★ but not yet in the schedule — paste prompt into Claude Code to slot them in.</div>`;
+
+  panel.innerHTML=html;
+  panel.classList.add('show');
+  updateCardStyles();
+}
+
+function updateCardStyles(){
+  document.querySelectorAll('.act-card[data-id]').forEach(card=>{
+    const r=ratings[card.dataset.id]||0;
+    card.classList.toggle('card-hot',r===5);
+    card.classList.toggle('card-cold',r===1);
+  });
+}
+
+// ── CLAUDE CODE PROMPT GENERATOR ───────────────────────────────────────────
+function generateClaudePrompt(){
+  const name=localStorage.getItem('aruba26_voter')||'the trip organizer';
+  const rated=Object.entries(ACTS)
+    .map(([id,meta])=>({id,...meta,r:ratings[id]||0}))
+    .filter(a=>a.r>0)
+    .sort((a,b)=>b.r-a.r);
+  if(!rated.length){
+    alert('Rate some activities in Tab 1 first, then come back to copy the prompt!');
+    return;
+  }
+  const fmt=(n,stars)=>rated.filter(a=>a.r===n)
+    .map(a=>`  - ${a.name}${a.day?` (currently Day ${a.day})`:(a.flex?' (flexible day)':'')}`)
+    .join('\n')||'  (none)';
+
+  const prompt=`I'm using Claude Code to manage the Aruba 2026 trip planner.
+File: /Users/longnguyen/Dev/scratch/aruba/index.html
+Voter: ${name}
+
+─── ACTIVITY RATINGS (from Tab 1) ───────────────────────────────
+
+⭐⭐⭐⭐⭐  MUST DO (5 stars):
+${fmt(5)}
+
+⭐⭐⭐⭐  Really want this (4 stars):
+${fmt(4)}
+
+⭐⭐⭐  Would do it (3 stars):
+${fmt(3)}
+
+⭐⭐  Mild interest (2 stars):
+${fmt(2)}
+
+⭐  No interest — skip (1 star):
+${fmt(1)}
+
+─── WHAT TO DO ───────────────────────────────────────────────────
+
+Please update the Smart Itinerary (Tab 2, div#p2) in index.html:
+
+1. SCHEDULE: Give every 5-star activity a prime time slot. If two 5-star fixed activities are on the same day, move the more flexible one to another day.
+2. ADD: Any 5-star flexible activity not currently in the schedule — add it to the best available slot.
+3. DEMOTE: Move 1-star activities out of the main schedule into the gray alt-box alternatives.
+4. CONFLICT NOTE: Add a small banner at the top of Tab 2 (inside div#p2, after .itin-note) listing any changes made and why.
+5. PRESERVE: Keep all HTML structure, CSS classes, booking checklist, day cards, and the Options panel intact. Only update slot content and order.
+
+Commit and push when done.`;
+
+  const showToast=()=>{const t=document.getElementById('copy-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);};
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(prompt).then(showToast).catch(()=>{legacyCopy(prompt);showToast();});
+  }else{legacyCopy(prompt);showToast();}
+}
+function legacyCopy(text){
+  const ta=document.createElement('textarea');
+  ta.value=text;Object.assign(ta.style,{position:'fixed',top:'-9999px',opacity:'0'});
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);
+}
+
+// ── VOTER IDENTITY ─────────────────────────────────────────────────────────
+function initVoter(){
+  const name=localStorage.getItem('aruba26_voter');
+  if(name)showVoterDisplay(name);
+  else document.getElementById('voter-input-row').style.display='flex';
+}
+function saveVoterName(){
+  const v=document.getElementById('voter-name-input').value.trim();
+  if(!v)return;
+  localStorage.setItem('aruba26_voter',v);
+  showVoterDisplay(v);
+}
+function showVoterDisplay(name){
+  document.getElementById('voter-name-display').textContent=name;
+  document.getElementById('voter-display').style.display='flex';
+  document.getElementById('voter-display').style.alignItems='center';
+  document.getElementById('voter-display').style.gap='8px';
+  document.getElementById('voter-input-row').style.display='none';
+}
+function showVoterInput(){
+  const name=localStorage.getItem('aruba26_voter')||'';
+  document.getElementById('voter-name-input').value=name;
+  document.getElementById('voter-display').style.display='none';
+  document.getElementById('voter-input-row').style.display='flex';
+  document.getElementById('voter-name-input').focus();
+}
+
+// ── LOCK / UNLOCK ───────────────────────────────────────────────────────────
+function lockItinerary(){
+  const voter=localStorage.getItem('aruba26_voter')||'the organizer';
+  const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  localStorage.setItem('aruba26_locked','1');
+  localStorage.setItem('aruba26_locked_date',now);
+  localStorage.setItem('aruba26_locked_by',voter);
+  showLockBanner();
+}
+function unlockItinerary(){
+  localStorage.removeItem('aruba26_locked');
+  document.getElementById('lock-banner').classList.remove('show');
+}
+function showLockBanner(){
+  const locked=localStorage.getItem('aruba26_locked');
+  if(!locked)return;
+  const date=localStorage.getItem('aruba26_locked_date')||'';
+  const by=localStorage.getItem('aruba26_locked_by')||'the organizer';
+  document.getElementById('lock-title').textContent='✅ Itinerary Finalized';
+  document.getElementById('lock-subtitle').textContent=`Locked ${date} by ${by} · Based on group ratings · Refresh won't change it`;
+  document.getElementById('lock-banner').classList.add('show');
+}
+
+buildStars();load();initVoter();syncItinerary();showLockBanner();
 (function(){document.querySelectorAll('#p4 .rest-name').forEach(function(el){var n=el.textContent.trim();var m=document.createElement('div');m.className='rest-meta';m.innerHTML='🔗 <a href="https://www.google.com/search?q='+encodeURIComponent(n+' Aruba restaurant')+'" target="_blank" rel="noopener">Hours, phone &amp; reserve ↗</a>';el.closest('.rest').appendChild(m);});})();
 </script>
 </body></html>
