@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aruba 2026 · Family of 17 · Trip Planner</title>
+<title>Aruba 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--sand:#F7F1E4;--ocean:#0B6E8F;--ocean2:#E0F2F7;--coral:#D95C38;--coral2:#FDEEE9;--gold:#C4922A;--gold2:#FDF5DF;--teal:#1A9B86;--teal2:#E0F5F1;--night:#1C2332;--text:#252525;--muted:#6A7282;--border:#E2D9C6;--white:#fff;--bg:#FDFAF4;--purple:#6B4FAE;--purple2:#F0EAFF;--pink:#993556;--pink2:#FFE8F5;--rad:8px;--radlg:12px}
@@ -219,13 +219,46 @@ body{font-size:14px}
 .mission-label strong{display:block;font-size:13px}
 .mission-label small{font-size:11.5px;color:var(--muted)}
 @media(max-width:600px){.intel-grid{grid-template-columns:1fr}}
+/* ITINERARY OPTIONS */
+.opt-bar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px;align-items:center}
+.opt-label{font-size:12px;color:var(--muted);font-weight:500}
+.opt-btn{padding:7px 16px;font-size:13px;font-weight:500;border-radius:20px;border:1px solid var(--border);background:var(--white);cursor:pointer;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:5px}
+.opt-btn.active{background:var(--night);color:#fff;border-color:var(--night)}
+.opt-panel{display:none;border:1px solid var(--border);border-radius:var(--radlg);margin-bottom:18px;overflow:hidden}
+.opt-panel.show{display:block}
+.opt-panel-head{padding:14px 16px;font-size:13.5px;font-weight:600;border-bottom:1px solid var(--border)}
+.ob-budget{background:var(--teal2);color:var(--teal)}
+.ob-fam{background:var(--gold2);color:#7A5C00}
+.ob-age{background:var(--purple2);color:var(--purple)}
+.opt-panel-head.ob-budget{border-color:#B2DFD5}
+.opt-panel-head.ob-fam{border-color:#E8D080}
+.opt-panel-head.ob-age{border-color:#C9B8F0}
+.opt-day{padding:12px 16px;border-bottom:1px solid var(--border)}
+.opt-day:last-child{border-bottom:none}
+.opt-day-h{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.opt-row{display:grid;grid-template-columns:90px 1fr;gap:8px;padding:5px 0;font-size:12.5px;border-bottom:1px solid rgba(0,0,0,.04)}
+.opt-row:last-child{border-bottom:none}
+.opt-row .ot{color:var(--ocean);font-weight:600;font-size:11.5px;padding-top:1px}
+.opt-row .od{color:var(--text);line-height:1.5}
+.opt-save{background:var(--teal2);color:var(--teal);border-radius:4px;padding:1px 7px;font-size:10.5px;font-weight:700;white-space:nowrap}
+.grp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:14px 16px}
+.grp-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rad);padding:12px}
+.grp-emoji{font-size:22px;margin-bottom:4px}
+.grp-head{font-weight:700;font-size:13px;margin-bottom:5px}
+.grp-items{font-size:12px;color:var(--muted);line-height:1.7}
+.grp-items li{margin-left:14px}
+.fam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:14px 16px}
+.fam-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rad);padding:12px}
+.fam-head{font-weight:700;font-size:13px;margin-bottom:5px}
+.fam-body{font-size:12px;color:var(--muted);line-height:1.65}
+@media(max-width:600px){.opt-row{grid-template-columns:70px 1fr}.grp-grid,.fam-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <div class="hero-eye">Family Trip Planner · Jun 27 – Jul 2, 2026</div>
-  <h1>Aruba 🌴 Family of 17</h1>
+  <div class="hero-eye">Jun 27 – Jul 2, 2026</div>
+  <h1>Aruba 2026 🌴</h1>
   <div class="hero-sub">Divi Aruba Phoenix Beach Resort · 4 families · Ages 5–85 · 2 vehicles</div>
   <div class="pills">
     <span class="pill">Palm Beach · Studio Suite</span>
@@ -547,6 +580,145 @@ body{font-size:14px}
 <div class="ci"><span class="ci-n">6</span><span><strong>Pure Indulgence Spa (ladies Day 3)</strong> · +1 (297) 586-6066 · Group appointment, request Angeles or Francy</span></div>
 <div class="ci"><span class="ci-n">7</span><span><strong>Kukoo Kunuku Pub Krawl (Day 3, 18+)</strong> · <a href="https://www.kukookunuku.com" target="_blank">kukookunuku.com</a> · Call hotel # upon Aruba arrival</span></div>
 <div class="ci"><span class="ci-n">8</span><span><strong>Ling &amp; Sons grocery run (Day 1 afternoon)</strong> · No booking · 5 min drive N · Budget ~$80 · Saves $300+ across trip</span></div>
+</div>
+
+<!-- OPTIONS PANEL -->
+<div class="opt-bar">
+  <span class="opt-label">View alternate plans:</span>
+  <button class="opt-btn" onclick="toggleOpt('opt-budget',this)">💰 Budget Mode</button>
+  <button class="opt-btn" onclick="toggleOpt('opt-fam',this)">👨‍👩‍👧‍👦 Split by Family</button>
+  <button class="opt-btn" onclick="toggleOpt('opt-age',this)">🎂 Split by Age Group</button>
+</div>
+
+<!-- BUDGET MODE -->
+<div id="opt-budget" class="opt-panel">
+<div class="opt-panel-head ob-budget">💰 Budget Mode — All 5 Days for ~$150–200 less per person · Same great trip, smarter spending</div>
+
+<div class="opt-day">
+<div class="opt-day-h">Day 1 · Arrival · No changes needed</div>
+<div class="opt-row"><div class="ot">4:00 PM</div><div class="od">Check-in + Ling &amp; Sons run — same as primary plan. This grocery run IS the budget play. $80 total saves $300+ across the trip.</div></div>
+<div class="opt-row"><div class="ot">7:30 PM</div><div class="od"><strong>Welcome dinner at resort BBQ pavilion</strong> — use Ling &amp; Sons supplies. Zero logistics, all 17 together. $5–8/pp vs. ~$22/pp at Bugaloe. <span class="opt-save">Save ~$240 group</span></div></div>
+</div>
+
+<div class="opt-day">
+<div class="opt-day-h">Day 2 · Skip the catamaran — free water day instead</div>
+<div class="opt-row"><div class="ot">8:00 AM</div><div class="od"><strong>Boca Catalina Beach</strong> — free, calm, crystal-clear, pelicans, shallow snorkeling. Bring resort snorkel gear. Drive 10 min N.</div></div>
+<div class="opt-row"><div class="ot">10:30 AM</div><div class="od"><strong>Mangel Halto</strong> — locals' #1 snorkeling beach. Free. Turquoise lagoon, sea horses, reef fish. Better visibility than most paid tours. Drive 20 min S.</div></div>
+<div class="opt-row"><div class="ot">1:00 PM</div><div class="od"><strong>Tres Trapi cove swim</strong> — secret local spot, free, 5 min from Mangel Halto. Float in crystal pool. Pack Ling &amp; Sons lunch. <span class="opt-save">Save $70–85/pp vs. catamaran</span></div></div>
+<div class="opt-row"><div class="ot">3:30 PM</div><div class="od">Resort pool + beach free afternoon. Same vibe as post-catamaran, zero cost.</div></div>
+<div class="opt-row"><div class="ot">7:00 PM</div><div class="od"><strong>Zeerovers</strong> — fishermen's shack dinner, $8–10/plate, cash only. The real Aruba fish experience. Drive 20 min S. <span class="opt-save">Save ~$15–20/pp vs. restaurant</span></div></div>
+</div>
+
+<div class="opt-day">
+<div class="opt-day-h">Day 3 · Replace paid tours with DIY adventure</div>
+<div class="opt-row"><div class="ot">7:30 AM</div><div class="od"><strong>Pastechi House breakfast</strong> — drive to Oranjestad, $1.50 each. Everyone gets 2-3 pastechis. Group of 17 = $50 total. <span class="opt-save">Save $170 vs. resort breakfast</span></div></div>
+<div class="opt-row"><div class="ot">9:00 AM</div><div class="od"><strong>Arikok National Park DIY</strong> — $15/pp entry, rent a car and self-guide. Quadirikiri Cave, Fontein Cave paintings, Natural Pool overlook, iguana spotting. 4 hours. <span class="opt-save">Save $65/pp vs. guided UTV</span></div></div>
+<div class="opt-row"><div class="ot">1:30 PM</div><div class="od"><strong>Baby Beach</strong> — 15 min from Arikok exit. Free. The best kid and family beach in the Caribbean. Pack Ling &amp; Sons lunch, swim for 2 hours.</div></div>
+<div class="opt-row"><div class="ot">5:00 PM</div><div class="od">Resort return. Ladies: resort spa (on-property, cheaper than external booking). Dads: resort beach bar.</div></div>
+<div class="opt-row"><div class="ot">7:00 PM</div><div class="od"><strong>Texas de Brazil or Gianni's</strong> — both on Palm Beach strip, group-friendly, walkable. ~$35–45/pp vs. Flying Fishbone $80+/pp. <span class="opt-save">Save $35–40/pp on dinner</span></div></div>
+</div>
+
+<div class="opt-day">
+<div class="opt-day-h">Day 4 · Keep the highlights, trim the add-ons</div>
+<div class="opt-row"><div class="ot">11:00 AM</div><div class="od"><strong>Zeerovers fish lunch</strong> — keep this on plan. $10/pp, best meal on the island. The one food experience worth every cent.</div></div>
+<div class="opt-row"><div class="ot">2:00 PM</div><div class="od"><strong>California Lighthouse + Alto Vista Chapel scenic drive</strong> — free. Beautiful, photogenic, no entry fee. 30 min round trip each. Better than paying for a jeep safari.</div></div>
+<div class="opt-row"><div class="ot">5:30 PM</div><div class="od"><strong>Sunset at Eagle Beach</strong> — free. Best sunset beach in the Caribbean. Bring Ling &amp; Sons drinks. The fofoti trees glow at golden hour.</div></div>
+<div class="opt-row"><div class="ot">7:30 PM</div><div class="od"><strong>Keep Madame Janette</strong> — this one IS worth the splurge for 17 together. Or substitute: resort BBQ cookout for $15/pp total. <span class="opt-save">Save $50–70/pp if you do resort BBQ</span></div></div>
+</div>
+
+<div class="opt-day">
+<div class="opt-day-h">Day 5 · Departure · No changes — beach morning is already free</div>
+<div class="opt-row"><div class="ot">All day</div><div class="od">Resort beach + pool until checkout. Eat remaining Ling &amp; Sons supplies. Airport at 2pm. Budget breakfast saves last-day costs vs. eating out.</div></div>
+<div class="opt-row"><div class="ot">Est. savings</div><div class="od"><strong>Full Budget Mode savings: $200–350 per adult, $100–150 per child.</strong> Group of 17 saves $3,000–5,000 total with no material drop in fun — the free beaches rival any paid activity.</div></div>
+</div>
+</div>
+
+<!-- FAMILY SPLITS -->
+<div id="opt-fam" class="opt-panel">
+<div class="opt-panel-head ob-fam">👨‍👩‍👧‍👦 Split by Family — Day 4 afternoon is your best "family unit" window (everyone reconvenes at 7pm for Madame Janette)</div>
+
+<div class="opt-day">
+<div class="opt-day-h">When to split · Best windows by day</div>
+<div class="opt-row"><div class="ot">Day 1</div><div class="od">Everyone together — arrival and first-night bonding. Keep as a group.</div></div>
+<div class="opt-row"><div class="ot">Day 2</div><div class="od">Catamaran fits all 17 → everyone together. Or: families split beach spots in the afternoon.</div></div>
+<div class="opt-row"><div class="ot">Day 3</div><div class="od">Already split by role (dads fishing, ladies spa, teens UTV). Families are naturally separated by activity.</div></div>
+<div class="opt-row"><div class="ot">Day 4 PM</div><div class="od"><strong>Best family split window.</strong> After Zeerovers lunch (~1pm), each family goes their own way until 6:30pm, then reunites at Madame Janette. 4 families = 4 adventures. See options below.</div></div>
+<div class="opt-row"><div class="ot">Day 5</div><div class="od">Resort beach morning — families naturally cluster by vibe. Some pack early, some live their last beach hour.</div></div>
+</div>
+
+<div class="fam-grid">
+<div class="fam-card"><div class="fam-head">🏖️ Family A — Little Ones (with ages 5 &amp; 7)</div><div class="fam-body">After Zeerovers, drive 5 min east to <strong>Baby Beach</strong> — the perfect kid lagoon. Then <strong>Red Anchor at Boca Grandi</strong> for photos. If kids have energy: short <strong>tide pool walk</strong>. Back to resort by 5pm for nap + dress-up before Madame Janette. This is the exact day-trip your youngest travelers need.</div></div>
+<div class="fam-card"><div class="fam-head">🏄 Family B — Teens &amp; Young Adults</div><div class="fam-body">After Zeerovers, drive to <strong>Arikok National Park</strong> (20 min N). Iguana spotting, Quadirikiri Cave, hike to Natural Pool overlook. Teens love having "wilderness time" without adults helicoptering. Back via <strong>Blackstone Beach</strong> detour if energy allows. Arrive at Madame Janette sun-kissed and happy.</div></div>
+<div class="fam-card"><div class="fam-head">🎨 Family C — Culture &amp; Discovery</div><div class="fam-body">After Zeerovers, head to <strong>San Nicolas</strong> (10 min south). Street murals, Cosecha Art Gallery, local vibe. Then <strong>Balashi Brewery Cold Zone</strong> for an afternoon beer (locals' spot). Oranjestad harbor walk at Waf'i Rancho before heading to dinner. Completely different Aruba than the resort strip.</div></div>
+<div class="fam-card"><div class="fam-head">🚗 Family D — Scenic &amp; Relaxed</div><div class="fam-body">After Zeerovers, drive the scenic south coast up to <strong>California Lighthouse</strong> (40 min with stops). Detour to <strong>Alto Vista Chapel</strong>. Stop at <strong>Bright Bakery in Paradera</strong> for pastries. Arrive at California Lighthouse for golden-hour views, then straight to Madame Janette. Perfect pacing for anyone who prefers beauty over adrenaline.</div></div>
+</div>
+</div>
+
+<!-- AGE GROUPS -->
+<div id="opt-age" class="opt-panel">
+<div class="opt-panel-head ob-age">🎂 Split by Age Group — Signature activities &amp; best matches for each generation in your group of 17</div>
+
+<div class="grp-grid">
+<div class="grp-card"><div class="grp-emoji">🧒</div><div class="grp-head">Ages 5–7 · Little Explorers</div><div class="grp-items"><ul>
+<li>Baby Beach (shallow lagoon, zero waves)</li>
+<li>Flamingo Beach — flamingos walk up to them</li>
+<li>Butterfly Farm — butterflies land on them</li>
+<li>Arikok iguana spotting</li>
+<li>Tide pools at Boca Mahos</li>
+<li>Evening ice cream walk on Palm Beach strip</li>
+<li>Resort pool every morning before group activities</li>
+</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 4 PM — Baby Beach + Red Anchor</div></div></div>
+
+<div class="grp-card"><div class="grp-emoji">🏄</div><div class="grp-head">Ages 14–17 · Teen Adventurers</div><div class="grp-items"><ul>
+<li>UTV AM slot (book independently — adults on PM)</li>
+<li>Jet ski from Palm Beach operators</li>
+<li>Parasailing off Palm Beach</li>
+<li>Eagle Beach volleyball + hangout</li>
+<li>Bugaloe Beach Bar (all-ages friendly)</li>
+<li>Resort basketball court evenings</li>
+<li>Casino observation (some casinos allow 18+ only — verify)</li>
+</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 3 AM — UTV adventure on their own</div></div></div>
+
+<div class="grp-card"><div class="grp-emoji">🎉</div><div class="grp-head">Ages 18–22 · Young Adults</div><div class="grp-items"><ul>
+<li>Kukoo Kunuku pub crawl (18+ strictly)</li>
+<li>Deep sea fishing charter</li>
+<li>Eagle Beach — all-day hang</li>
+<li>San Nicolas Saturday night art walk</li>
+<li>Balashi Brewery tour + Cold Zone</li>
+<li>Palm Beach bar hop (Moomba → Bugaloe → Pelican Pier)</li>
+<li>Casino evenings (Crystal Casino or Stellaris Marriott)</li>
+</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 3 evening — Kukoo Kunuku + their own night</div></div></div>
+
+<div class="grp-card"><div class="grp-emoji">🌅</div><div class="grp-head">Ages 35–55 · Active Parents</div><div class="grp-items"><ul>
+<li>UTV PM slot (adults' version — same caves, adult pace)</li>
+<li>Pure Indulgence Spa group morning</li>
+<li>Flying Fishbone — adults' splurge dinner</li>
+<li>Golf at The Links at Divi or Tierra del Sol</li>
+<li>Sunset sail (Mi Dushi or similar)</li>
+<li>Madame Janette group dinner for all 17</li>
+<li>Dads: deep sea fishing charter Day 3</li>
+</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 3 — the ultimate age-group split day</div></div></div>
+
+<div class="grp-card"><div class="grp-emoji">🌿</div><div class="grp-head">Ages 60–85 · The Seasoned Explorers</div><div class="grp-items"><ul>
+<li>Butterfly Farm — calm, beautiful, easy walking</li>
+<li>Oranjestad harbor promenade at Waf'i Rancho</li>
+<li>Zeerovers fish lunch on the pier (unforgettable)</li>
+<li>California Lighthouse scenic drive</li>
+<li>Alto Vista Chapel hilltop visit</li>
+<li>Resort beach mornings — best seats in the house</li>
+<li>Arikok NP by car (don't need to hike — drive &amp; stop)</li>
+</ul><div style="margin-top:6px;font-size:11px;color:var(--teal)">Best Day: Day 4 — scenic south coast + lighthouse loop</div></div></div>
+</div>
+
+<div class="opt-day">
+<div class="opt-day-h">How Day 3 breaks down by age group — the cleanest natural split</div>
+<div class="opt-row"><div class="ot">7:00 AM</div><div class="od"><strong>Ages 35–55 (some):</strong> Deep sea fishing departs from Oranjestad</div></div>
+<div class="opt-row"><div class="ot">8:35 AM</div><div class="od"><strong>Ages 14–22:</strong> UTV AM slot hotel pickup — teens &amp; young adults go together. Their adventure, their call.</div></div>
+<div class="opt-row"><div class="ot">9:00 AM</div><div class="od"><strong>Ladies (all ages):</strong> Pure Indulgence Spa group appointment</div></div>
+<div class="opt-row"><div class="ot">10:00 AM</div><div class="od"><strong>Ages 5–7 + Ages 60–85:</strong> Butterfly Farm — both groups love it equally. Easy 45 min, butterflies land on everyone.</div></div>
+<div class="opt-row"><div class="ot">2:10 PM</div><div class="od"><strong>Ages 35–55:</strong> UTV PM slot. Little ones nap at resort. Young adults have Eagle Beach free afternoon.</div></div>
+<div class="opt-row"><div class="ot">7:00 PM+</div><div class="od"><strong>Ages 35–55 + adults:</strong> Flying Fishbone dinner. <strong>Ages 18+:</strong> Kukoo Kunuku departs. <strong>Ages 5–17:</strong> resort evening, Bugaloe, early bedtime.</div></div>
+</div>
 </div>
 
 <div class="day-card">
@@ -1077,6 +1249,13 @@ function filt(cat,btn){
     const cats=s.dataset.cat.split(' ');
     s.style.display=(cat==='all'||cats.includes(cat))?'':'none';
   });
+}
+function toggleOpt(id,btn){
+  const panel=document.getElementById(id);
+  const show=!panel.classList.contains('show');
+  document.querySelectorAll('.opt-panel').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('active'));
+  if(show){panel.classList.add('show');btn.classList.add('active');}
 }
 function showTab(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
