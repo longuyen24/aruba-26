@@ -48,6 +48,27 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .qr-body .stars-row{gap:4px}
 .qr-body .star-btn{font-size:20px}
 @media(max-width:600px){.qr-grid{grid-template-columns:repeat(2,1fr);gap:10px}.qr-img{height:120px}.qr-body{padding:8px 10px 10px}.qr-name{font-size:12.5px}.qr-blurb{display:none}}
+/* CUSTOM ACTIVITY INPUTS */
+.custom-section{margin-top:28px}
+.custom-section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.custom-img-placeholder{height:90px;background:linear-gradient(135deg,var(--coral),var(--gold));display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;user-select:none}
+.custom-name-input{width:100%;border:none;border-bottom:1.5px solid var(--border);padding:4px 0;font-size:13.5px;font-weight:600;font-family:inherit;background:none;outline:none;color:var(--text);margin-bottom:7px;box-sizing:border-box}
+.custom-name-input:focus{border-bottom-color:var(--ocean)}
+.custom-name-input::placeholder{color:var(--muted);font-weight:400}
+.custom-desc-input{width:100%;border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:12px;font-family:inherit;resize:vertical;min-height:48px;max-height:120px;outline:none;color:var(--text);background:var(--bg);margin-bottom:6px;box-sizing:border-box;line-height:1.45}
+.custom-desc-input:focus{border-color:var(--ocean)}
+.custom-desc-input::placeholder{color:var(--muted)}
+.custom-delete{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:3px 5px;border-radius:4px;line-height:1;flex-shrink:0}
+.custom-delete:hover{background:#FFEBEE;color:var(--coral)}
+.custom-add-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;padding:11px 0;background:none;border:2px dashed var(--border);border-radius:var(--radlg);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
+.custom-add-btn:hover{border-color:var(--ocean);color:var(--ocean);background:var(--ocean2)}
+.custom-p1-card{display:flex;gap:12px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:var(--radlg);padding:14px;margin-bottom:10px;position:relative}
+.custom-p1-card .star-col{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:52px}
+.custom-p1-card .slbl{font-size:9px;color:var(--muted);text-align:center;line-height:1.2;text-transform:uppercase;letter-spacing:.05em}
+.custom-p1-fields{flex:1;min-width:0}
+.custom-p1-delete{position:absolute;top:10px;right:10px}
+.custom-name-lg{font-size:14px}
+.custom-desc-lg{min-height:64px}
 .hero h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
 .hero-sub{font-size:13.5px;color:rgba(255,255,255,.75);margin-bottom:18px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65}
 .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
@@ -393,6 +414,7 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div class="pg-title">Quick Rate — Photo &amp; Vibe</div>
 <div class="pg-desc">Rate 1–5 stars. One photo, one sentence — that's it. Ratings sync live with Tab 1. Full details, directions, and tips are in the next tab.</div>
 <div id="p0-grid"></div>
+<div id="custom-section-p0" class="custom-section"></div>
 </div>
 
 <!-- PAGE 1 -->
@@ -734,7 +756,9 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div class="card-dir">🚗 Drive 5 min N on Palm Beach strip · OR walk 20 min N along J.E. Irausquin Blvd</div>
 <div class="card-src"><a href="https://things-to-do-in-aruba.com/aruba-nightlife/" target="_blank">Aruba Nightlife 2025 guide</a> · <a href="https://www.aruba.com/us/things-to-do/nightlife" target="_blank">aruba.com nightlife</a></div></div></div>
 
-<button class="cta-btn" onclick="calcScores();showTab('p2',document.querySelectorAll('.tab-btn')[1])">
+<div id="custom-section-p1" class="custom-section"></div>
+
+<button class="cta-btn" onclick="calcScores();showTab('p2',document.querySelectorAll('.tab-btn')[2])">
   📊 See My Ratings Summary → View Smart Itinerary
 </button>
 </div>
@@ -1925,6 +1949,104 @@ function closeLB(){
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
 
+// ── CUSTOM ACTIVITIES ──────────────────────────────────────────────────────
+let customActivities=[];
+function loadCustom(){try{customActivities=JSON.parse(localStorage.getItem('aruba26_custom')||'[]');}catch(e){customActivities=[];}}
+function saveCustom(){localStorage.setItem('aruba26_custom',JSON.stringify(customActivities));}
+function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function addCustomActivity(){
+  const id='custom_'+Date.now();
+  customActivities.push({id,name:'',desc:''});
+  saveCustom();renderCustom();
+  setTimeout(()=>document.querySelector(`.custom-name-input[data-cid="${id}"]`)?.focus(),30);
+}
+
+function deleteCustomActivity(id){
+  customActivities=customActivities.filter(a=>a.id!==id);
+  delete ratings[id];
+  saveCustom();save();renderCustom();syncItinerary();
+}
+
+function updateCustomField(id,field,value){
+  const a=customActivities.find(a=>a.id===id);
+  if(a){a[field]=value;saveCustom();}
+}
+
+function buildCustomStarRow(row){
+  const id=row.dataset.id;
+  if(row.querySelector('.star-btn'))return;
+  for(let i=1;i<=5;i++){
+    const b=document.createElement('button');
+    b.className='star-btn';b.innerHTML='★';b.dataset.v=i;
+    b.title=['','No interest','Mild interest','Would do it','Really want this','MUST DO'][i];
+    b.addEventListener('mouseenter',()=>hov(row,i));
+    b.addEventListener('mouseleave',()=>rst(row,id));
+    b.addEventListener('click',()=>setR(id,i,row));
+    row.appendChild(b);
+  }
+  rst(row,id);
+}
+
+function wireCustomSection(container){
+  container.querySelectorAll('.custom-name-input,.custom-desc-input').forEach(inp=>{
+    inp.addEventListener('input',()=>updateCustomField(inp.dataset.cid,inp.dataset.field,inp.value));
+  });
+  container.querySelectorAll('.stars-row[data-id]').forEach(buildCustomStarRow);
+}
+
+function renderCustom(){
+  // ── Tab 0 (photo-card style) ──────────────────────────────────
+  const p0=document.getElementById('custom-section-p0');
+  if(p0){
+    let h='<div class="custom-section-label">✏️ Add Your Own Activities</div>';
+    h+='<div class="qr-grid">';
+    customActivities.forEach(a=>{
+      h+=`<div class="qr-card" style="overflow:visible">
+        <div class="custom-img-placeholder">✏️</div>
+        <div class="qr-body">
+          <input class="custom-name-input" data-cid="${a.id}" data-field="name"
+            placeholder="Activity name..." value="${escHtml(a.name)}" maxlength="60">
+          <textarea class="custom-desc-input" data-cid="${a.id}" data-field="desc"
+            placeholder="One-liner or notes..." maxlength="200">${escHtml(a.desc)}</textarea>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+            <div class="stars-row" data-id="${a.id}"></div>
+            <button class="custom-delete" onclick="deleteCustomActivity('${a.id}')" title="Remove">✕</button>
+          </div>
+        </div>
+      </div>`;
+    });
+    h+='</div>';
+    h+='<button class="custom-add-btn" onclick="addCustomActivity()">＋ Add your own activity</button>';
+    p0.innerHTML=h;
+    wireCustomSection(p0);
+  }
+
+  // ── Tab 1 (act-card style) ────────────────────────────────────
+  const p1=document.getElementById('custom-section-p1');
+  if(p1){
+    let h='<div class="sec-label" style="margin-top:24px;border-top:1px solid var(--border);padding-top:20px">✏️ Add Your Own Activities</div>';
+    customActivities.forEach(a=>{
+      h+=`<div class="custom-p1-card">
+        <div class="star-col">
+          <div class="slbl">My<br>Rating</div>
+          <div class="stars-row" data-id="${a.id}"></div>
+        </div>
+        <div class="custom-p1-fields">
+          <input class="custom-name-input custom-name-lg" data-cid="${a.id}" data-field="name"
+            placeholder="Activity name..." value="${escHtml(a.name)}" maxlength="60">
+          <textarea class="custom-desc-input custom-desc-lg" data-cid="${a.id}" data-field="desc"
+            placeholder="Details, cost, where, why you want to do it..." maxlength="400">${escHtml(a.desc)}</textarea>
+        </div>
+        <button class="custom-delete custom-p1-delete" onclick="deleteCustomActivity('${a.id}')" title="Remove">✕</button>
+      </div>`;
+    });
+    h+='<button class="custom-add-btn" onclick="addCustomActivity()">＋ Add your own activity</button>';
+    p1.innerHTML=h;
+    wireCustomSection(p1);
+  }
+}
+
 // ── MANUAL OVERRIDE ────────────────────────────────────────────────────────
 let manualOverride=!!localStorage.getItem('aruba26_manual');
 function setManualOverride(on){
@@ -2075,7 +2197,7 @@ function initSync(){
   // auto-create gist on first rating if PAT exists but no gist yet
 }
 
-buildQuickRateTab();buildStars();load();initVoter();syncItinerary();showLockBanner();initDayModes();
+buildQuickRateTab();buildStars();loadCustom();load();renderCustom();initVoter();syncItinerary();showLockBanner();initDayModes();
 // restore manual override banner
 if(manualOverride){const b=document.getElementById('manual-banner');if(b)b.style.display='flex';}
 initDragDrop();initSync();
