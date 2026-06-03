@@ -155,6 +155,37 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .bnoord{background:var(--ocean2);color:var(--ocean)}
 .bcity{background:var(--gold2);color:#7A5A0A}
 .bsouth{background:var(--coral2);color:#9A3018}
+.rest-meta{font-size:11px;margin-top:4px}
+.rest-meta a{color:var(--ocean)}
+/* RESPONSIVE / MOBILE */
+html{-webkit-text-size-adjust:100%}
+.card-name,.rest-name,.slot-title,.card-desc,.rest-note{overflow-wrap:anywhere}
+a{word-break:break-word}
+.tabs{-webkit-overflow-scrolling:touch}
+@media(max-width:600px){
+.page{padding:20px 14px 56px}
+.pg-title{font-size:22px}
+.hero{padding:30px 18px 24px}
+.hero h1{font-size:28px}
+.tab-btn{padding:12px 14px;font-size:12.5px}
+.star-col{min-width:58px;padding:9px}
+.star-btn{font-size:20px}
+.card-top{flex-direction:column;align-items:flex-start;gap:4px}
+.badge-row{align-self:flex-start}
+.slots{padding:11px 12px}
+.slot{gap:9px}
+.slot-t{min-width:58px}
+.split-grid{grid-template-columns:1fr}
+}
+@media(max-width:400px){
+body{font-size:14px}
+.hero h1{font-size:23px}
+.pg-title{font-size:19px}
+.sc-box{min-width:68px;padding:10px 8px}
+.slot{flex-direction:column;gap:3px}
+.slot-t{min-width:0}
+.star-col .slbl{font-size:8px}
+}
 </style>
 </head>
 <body>
@@ -771,6 +802,16 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 </div>
 
 <div class="cons-card">
+<div class="cons-head"><div class="cons-icon ci-pink">🛎️</div><h3>Services That Come to You</h3></div>
+<div class="hi"><strong>At a resort (not a villa):</strong> the front desk and room service are fastest. Mobile massage, grocery provisioning and private transfers also deliver to resorts; full private-chef / in-villa dining is geared to rental villas, but some chefs will cater a resort suite that has a kitchen.</div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Resort room service + concierge</span><span class="bdg bonsite">🏨 On-site</span></div><div class="rest-note">In-room dining, extra housekeeping and bookings — dial the front desk. Pure Indulgence Spa (on-property) can often arrange in-room or poolside massage.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Grocery provisioning &amp; delivery</span><span class="bdg ball">Pre-stock the suites</span></div><div class="rest-note">Have breakfast, drinks &amp; snacks delivered so the suites are stocked on arrival (complements the Ling &amp; Sons run). 🔗 <a href="https://www.arubahostess.com/aruba-concierge-services/" target="_blank">arubahostess.com</a></div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">In-room / poolside massage</span><span class="bdg ball">Mobile therapist</span></div><div class="rest-note">Certified therapists come to you — ideal for a recovery afternoon. 🔗 <a href="https://arubabutler.com/" target="_blank">arubabutler.com</a> · or the on-site spa.</div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Private chef / in-suite dinner</span><span class="bdg ball">A group night in</span></div><div class="rest-note">A chef shops, cooks &amp; cleans — an all-17 night with no restaurant logistics. Best with a full-kitchen suite. 🔗 <a href="https://www.myprivatechefaruba.com/" target="_blank">myprivatechefaruba.com</a> · <a href="https://arubabutler.com/aruba-private-chef/" target="_blank">arubabutler.com</a></div></div>
+<div class="rest"><div class="rest-top"><span class="rest-name">Private transfers &amp; baby gear</span><span class="bdg ball">Delivered</span></div><div class="rest-note">Group van transfers (handy for 17 + luggage) and cribs/strollers/beach gear delivered to the resort. 🔗 <a href="https://www.arubahostess.com/" target="_blank">arubahostess.com</a></div></div>
+</div>
+
+<div class="cons-card">
 <div class="cons-head"><div class="cons-icon ci-gold">📱</div><h3>Mobile &amp; Staying Connected</h3></div>
 <div class="hi"><strong>Quickest setup:</strong> install a travel <strong>eSIM before you fly</strong> (data-only, activates on landing). For a 5–6 day trip a 3–5 GB plan (~$20–30) is plenty if you're on resort WiFi at night.</div>
 <ul>
@@ -840,5 +881,6 @@ function load(){
   }catch(e){}
 }
 buildStars();load();
+(function(){document.querySelectorAll('#p4 .rest-name').forEach(function(el){var n=el.textContent.trim();var m=document.createElement('div');m.className='rest-meta';m.innerHTML='🔗 <a href="https://www.google.com/search?q='+encodeURIComponent(n+' Aruba restaurant')+'" target="_blank" rel="noopener">Hours, phone &amp; reserve ↗</a>';el.closest('.rest').appendChild(m);});})();
 </script>
 </body></html>
