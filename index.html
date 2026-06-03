@@ -288,6 +288,13 @@ body{font-size:14px}
 .tp-skip{font-size:10.5px;background:#FFE4E4;color:#B22222;border-radius:4px;padding:1px 7px;font-weight:700;flex-shrink:0}
 .conflict-warn{background:#FFF4E0;border:1px solid #E8A030;border-radius:var(--rad);padding:10px 13px;margin-bottom:8px;font-size:12px;color:#7A4000;display:flex;gap:8px;line-height:1.5}
 .unscheduled-note{font-size:12px;color:var(--coral);padding:6px 0;border-top:1px dashed var(--border);margin-top:4px}
+/* ORGANIZER PANEL */
+.org-panel{border-top:1px solid var(--border);margin-top:40px;background:var(--white)}
+.org-summary{padding:12px 20px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;max-width:980px;margin:0 auto}
+.org-summary::-webkit-details-marker{display:none}
+.org-summary::after{content:'▸';font-size:10px;transition:transform .2s}
+details[open] .org-summary::after{transform:rotate(90deg)}
+.org-body{padding:16px 20px 32px;max-width:980px;margin:0 auto}
 /* CLAUDE CONNECT */
 .claude-panel{background:var(--purple2);border:1px solid #C4AEF5;border-radius:var(--radlg);padding:16px 18px;margin-bottom:16px}
 .claude-panel h4{color:var(--purple);font-size:15px;margin-bottom:5px;display:flex;align-items:center;gap:7px}
@@ -672,34 +679,6 @@ body{font-size:14px}
 <!-- SMART TOP PICKS (populated by JS) -->
 <div id="top-picks" class="top-picks"></div>
 
-<!-- CLAUDE CONNECT PANEL -->
-<div class="claude-panel">
-  <h4>🤖 Auto-Update Itinerary with Claude</h4>
-  <p>Rate activities in Tab 1, then hit <strong>Auto-Update</strong> — Claude rewrites the itinerary around your actual preferences, commits to GitHub, and the live site updates for everyone in ~90 seconds. Or copy the prompt and paste it into Claude Code manually.</p>
-
-  <!-- AUTO-UPDATE SECTION -->
-  <div id="auto-update-section">
-    <div id="pat-setup-prompt" style="display:none;background:rgba(0,0,0,.05);border-radius:8px;padding:12px;margin-bottom:12px">
-      <div style="font-size:13px;font-weight:600;margin-bottom:8px">⚙️ One-time setup — GitHub Token</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Create a GitHub Personal Access Token with <code>workflow</code> scope at <strong>github.com → Settings → Developer settings → Personal access tokens</strong>. Stored only in your browser.</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <input id="pat-input" type="password" placeholder="ghp_xxxxxxxxxxxx" style="flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;font-family:monospace">
-        <button onclick="savePat()" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:13px;cursor:pointer">Save Token</button>
-        <button onclick="cancelPatSetup()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:7px 12px;font-size:13px;cursor:pointer;color:var(--muted)">Cancel</button>
-      </div>
-    </div>
-    <div class="claude-btn-row" style="flex-wrap:wrap;gap:8px">
-      <button class="cta-claude" id="auto-update-btn" onclick="autoUpdate()" style="background:var(--teal)">⚡ Auto-Update via Claude</button>
-      <button class="cta-claude" onclick="generateClaudePrompt()" style="background:var(--purple)">📋 Copy Prompt for Claude Code</button>
-      <span id="copy-toast" class="copy-toast">✓ Copied!</span>
-    </div>
-    <div id="auto-update-status" style="display:none;margin-top:10px;font-size:12.5px;padding:10px;background:rgba(0,0,0,.05);border-radius:6px;line-height:1.6"></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:8px">Auto-Update requires: (1) <code>ANTHROPIC_API_KEY</code> in this repo's GitHub Secrets, (2) a GitHub token entered above. First time only.</div>
-  </div>
-
-  <button class="lock-cta" onclick="lockItinerary()" style="margin-top:10px">🔒 Lock Itinerary</button>
-  <div class="claude-note" style="margin-top:10px">💡 <strong>How ratings work:</strong> Ratings live in <em>this browser's localStorage</em> — survive refresh and restarts on the same device. Different device = fresh vote. No server, no account. The Auto-Update button sends your device's ratings to GitHub Actions, which calls Claude and pushes the updated file. Everyone sees the new itinerary after ~90 seconds.</div>
-</div>
 
 
 <div class="day-card">
@@ -1190,6 +1169,39 @@ body{font-size:14px}
 <div class="rest"><div class="rest-top"><span class="rest-name">Fresh fish at Zeerovers (with older supervision)</span><span class="bdg bsouth">🚗 ~20 min · Savaneta</span></div><div class="rest-note">Even 5 and 7 year olds can enjoy the experience — watching fishermen at the dock, eating at picnic tables on the water. Order shrimp for the little ones. It's an adventure, not just a meal.</div></div>
 <div class="rest"><div class="rest-top"><span class="rest-name">Ice cream on Palm Beach strip (evening walk)</span><span class="bdg bwalk">🚶 Walkable</span></div><div class="rest-note">End the day with a beach walk and ice cream. Multiple spots on the strip serve tropical flavors (coconut, mango, guava). A ritual the 5 and 7 year olds will beg to repeat every night.</div></div>
 </div>
+</div>
+
+<!-- ORGANIZER PANEL — bottom of page -->
+<div class="org-panel">
+  <details>
+    <summary class="org-summary">🔧 Organizer Tools</summary>
+    <div class="org-body">
+      <div class="claude-panel" style="margin:0;border-radius:var(--rad)">
+        <h4>🤖 Auto-Update Itinerary with Claude</h4>
+        <p>Rate activities in Tab 1, then hit <strong>Auto-Update</strong> — Claude rewrites the itinerary around your actual preferences, commits to GitHub, and the live site updates for everyone in ~90 seconds. Or copy the prompt and paste it into Claude Code manually.</p>
+        <div id="auto-update-section">
+          <div id="pat-setup-prompt" style="display:none;background:rgba(0,0,0,.05);border-radius:8px;padding:12px;margin-bottom:12px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:8px">⚙️ One-time setup — GitHub Token</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Create a GitHub Personal Access Token with <code>workflow</code> scope at <strong>github.com → Settings → Developer settings → Personal access tokens</strong>. Stored only in your browser.</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <input id="pat-input" type="password" placeholder="ghp_xxxxxxxxxxxx" style="flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;font-family:monospace">
+              <button onclick="savePat()" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:13px;cursor:pointer">Save Token</button>
+              <button onclick="cancelPatSetup()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:7px 12px;font-size:13px;cursor:pointer;color:var(--muted)">Cancel</button>
+            </div>
+          </div>
+          <div class="claude-btn-row" style="flex-wrap:wrap;gap:8px">
+            <button class="cta-claude" id="auto-update-btn" onclick="autoUpdate()" style="background:var(--teal)">⚡ Auto-Update via Claude</button>
+            <button class="cta-claude" onclick="generateClaudePrompt()" style="background:var(--purple)">📋 Copy Prompt for Claude Code</button>
+            <span id="copy-toast" class="copy-toast">✓ Copied!</span>
+          </div>
+          <div id="auto-update-status" style="display:none;margin-top:10px;font-size:12.5px;padding:10px;background:rgba(0,0,0,.05);border-radius:6px;line-height:1.6"></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px">Requires: <code>ANTHROPIC_API_KEY</code> in GitHub Secrets + a GitHub token entered above (one-time).</div>
+        </div>
+        <button class="lock-cta" onclick="lockItinerary()" style="margin-top:10px">🔒 Lock Itinerary</button>
+        <div class="claude-note" style="margin-top:10px">💡 Ratings live in localStorage — survive refresh on the same device. Different device = fresh vote. The Auto-Update button sends your ratings to GitHub Actions → Claude rewrites the file → live site updates in ~90 sec.</div>
+      </div>
+    </div>
+  </details>
 </div>
 
 <script>
