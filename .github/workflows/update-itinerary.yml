@@ -47,6 +47,8 @@ jobs:
             'madame':'Madame Janette (all 17)','lima':'Lima Bistro Farewell Dinner',
             'bugaloe':'Bugaloe Beach Bar','fishing':'Deep Sea Fishing Charter',
             'golf':'Golf','casino':'Casino Night','sunsetsail':'Sunset Sail',
+            'yoga':'Eagle Beach Yoga Session','aloe':'Aruba Aloe Factory Tour',
+            'screamingeagle':'Screaming Eagle Dinner (Ladies)',
             'shopping':'Oranjestad Shopping','kukoo':'Kukoo Kunuku Pub Crawl (18+)',
             'club':'Club / Nightlife',
           }
