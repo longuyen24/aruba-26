@@ -1834,7 +1834,47 @@ const QUICK={
 const QUICK_CAT_ORDER=['chill','resort','water','land','food','nightlife','ladies','dads'];
 const QUICK_CAT_LABELS={chill:'😌 Relax & Recharge',resort:'🏨 Resort',water:'🌊 Water',land:'🏜 Land',food:'🍽 Food & Dining',nightlife:'🌙 Nightlife',ladies:'💅 Ladies',dads:'🎣 Dads'};
 const QUICK_CAT_COLOR={chill:'#00796B',resort:'#1565C0',water:'#0277BD',land:'#E65100',food:'#6A1B9A',nightlife:'#1A237E',ladies:'#880E4F',dads:'#1B5E20'};
-const UNSPLASH='https://source.unsplash.com/featured/600x400/?';
+// Direct Unsplash CDN photo IDs — permanent, no API key needed
+const PHOTO={
+  pool:       'photo-1530549387789-4c1017266635', // resort pool
+  tennis:     'photo-1554068865-24cecd4e34b8', // tennis court
+  basketball: 'photo-1546519638-68e109498ffc', // basketball
+  spa:        'photo-1540555700478-4be289fbecef', // spa
+  bbq:        'photo-1555939594-58d7cb561ad1', // BBQ grill
+  gym:        'photo-1534438327276-14e5300c3a48', // gym
+  catamaran:  'photo-1544551763-46a013bb70d5', // catamaran sailing
+  utv:        'photo-1502126324834-38f8e02d7160', // ATV/UTV offroad
+  depalm:     'photo-1571019614242-c5c5dee9f50b', // water park
+  parasail:   'photo-1530053969600-caed2596d242', // parasailing beach
+  arashi:     'photo-1559128010-7c1ad6e1b6a5', // snorkeling reef
+  mangel:     'photo-1534766438357-2b270dbd1b40', // underwater coral
+  flamingo:   'photo-1558618666-fcd25c85cd64', // flamingo
+  jeep:       'photo-1519424187720-db8a5e98bf96', // jeep desert
+  lighthouse: 'photo-1507525428034-b723cf961d3e', // coastal scenic
+  casibari:   'photo-1501854140801-50d01698950b', // rock boulders desert
+  oranjestad: 'photo-1548013146-72479768bada', // colorful colonial town
+  horse:      'photo-1553284965-83fd3e82fa5a', // horseback beach
+  zeerovers:  'photo-1565299624946-b28f40a0ae38', // fried fish local
+  flyfish:    'photo-1414235077428-338989a2e8c0', // waterfront dining
+  madame:     'photo-1559339352-11d035aa65de', // garden restaurant
+  lima:       'photo-1555396273-367ea4eb4db5', // elegant restaurant
+  bugaloe:    'photo-1510414842594-a61c69b5ae57', // beach bar
+  fishing:    'photo-1544551763-77ef2d0cfc6c', // deep sea fishing
+  golf:       'photo-1535131749006-b7f58c99034b', // golf course ocean
+  casino:     'photo-1596838132731-75a2b4c93c0a', // casino
+  sunsetsail: 'photo-1502086223501-7ea6ecd79368', // sunset sailing
+  shopping:   'photo-1481437156560-3205f6a55735', // colorful market street
+  kukoo:      'photo-1533174072545-7a4b6ad7a6c3', // party nightlife
+  club:       'photo-1571127236794-81c0bbfe1ce3', // nightclub dancing
+  beachwalk:  'photo-1507525428034-b723cf961d3e', // palm beach sunset
+  eaglemorning:'photo-1506905925346-21bda4d32df4',// beach sunrise quiet
+  poolnap:    'photo-1499793983690-e29da59ef1c2', // pool relax float
+  hottub:     'photo-1584132967334-10e028bd69f7', // hot tub evening
+  readingbeach:'photo-1519046904884-53103b34b206',// hammock beach
+  sunrise:    'photo-1500534314209-a25ddb2bd429', // dramatic sunrise coast
+  'oranjestad-wander':'photo-1548013146-72479768bada', // street wander
+};
+const CDN='https://images.unsplash.com/';
 
 function buildQuickRateTab(){
   const container=document.getElementById('p0-grid');
@@ -1853,7 +1893,7 @@ function buildQuickRateTab(){
       const fb=QUICK_CAT_COLOR[cat]||'#546E7A';
       const BLANK='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
       html+=`<div class="qr-card">
-        <img class="qr-img" src="${UNSPLASH}${a.img}" alt="${name}" loading="lazy"
+        <img class="qr-img" src="${CDN}${PHOTO[a.id]||'photo-1507525428034-b723cf961d3e'}?w=600&h=400&fit=crop&q=80" alt="${name}" loading="lazy"
           onerror="this.onerror=null;this.src='${BLANK}';this.style.background='${fb}';this.style.opacity='.55'">
         <div class="qr-body">
           <div class="qr-name">${name}</div>
@@ -1878,7 +1918,7 @@ function openLB(src,caption){
   const lbImg=document.getElementById('lb-img');
   const lbCap=document.getElementById('lb-caption');
   // load full-size version (swap 600x400 → 1200x800 in Unsplash URL)
-  lbImg.src=src.replace('/600x400/','/1200x800/').replace('w=600','w=1200');
+  lbImg.src=src.replace('w=600&h=400','w=1400&h=900');
   lbCap.textContent=caption;
   lb.classList.add('open');
   document.body.style.overflow='hidden';
