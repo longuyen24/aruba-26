@@ -49,6 +49,9 @@ jobs:
             'golf':'Golf','casino':'Casino Night','sunsetsail':'Sunset Sail',
             'yoga':'Eagle Beach Yoga Session','aloe':'Aruba Aloe Factory Tour',
             'screamingeagle':'Screaming Eagle Dinner (Ladies)',
+            'manchebo':'Manchebo Beach','elements':'Elements Restaurant','pinchos':'Pinchos Grill & Bar',
+            'philipsgarden':"Philip's Animal Garden",'turtlewatch':'Sea Turtle Conservation Night Watch',
+            'ayorocks':'Ayo Rock Formations','bocsanddunes':'Boca Prins Sand Dunes','kayaksnorkel':'Resort Kayak + Snorkel',
             'shopping':'Oranjestad Shopping','kukoo':'Kukoo Kunuku Pub Crawl (18+)',
             'club':'Club / Nightlife',
           }
