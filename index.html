@@ -142,6 +142,15 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .survey-cta-body span{font-size:12px;color:rgba(255,255,255,.82);line-height:1.4}
 .survey-cta-btn{background:#fff;color:#8E44AD;border:none;border-radius:20px;padding:8px 18px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;letter-spacing:.03em}
 .survey-cta-btn:hover{background:rgba(255,255,255,.9)}
+.survey-done{margin:28px 0 8px;background:linear-gradient(135deg,#00695C 0%,#00897B 100%);border-radius:var(--radlg);padding:22px 20px;text-align:center;color:#fff}
+.survey-done-icon{font-size:36px;margin-bottom:8px}
+.survey-done h3{margin:0 0 6px;font-size:16px;font-weight:700}
+.survey-done p{margin:0 0 16px;font-size:13px;color:rgba(255,255,255,.85);line-height:1.5}
+.survey-done-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.survey-done-btn{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:20px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
+.survey-done-btn:hover{background:rgba(255,255,255,.35)}
+.survey-done-btn.primary{background:#fff;color:#00695C;border-color:#fff}
+.survey-done-btn.primary:hover{background:rgba(255,255,255,.9)}
 /* SURVEY BANNER (tab 1 instructions) */
 .survey-banner{background:var(--night);color:#fff;border-radius:var(--radlg);padding:15px 18px;display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
 .sb-icon{font-size:26px;flex-shrink:0}
@@ -408,7 +417,6 @@ details[open] .org-summary::after{transform:rotate(90deg)}
     <strong>Survey is open — we need your ratings!</strong>
     <span>The itinerary won't be finalized until <strong>10 family members</strong> have rated. Takes 2 minutes. Every vote shapes the trip.</span>
   </div>
-  <button class="survey-cta-btn" onclick="showTab('p0',document.querySelectorAll('.tab-btn')[0])">Rate Now →</button>
 </div>
 
 <div class="tab-bar">
@@ -437,6 +445,17 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div class="pg-title">Quick Rate — Photo &amp; Vibe</div>
 <div class="pg-desc">Rate 1–5 stars. One photo, one sentence — done. The Smart Itinerary finalizes after <strong>10 family members</strong> have rated, so the more people vote, the better it gets. Ratings sync live across tabs.</div>
 <div id="p0-grid"></div>
+
+<div class="survey-done">
+  <div class="survey-done-icon">🎉</div>
+  <h3>You're done — thank you!</h3>
+  <p>Your ratings are saved automatically on this device.<br>Want to see what each activity involves before finalising?</p>
+  <div class="survey-done-btns">
+    <button class="survey-done-btn primary" onclick="showTab('p1',document.querySelectorAll('.tab-btn')[1])">Browse Full Details</button>
+    <button class="survey-done-btn" onclick="showTab('p2',document.querySelectorAll('.tab-btn')[2])">See the Itinerary</button>
+  </div>
+</div>
+
 <div id="custom-section-p0" class="custom-section"></div>
 </div>
 
