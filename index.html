@@ -388,6 +388,10 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 .unlock-btn{font-size:12px;background:none;border:1px solid #81C784;color:#2E6B2E;border-radius:20px;padding:4px 14px;cursor:pointer}
 .lock-cta{background:#2E7D32;color:#fff;border:none;border-radius:var(--rad);padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:8px}
 .lock-cta:hover{opacity:.85}
+.qr-detail-link{display:block;width:100%;border:none;background:none;border-top:1px solid var(--border);padding:7px 13px;font-size:11.5px;color:var(--ocean);text-align:right;cursor:pointer;font-weight:600;letter-spacing:.01em;transition:background .15s}
+.qr-detail-link:hover{background:#f0f7ff}
+@keyframes card-flash{0%{box-shadow:0 0 0 0 rgba(13,130,138,.6)}60%{box-shadow:0 0 0 8px rgba(13,130,138,.15)}100%{box-shadow:0 0 0 0 rgba(13,130,138,0)}}
+.act-card.card-flash{animation:card-flash 1.2s ease-out}
 </style>
 </head>
 <body>
@@ -1521,6 +1525,33 @@ function showTab(id,btn){
   btn.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
+function jumpToDetail(id){
+  const btn=document.querySelectorAll('.tab-btn')[1];
+  showTab('p1',btn);
+  setTimeout(()=>{
+    const card=document.querySelector('#p1 .act-card[data-id="'+id+'"]');
+    if(!card)return;
+    card.scrollIntoView({behavior:'smooth',block:'center'});
+    card.classList.remove('card-flash');
+    void card.offsetWidth;
+    card.classList.add('card-flash');
+    setTimeout(()=>card.classList.remove('card-flash'),1500);
+  },220);
+}
+// Swipe left/right to navigate between tabs
+(function(){
+  let sx=0,sy=0;
+  document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    const dy=Math.abs(e.changedTouches[0].clientY-sy);
+    if(Math.abs(dx)<55||dy>Math.abs(dx)*0.9)return;
+    const btns=[...document.querySelectorAll('.tab-btn')];
+    const cur=btns.findIndex(b=>b.classList.contains('active'));
+    const next=cur+(dx<0?1:-1);
+    if(next>=0&&next<btns.length)btns[next].click();
+  },{passive:true});
+})();
 function save(){try{localStorage.setItem('aruba26',JSON.stringify(ratings));}catch(e){}}
 function load(){
   try{
@@ -2074,6 +2105,7 @@ function buildQuickRateTab(){
           <div class="qr-blurb">${a.blurb}</div>
           <div class="stars-row" data-id="${a.id}"></div>
         </div>
+        <button class="qr-detail-link" onclick="jumpToDetail('${a.id}')">Full details →</button>
       </div>`;
     });
     html+='</div>';
