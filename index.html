@@ -160,6 +160,8 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .submit-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a2e;color:#fff;border-radius:24px;padding:11px 22px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap}
 .submit-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 /* SURVEY BANNER (tab 1 instructions) */
+.rating-tip{background:var(--night);color:rgba(255,255,255,.85);border-radius:var(--rad);padding:10px 14px;font-size:12.5px;line-height:1.6;margin-bottom:14px}
+.rating-tip strong{color:#fff}
 .survey-banner{background:var(--night);color:#fff;border-radius:var(--radlg);padding:15px 18px;display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
 .sb-icon{font-size:26px;flex-shrink:0}
 .survey-banner h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;margin-bottom:4px}
@@ -473,34 +475,9 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 
 <!-- PAGE 1 -->
 <div id="p1" class="page">
-<span class="pg-badge badge-blue">Tab 1</span>
+<span class="pg-badge badge-blue">Full Details + Rate</span>
 <div class="pg-title">Rate Every Activity · Build Your Trip</div>
-<div class="pg-desc">Rate 1–5 stars. 1=No interest, 5=Must Do. ⏳=Limited availability — only offered on certain days/times, so we get just a few chances to do it (book early!). Teal left-border=resort amenity. Ratings save in your browser automatically.</div>
-
-<!-- VOTER IDENTITY BANNER -->
-<div id="voter-banner" class="voter-banner">
-  <div id="voter-display" style="display:none">
-    <span>⭐ Rating as: <strong id="voter-name-display"></strong></span>
-    <button class="voter-change" onclick="showVoterInput()">Change</button>
-    <span class="voter-info">· Saves on this device · Survives refresh ✓</span>
-    <span id="sync-pill" class="sync-pill" style="display:none"></span>
-  </div>
-  <div id="voter-input-row">
-    <span style="font-size:13px;font-weight:500">👋 Who's rating? </span>
-    <input id="voter-name-input" class="voter-input" type="text" placeholder="Your first name..." maxlength="20">
-    <button class="voter-save" onclick="saveVoterName()">Save my name</button>
-    <button class="voter-change" onclick="skipVoterName()" style="margin-left:2px">Skip</button>
-    <span class="voter-info"> — optional, one name per device</span>
-  </div>
-</div>
-
-<div class="survey-banner">
-  <div class="sb-icon">📋</div>
-  <div>
-    <h3>How this works — read before rating</h3>
-    <p>Rate each activity 1–5 stars on <em>your own device</em>. Ratings save automatically — closing the tab is fine, they stick. <strong style="color:#fff">We need 10 family members to rate before the itinerary is finalized.</strong> Every vote counts — high-rated activities get prime time slots, low-rated ones move to alternates. Takes about 2 minutes for Quick Rate (Tab 0).</p>
-  </div>
-</div>
+<div class="rating-tip">⭐ Tap stars to rate &nbsp;·&nbsp; <strong>1</strong> = skip it &nbsp;<strong>5</strong> = must do &nbsp;·&nbsp; saves instantly &nbsp;·&nbsp; ⏳ = limited dates, book early &nbsp;·&nbsp; teal border = resort amenity</div>
 
 <div class="filter-bar">
   <span class="filter-lbl">Filter:</span>
