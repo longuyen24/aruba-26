@@ -2345,20 +2345,26 @@ async function gistFetch(){
     const r=await fetch('https://api.github.com/gists/'+gistId,{headers:hdrs});
     if(!r.ok){setSyncPill('Sync ✗','err');return;}
     const d=await r.json();
-    const raw=d.files&&d.files['aruba26-ratings.json']&&d.files['aruba26-ratings.json'].content;
-    if(!raw)return;
-    const remote=JSON.parse(raw);
-    if((remote.ts||0)>syncTs){
-      syncTs=remote.ts||0;
-      const remoteRatings=remote.ratings||{};
-      Object.entries(remoteRatings).forEach(([id,v])=>{
-        ratings[id]=v;rstAll(id);
+    // collect all per-voter files (aruba26-ratings-*.json) plus legacy single file
+    const voterFiles=Object.entries(d.files||{})
+      .filter(([n])=>n.startsWith('aruba26-ratings-')||n==='aruba26-ratings.json')
+      .map(([,f])=>{try{return JSON.parse(f.content);}catch(e){return null;}})
+      .filter(Boolean);
+    if(!voterFiles.length)return;
+    const latestTs=Math.max(...voterFiles.map(f=>f.ts||0));
+    if(latestTs<=syncTs){setSyncPill('✓ '+new Date().toLocaleTimeString(),'ok');return;}
+    syncTs=latestTs;
+    // merge: average of all non-zero votes per activity
+    const sums={},counts={};
+    voterFiles.forEach(f=>{
+      Object.entries(f.ratings||{}).forEach(([id,v])=>{
+        if(v>0){sums[id]=(sums[id]||0)+v;counts[id]=(counts[id]||0)+1;}
       });
-      save();calcScores();syncItinerary();
-      setSyncPill('↓ '+new Date().toLocaleTimeString(),'ok');
-    } else {
-      setSyncPill('✓ '+new Date().toLocaleTimeString(),'ok');
-    }
+    });
+    Object.entries(sums).forEach(([id,s])=>{ratings[id]=Math.round(s/counts[id]);rstAll(id);});
+    save();calcScores();syncItinerary();
+    const voters=[...new Set(voterFiles.map(f=>f.voter).filter(Boolean))];
+    setSyncPill('↓ '+voters.length+' voter'+(voters.length!==1?'s':'')+' synced','ok');
   }catch(e){setSyncPill('Sync ✗','err');}
 }
 
@@ -2368,12 +2374,14 @@ async function gistPush(){
   if(!gistId){await gistCreate(pat);return;}
   const voter=localStorage.getItem('aruba26_voter')||'organizer';
   const ts=Date.now();syncTs=ts;
+  const slug=voter.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()||'anon';
+  const fname='aruba26-ratings-'+slug+'.json';
   const content=JSON.stringify({ratings,voter,ts},null,2);
   try{
     const r=await fetch('https://api.github.com/gists/'+gistId,{
       method:'PATCH',
       headers:{'Authorization':'token '+pat,'Content-Type':'application/json'},
-      body:JSON.stringify({files:{'aruba26-ratings.json':{content}}})
+      body:JSON.stringify({files:{[fname]:{content}}})
     });
     setSyncPill(r.ok?'↑ '+new Date().toLocaleTimeString():'Push ✗',r.ok?'ok':'err');
   }catch(e){setSyncPill('Push ✗','err');}
@@ -2382,13 +2390,15 @@ async function gistPush(){
 async function gistCreate(pat){
   const voter=localStorage.getItem('aruba26_voter')||'organizer';
   const ts=Date.now();
+  const slug=voter.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()||'anon';
+  const fname='aruba26-ratings-'+slug+'.json';
   const content=JSON.stringify({ratings,voter,ts},null,2);
   try{
     const r=await fetch('https://api.github.com/gists',{
       method:'POST',
       headers:{'Authorization':'token '+pat,'Content-Type':'application/json'},
       body:JSON.stringify({description:'Aruba 2026 — Shared Ratings',public:false,
-        files:{'aruba26-ratings.json':{content}}})
+        files:{[fname]:{content}}})
     });
     if(r.ok){
       const d=await r.json();
