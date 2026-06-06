@@ -1488,17 +1488,6 @@ details[open] .org-summary::after{transform:rotate(90deg)}
         <button class="lock-cta" onclick="lockItinerary()" style="margin-top:10px">🔒 Lock Itinerary</button>
         <div class="claude-note" style="margin-top:10px">💡 Ratings live in localStorage — survive refresh on the same device. Different device = fresh vote. The Auto-Update button sends your ratings to GitHub Actions → Claude rewrites the file → live site updates in ~90 sec.</div>
 
-        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
-          <h4 style="margin:0 0 6px">🔄 Live Ratings Sync (GitHub Gist)</h4>
-          <p style="font-size:12px;color:var(--muted);margin:0 0 10px">Ratings sync across all devices every 60 seconds via a secret GitHub Gist. Enter your GitHub PAT above first — it auto-creates the Gist. Share the Gist ID with family so their ratings stay in sync.</p>
-          <div style="font-size:12px;margin-bottom:8px">Gist ID: <code id="gist-id-display" style="background:rgba(0,0,0,.06);padding:2px 6px;border-radius:4px;font-size:11px">(none — PAT required to auto-create)</code></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px">
-            <input id="gist-id-input" type="text" placeholder="Paste Gist ID from another device..." style="flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:monospace">
-            <button onclick="saveGistId()" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer">Connect</button>
-            <button onclick="gistPush()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--muted)">Push now ↑</button>
-          </div>
-          <div style="font-size:11px;color:var(--muted)">Poll interval: every 60 sec · Also re-fetches on tab focus · Status shown next to voter name in Tab 1.</div>
-        </div>
       </div>
     </div>
   </details>
