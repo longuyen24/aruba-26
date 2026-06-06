@@ -151,6 +151,15 @@ a{color:var(--ocean);text-decoration:none}a:hover{text-decoration:underline}
 .survey-done-btn:hover{background:rgba(255,255,255,.35)}
 .survey-done-btn.primary{background:#fff;color:#00695C;border-color:#fff}
 .survey-done-btn.primary:hover{background:rgba(255,255,255,.9)}
+/* Submit button */
+.submit-wrap{text-align:center;margin:24px 0 0}
+.submit-btn{background:var(--ocean);color:#fff;border:none;border-radius:24px;padding:13px 40px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.02em;box-shadow:0 3px 12px rgba(0,130,138,.25);transition:background .15s,transform .1s}
+.submit-btn:hover{background:#00696e}
+.submit-btn:active{transform:scale(.97)}
+.submit-btn:disabled{background:#aaa;cursor:default;box-shadow:none}
+/* Toast notification */
+.submit-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a2e;color:#fff;border-radius:24px;padding:11px 22px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap}
+.submit-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 /* SURVEY BANNER (tab 1 instructions) */
 .survey-banner{background:var(--night);color:#fff;border-radius:var(--radlg);padding:15px 18px;display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
 .sb-icon{font-size:26px;flex-shrink:0}
@@ -443,10 +452,15 @@ details[open] .org-summary::after{transform:rotate(90deg)}
 <div id="p0" class="page active">
 <span class="pg-badge badge-gold">Quick Rate</span>
 <div class="pg-title">Quick Rate — Photo &amp; Vibe</div>
-<div class="pg-desc">Rate 1–5 stars. One photo, one sentence — done. The Smart Itinerary finalizes after <strong>10 family members</strong> have rated, so the more people vote, the better it gets. Ratings sync live across tabs.</div>
+<div class="pg-desc">Rate 1–5 stars. One photo, one sentence — done. <strong>Each tap saves instantly</strong> — no submit needed — and your Top Picks in the Itinerary tab update in real time. Hit Submit when you're finished to lock in your vote.</div>
 <div id="p0-grid"></div>
 
-<div class="survey-done">
+<div class="submit-wrap">
+  <button class="submit-btn" id="submit-btn" onclick="submitRatings()">Submit my ratings ✓</button>
+  <div style="font-size:11px;color:var(--muted);margin-top:8px">Your stars save on every tap — this just marks you done.</div>
+</div>
+
+<div class="survey-done" id="survey-done-card" style="display:none">
   <div class="survey-done-icon">🎉</div>
   <h3>You're done — thank you!</h3>
   <p>Your ratings are saved automatically on this device.<br>Want to see what each activity involves before finalising?</p>
@@ -1579,6 +1593,13 @@ function load(){
       if(v>0){ratings[id]=v;rstAll(id);}
     });
     calcScores();
+    // restore submitted state
+    if(localStorage.getItem('aruba26_submitted')){
+      const btn=document.getElementById('submit-btn');
+      if(btn){btn.disabled=true;btn.textContent='Submitted ✓';}
+      const done=document.getElementById('survey-done-card');
+      if(done)done.style.display='';
+    }
   }catch(e){}
 }
 // ── PER-DAY ALTERNATE PLANS ────────────────────────────────────────────────
@@ -2378,6 +2399,36 @@ async function gistCreate(pat){
 }
 
 function schedulePush(){clearTimeout(pushDebounce);pushDebounce=setTimeout(gistPush,2000);}
+
+function submitRatings(){
+  const rated=Object.values(ratings).filter(v=>v>0).length;
+  if(!rated){
+    showToast('Rate at least one activity first!');
+    return;
+  }
+  // mark submitted in localStorage
+  localStorage.setItem('aruba26_submitted','1');
+  // disable button, show done card
+  const btn=document.getElementById('submit-btn');
+  if(btn){btn.disabled=true;btn.textContent='Submitted ✓';}
+  const done=document.getElementById('survey-done-card');
+  if(done){
+    done.style.display='';
+    setTimeout(()=>done.scrollIntoView({behavior:'smooth',block:'center'}),80);
+  }
+  // trigger sync if Gist is configured
+  schedulePush();
+  showToast(`${rated} ratings submitted — thank you!`);
+}
+
+function showToast(msg){
+  let t=document.getElementById('submit-toast');
+  if(!t){t=document.createElement('div');t.id='submit-toast';t.className='submit-toast';document.body.appendChild(t);}
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),3000);
+}
 
 function updateGistDisplay(){
   const el=document.getElementById('gist-id-display');
