@@ -28,11 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch ratings from Gist and update itinerary
+      - name: Fetch ratings from Upstash and update itinerary
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GIST_ID: ${{ inputs.gist_id || secrets.GIST_ID }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KV_URL: ${{ secrets.KV_REST_API_URL }}
+          KV_TOK: ${{ secrets.KV_REST_API_TOKEN }}
           RATINGS_OVERRIDE: ${{ inputs.ratings_json }}
           VOTER_NAME_OVERRIDE: ${{ inputs.voter_name }}
         run: |
@@ -40,7 +40,8 @@ jobs:
           import os, json, re, urllib.request, datetime
 
           api_key  = os.environ['ANTHROPIC_API_KEY']
-          gist_id  = os.environ.get('GIST_ID', '').strip()
+          kv_url   = os.environ.get('KV_URL', '').strip()
+          kv_tok   = os.environ.get('KV_TOK', '').strip()
           override = os.environ.get('RATINGS_OVERRIDE', '').strip()
           voter    = os.environ.get('VOTER_NAME_OVERRIDE', '').strip() or 'the group'
 
@@ -78,46 +79,36 @@ jobs:
 
           if override:
             ratings = json.loads(override)
-            voter_data = [{'voter': voter, 'ratings': ratings, 'ts': 0}]
+            voter_data = [{'n': voter, 'r': ratings}]
             print(f"Using manually provided ratings ({len(ratings)} activities)")
-          elif gist_id:
-            print(f"Fetching ratings from Gist {gist_id}...")
-            req = urllib.request.Request(
-              f'https://api.github.com/gists/{gist_id}',
-              headers={'Accept': 'application/vnd.github+json',
-                       'Authorization': f'token {os.environ["GITHUB_TOKEN"]}'}
-            )
-            with urllib.request.urlopen(req, timeout=30) as resp:
-              gist = json.loads(resp.read())
-
-            for fname, fdata in gist.get('files', {}).items():
-              if fname.startswith('aruba26-ratings-') or fname == 'aruba26-ratings.json':
-                try:
-                  parsed = json.loads(fdata['content'])
-                  voter_data.append(parsed)
-                  rated_count = sum(1 for v in parsed.get('ratings', {}).values() if v > 0)
-                  print(f"  Loaded {fname}: voter={parsed.get('voter','?')}, rated={rated_count} activities")
-                except Exception as e:
-                  print(f"  Skipping {fname}: {e}")
-
-            if not voter_data:
-              print("No voter files found in Gist — nothing to do.")
+          elif kv_url and kv_tok:
+            print("Fetching ratings from Upstash KV...")
+            req = urllib.request.Request(kv_url, data=json.dumps(['GET','aruba26:votes']).encode(),
+              headers={'Authorization': f'Bearer {kv_tok}', 'Content-Type': 'application/json'})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+              result = json.loads(resp.read())
+            raw = result.get('result')
+            if not raw:
+              print("No votes in KV yet — nothing to do.")
               exit(0)
-
+            all_votes = json.loads(raw)
+            voter_data = [v for v in all_votes.values() if v.get('r')]
+            if not voter_data:
+              print("No rated votes found in KV — nothing to do.")
+              exit(0)
             # Aggregate: average of all non-zero votes per activity
             sums, counts = {}, {}
             for vd in voter_data:
-              for act_id, score in vd.get('ratings', {}).items():
+              for act_id, score in vd.get('r', {}).items():
                 if score > 0:
                   sums[act_id]   = sums.get(act_id, 0) + score
                   counts[act_id] = counts.get(act_id, 0) + 1
-
             ratings = {act_id: round(sums[act_id] / counts[act_id]) for act_id in sums}
-            voter_names = [vd.get('voter') for vd in voter_data if vd.get('voter')]
+            voter_names = [vd['n'] for vd in voter_data if vd.get('n')]
             voter = ', '.join(voter_names) if voter_names else 'the group'
             print(f"Aggregated {len(ratings)} activities from {len(voter_data)} voter(s): {voter}")
           else:
-            print("No GIST_ID secret configured and no ratings_json provided — nothing to do.")
+            print("No KV configured and no ratings_json provided — nothing to do.")
             exit(0)
 
           if not ratings:

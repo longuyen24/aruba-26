@@ -1493,7 +1493,7 @@ function buildStars(){
 function hov(row,v){row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<v));}
 function rst(row,id){const r=ratings[id]||0;row.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('lit',i<r));}
 function rstAll(id){document.querySelectorAll(`.stars-row[data-id="${id}"]`).forEach(row=>rst(row,id));}
-function setR(id,v,row){ratings[id]=v;rstAll(id);calcScores();save();syncItinerary();schedulePush();}
+function setR(id,v,row){ratings[id]=v;rstAll(id);calcScores();save();syncItinerary();schedulePush();scheduleKvPush();}
 function calcScores(){
   const vals=Object.values(ratings).filter(v=>v>0);
   if(!vals.length)return;
@@ -1918,6 +1918,46 @@ function showLockBanner(){
 // ── AUTO-UPDATE via GitHub Actions ─────────────────────────────────────────
 const REPO='longuyen24/aruba-26';
 const WORKFLOW='update-itinerary.yml';
+const KV='https://electric-rodent-144407.upstash.io';
+const KV_TOK='gQAAAAAAAjQXAAIgcDFmNWEyNTQ4ZTk1MDI0YmE0OWU5MjI1NWQ2M2Q0ZDJkYw';
+
+function getDeviceId(){
+  let id=localStorage.getItem('aruba26_device');
+  if(!id){id=(crypto.randomUUID?crypto.randomUUID():'d'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('aruba26_device',id);}
+  return id;
+}
+async function kvCmd(cmd){
+  try{
+    const r=await fetch(KV,{method:'POST',headers:{'Authorization':'Bearer '+KV_TOK,'Content-Type':'application/json'},body:JSON.stringify(cmd)});
+    return (await r.json()).result||null;
+  }catch(e){return null;}
+}
+let kvDebounce=null;
+function scheduleKvPush(){clearTimeout(kvDebounce);kvDebounce=setTimeout(kvPush,2000);}
+async function kvPush(){
+  const rated=Object.fromEntries(Object.entries(ratings).filter(([,v])=>v>0));
+  if(!Object.keys(rated).length)return;
+  const deviceId=getDeviceId();
+  const name=localStorage.getItem('aruba26_voter')||'';
+  const raw=await kvCmd(['GET','aruba26:votes']);
+  const all=raw?JSON.parse(raw):{};
+  all[deviceId]={r:rated,n:name,ts:Date.now()};
+  await kvCmd(['SET','aruba26:votes',JSON.stringify(all)]);
+  renderKvStats(all);
+}
+async function kvFetch(){
+  const raw=await kvCmd(['GET','aruba26:votes']);
+  if(raw)try{renderKvStats(JSON.parse(raw));}catch(e){}
+}
+function renderKvStats(all){
+  const voters=Object.values(all).filter(v=>v.r&&Object.keys(v.r).length>0).length;
+  const target=10,needed=Math.max(0,target-voters);
+  const txt=document.getElementById('voter-progress-text');
+  const fill=document.getElementById('voter-progress-fill');
+  if(!txt||!fill)return;
+  fill.style.width=Math.min(100,Math.round(voters/target*100))+'%';
+  txt.textContent=voters===0?'Be the first to rate!':needed===0?`All ${target} family members rated ✓`:`${voters} of ${target} family members rated`;
+}
 
 function updateSurveyStats(){
   const total=Object.keys(ratings).length||48;
@@ -2415,8 +2455,8 @@ function submitRatings(){
     done.style.display='';
     setTimeout(()=>done.scrollIntoView({behavior:'smooth',block:'center'}),80);
   }
-  // trigger sync if Gist is configured
   schedulePush();
+  kvPush();
   updateSurveyStats();
   showToast(`${rated} ratings submitted — thank you!`);
 }
@@ -2454,7 +2494,7 @@ function initSync(){
   // auto-create gist on first rating if PAT exists but no gist yet
 }
 
-buildQuickRateTab();buildStars();loadCustom();load();renderCustom();initVoter();syncItinerary();showLockBanner();initDayModes();updateSurveyStats();
+buildQuickRateTab();buildStars();loadCustom();load();renderCustom();initVoter();syncItinerary();showLockBanner();initDayModes();updateSurveyStats();kvFetch();
 // Update "All" filter count dynamically
 (function(){const btn=document.getElementById('filter-all-btn');if(btn){const n=document.querySelectorAll('#p1 .act-card').length;btn.textContent='All ('+n+')';}})();
 // restore manual override banner
