@@ -425,6 +425,12 @@ details[open] .org-summary::after{transform:rotate(90deg)}
   <div class="survey-cta-icon">🗳️</div>
   <div class="survey-cta-body">
     <strong>Survey is open — rate activities, shape the trip. Takes 2 min.</strong>
+    <span id="voter-progress" style="display:none;font-size:11.5px;color:rgba(255,255,255,.8);margin-top:3px;display:flex;align-items:center;gap:8px">
+      <span id="voter-progress-text"></span>
+      <span id="voter-progress-bar" style="flex:1;max-width:120px;height:5px;background:rgba(255,255,255,.25);border-radius:3px;overflow:hidden">
+        <span id="voter-progress-fill" style="display:block;height:100%;background:#fff;border-radius:3px;transition:width .4s"></span>
+      </span>
+    </span>
   </div>
 </div>
 
@@ -1911,6 +1917,25 @@ function showLockBanner(){
 // ── AUTO-UPDATE via GitHub Actions ─────────────────────────────────────────
 const REPO='longuyen24/aruba-26';
 const WORKFLOW='update-itinerary.yml';
+
+(async function loadStats(){
+  try{
+    const r=await fetch('stats.json?_='+Date.now());
+    if(!r.ok)return;
+    const s=await r.json();
+    const voters=s.voters||0;
+    const target=s.target||10;
+    if(voters===0)return;
+    const pct=Math.min(100,Math.round(voters/target*100));
+    const el=document.getElementById('voter-progress');
+    const txt=document.getElementById('voter-progress-text');
+    const fill=document.getElementById('voter-progress-fill');
+    if(!el||!txt||!fill)return;
+    txt.textContent=`${voters} of ${target} family members submitted`;
+    fill.style.width=pct+'%';
+    el.style.display='flex';
+  }catch(e){}
+})();
 
 function savePat(){
   const v=document.getElementById('pat-input').value.trim();

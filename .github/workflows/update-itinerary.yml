@@ -205,6 +205,10 @@ INSTRUCTIONS — return ONLY valid HTML for the complete updated <div id="p2" cl
           with open('index.html', 'w') as f:
             f.write(new_html)
 
+          # ── Update stats.json with voter count ───────────────────────────────
+          stats = {'voters': len(voter_data), 'target': 10, 'updated': today}
+          with open('stats.json', 'w') as f:
+            json.dump(stats, f, indent=2)
           print(f"✅ Itinerary updated from {len(voter_data)} voter(s) on {today}")
           PYEOF
 
@@ -212,6 +216,6 @@ INSTRUCTIONS — return ONLY valid HTML for the complete updated <div id="p2" cl
         run: |
           git config user.email "aruba-bot@noreply.github.com"
           git config user.name "Aruba Trip Planner Bot"
-          git add index.html
+          git add index.html stats.json
           git diff --staged --quiet || git commit -m "Auto-update itinerary — $(date +'%b %d') — ${{ inputs.voter_name || 'scheduled run' }}"
           git push
