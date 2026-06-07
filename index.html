@@ -2458,6 +2458,7 @@ function initSync(){
 }
 
 buildQuickRateTab();buildStars();loadCustom();load();renderCustom();initVoter();syncItinerary();showLockBanner();initDayModes();updateSurveyStats();kvFetch();
+if(Object.values(ratings).some(v=>v>0))kvPush();
 // Update "All" filter count dynamically
 (function(){const btn=document.getElementById('filter-all-btn');if(btn){const n=document.querySelectorAll('#p1 .act-card').length;btn.textContent='All ('+n+')';}})();
 // restore manual override banner
